@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Layout from "../src/components/Layout";
-import AccessDenied from "../src/components/access-denied";
+import Layout from "src/components/Layout";
+import AccessDenied from "src/components/access-denied";
 
 export default function ProtectedPage() {
     const { data: session, status } = useSession();
