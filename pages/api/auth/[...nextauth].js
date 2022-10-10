@@ -67,10 +67,15 @@ export default async function auth(req, res) {
 
             async session({ session, token, user }) {
                 const newCalData = await clientPromise;
-                const isValidResident = await newCalData
+                const residentData = await newCalData
                     .db("newcal")
                     .collection("residents")
                     .findOne({ email: user.email });
+
+                session.id = residentData._id;
+                session.flat = residentData.flat;
+                session.name = residentData.name;
+                session.role = "resident";
                 return session;
             },
 
