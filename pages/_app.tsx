@@ -1,7 +1,7 @@
 import { SessionProvider } from "next-auth/react";
 import "./styles.css";
 import type { AppProps } from "next/app";
-import AppMeta from "src/components/AppMeta";
+import AppMeta from "@/src/components/AppMeta";
 
 export default function App({
     Component,

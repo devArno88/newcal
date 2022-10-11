@@ -9,7 +9,7 @@ import EmailProvider from "next-auth/providers/email";
 
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 
-import clientPromise from "../../../src/lib/mongodb";
+import clientPromise from "@/src/lib/mongodb";
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
 export default async function auth(req, res) {
