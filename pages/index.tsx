@@ -1,4 +1,4 @@
-import Layout from "@/src/components/Layout123";
+import Layout from "@/src/components/Layout";
 
 export default function IndexPage() {
     return (
