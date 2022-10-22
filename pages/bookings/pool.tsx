@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Layout from "@/src/components/Layout";
+import { PoolBooker } from "@/src/content/Bookings";
 
 const Index = () => {
     return (
@@ -10,7 +11,7 @@ const Index = () => {
             </Head>
 
             <Layout>
-                <h2>POOL</h2>
+                <PoolBooker />
             </Layout>
         </>
     );

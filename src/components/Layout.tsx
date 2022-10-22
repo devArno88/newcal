@@ -5,9 +5,11 @@ interface Props {
     children: React.ReactNode;
 }
 
+const light: boolean = true;
+
 export default function Layout({ children }: Props) {
     return (
-        <Box sx={{ bgcolor: "#1A2027", height: "100vh" }}>
+        <Box sx={{ bgcolor: light ? "#fff" : "#1A2027", height: "100vh" }}>
             <NavBar />
             <Container maxWidth="xl" sx={{ mt: 8 }}>
                 {children}
