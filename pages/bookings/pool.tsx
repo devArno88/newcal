@@ -9,8 +9,8 @@ import { useState } from "react";
 import useSWR from "swr";
 
 const Index = () => {
-    const { data: session } = useSession();
     const [date, setDate] = useState(getDateString(new Date()));
+    const { data: session, status } = useSession();
     const { data: bookings, error, isLoading, mutate } = useSWR(`/api/pool/${date}`, fetcher);
     if (error) return <AppError source="Pool Bookings" error={error.message} session={session} />;
     return (
@@ -19,7 +19,7 @@ const Index = () => {
                 <title>Pool | NewCal</title>
             </Head>
 
-            <Layout>
+            <Layout session={session}>
                 <BookingSuite
                     date={date}
                     mutate={mutate}

@@ -1,5 +1,4 @@
 import Layout from "@/src/components/Layout";
-import { BookingsMenu } from "@/src/content/Bookings";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 
@@ -8,11 +7,11 @@ const Index = () => {
     return (
         <>
             <Head>
-                <title>Bookings | NewCal</title>
+                <title>My Issues | NewCal</title>
             </Head>
 
             <Layout session={session}>
-                <BookingsMenu />
+                <h2>MYCAL ISSUES</h2>
             </Layout>
         </>
     );

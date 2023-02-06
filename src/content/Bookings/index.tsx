@@ -1,2 +1,2 @@
-export * from "./BookingCards";
+export * from "./BookingsMenu";
 export * from "./BookingSuite";

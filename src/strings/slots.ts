@@ -1,10 +1,6 @@
-interface Booking {
-    slot: number;
-    start: string;
-    end: string;
-}
+import { I_Slot } from "../interfaces";
 
-const pool: Booking[] = [
+const pool: I_Slot[] = [
     { slot: 1, start: "05:00:00", end: "05:45:00" },
     { slot: 2, start: "05:45:00", end: "06:30:00" },
     { slot: 3, start: "06:30:00", end: "07:15:00" },
@@ -33,7 +29,7 @@ const pool: Booking[] = [
     { slot: 25, start: "23:00:00", end: "23:45:00" },
 ];
 
-const gym: Booking[] = [
+const gym: I_Slot[] = [
     { slot: 1, start: "05:00:00", end: "06:00:00" },
     { slot: 2, start: "06:00:00", end: "07:00:00" },
     { slot: 3, start: "07:00:00", end: "08:00:00" },
@@ -54,7 +50,7 @@ const gym: Booking[] = [
     { slot: 18, start: "22:00:00", end: "23:00:00" },
 ];
 
-const table: Booking[] = [
+const table: I_Slot[] = [
     { slot: 1, start: "05:00:00", end: "06:00:00" },
     { slot: 2, start: "06:00:00", end: "07:00:00" },
     { slot: 3, start: "07:00:00", end: "08:00:00" },

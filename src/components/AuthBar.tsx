@@ -29,7 +29,7 @@ export default function AuthBar(props: any): JSX.Element {
 
                     <ExitToAppTwoToneIcon
                         fontSize="large"
-                        sx={{ ml: 4 }}
+                        sx={{ ml: 4, cursor: "pointer" }}
                         onClick={(e) => {
                             e.preventDefault();
                             signOut({ callbackUrl: "/" });
@@ -44,7 +44,7 @@ export default function AuthBar(props: any): JSX.Element {
                         href={`/api/auth/signin`}
                         onClick={(e) => {
                             e.preventDefault();
-                            signIn();
+                            signIn(null, { callbackUrl: `${process.env.NEXTAUTH_URL}/mycal` });
                         }}
                     >
                         Log In

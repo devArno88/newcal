@@ -1,4 +1,5 @@
 import { Session } from "next-auth";
+import { I_MongoID } from "./mongo";
 
 export type Maybe<T> = T | null | undefined;
 
@@ -15,5 +16,11 @@ export enum E_Fetches {
 }
 
 export interface I_NewCalSession {
-    session: Session;
+    session?: Maybe<Session>;
+}
+
+export interface I_Resident extends I_MongoID {
+    name: Maybe<string>;
+    email: Maybe<string>;
+    flat: Maybe<number>;
 }

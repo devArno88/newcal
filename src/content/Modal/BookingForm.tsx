@@ -4,7 +4,7 @@ import { createTableBooking, deleteTableBooking } from "@/src/actions/table";
 import { AppError } from "@/src/components/AppError";
 import { useAlert } from "@/src/context";
 import { E_BookingType, I_GymBooking, I_NewCalSession, I_PoolBooking, I_TableBooking } from "@/src/interfaces";
-import { capitalise, defaultSlotDetails, getErrorMessage } from "@/src/utils";
+import { capitalise, defaultSlotDetails, getErrorMessage, shortDate } from "@/src/utils";
 import { Box, Button, CircularProgress, Modal, Stack, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { KeyedMutator } from "swr";
@@ -13,18 +13,19 @@ const style = {
     position: "absolute" as "absolute",
     top: "50%",
     left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
+    transform: "translate(-50%, -75%)",
+    width: 420,
+    border: "1px solid #555",
     boxShadow: 24,
     p: 4,
+    bgcolor: "#0d1117",
 };
 
 interface PropTypes extends I_NewCalSession {
     slot: number;
     date: string;
     open: boolean;
+    today: boolean;
     type: E_BookingType;
     setOpen: (x) => void;
     mutate: KeyedMutator<any>;
@@ -98,7 +99,7 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
     const defaultDetails = defaultSlotDetails({ slot: props.slot, type: props.type });
     const pendingDetails = props.pending ? defaultSlotDetails({ slot: props.pending?.slot, type: props.type }) : null;
     const isOwnPendingBooking = props.slot === props.pending?.slot && props.session?.flat === props.pending?.flat;
-
+    const dateRange = `${defaultDetails?.start?.slice(0, -3)} - ${defaultDetails?.end?.slice(0, -3)}`;
     return (
         <Modal
             open={props.open}
@@ -117,9 +118,7 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
                         ? "You currently have this slot booked"
                         : props.pending
                         ? "You have a pending booking for this day"
-                        : `${defaultDetails?.start?.slice(0, -3)} - ${defaultDetails?.end?.slice(0, -3)} on ${new Date(
-                              props.date
-                          ).toDateString()}`}
+                        : `${props.today ? "Today " : shortDate(props.date)} from ${dateRange}`}
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 1 }}>
                     {isOwnPendingBooking

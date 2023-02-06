@@ -1,18 +1,19 @@
 import Layout from "@/src/components/Layout";
-import { BookingsMenu } from "@/src/content/Bookings";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 const Index = () => {
-    const { data: session } = useSession();
+    const router = useRouter();
+    const { data: session, status } = useSession();
     return (
         <>
             <Head>
-                <title>Bookings | NewCal</title>
+                <title>Help | NewCal</title>
             </Head>
 
             <Layout session={session}>
-                <BookingsMenu />
+                <h2>ISSUE {router?.query.issueID}</h2>
             </Layout>
         </>
     );

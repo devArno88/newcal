@@ -10,7 +10,7 @@ export default function AccessDenied() {
                     href="/api/auth/signin"
                     onClick={(e) => {
                         e.preventDefault();
-                        signIn();
+                        signIn(null, { callbackUrl: `${process.env.NEXTAUTH_URL}/mycal` });
                     }}
                 >
                     You must be signed in to view this page

@@ -39,5 +39,6 @@ export const isToday = (date: Date | string) => {
         return false;
     }
 };
+export const shortDate = (date: Date | string) => dateFormat(date, "dddd, mmmm dS");
 
 export const niceDate = (date: Date | string) => dateFormat(date, "dddd, mmmm dS, yyyy");

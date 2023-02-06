@@ -1,16 +1,16 @@
-import { CustomDatePicker } from "@/src/components/CustomDatePicker";
+import { BookingDatePicker } from "@/src/components/BookingDatePicker";
 import { PageHeader } from "@/src/components/PageHeader";
 import { E_BookingType, I_NewCalSession, I_PoolBookings } from "@/src/interfaces";
 import { slotStrings } from "@/src/strings";
 import { capitalise, defaultSlotDetails, getDateString, getFortnightAway, isToday, niceDate } from "@/src/utils";
 import FitnessCenterTwoToneIcon from "@mui/icons-material/FitnessCenterTwoTone";
-import LockIcon from "@mui/icons-material/Lock";
 import PoolTwoToneIcon from "@mui/icons-material/PoolTwoTone";
 import TableBarTwoToneIcon from "@mui/icons-material/TableBarTwoTone";
-import { CircularProgress, Grid, Paper, Stack, Typography } from "@mui/material";
-import { FunctionComponent, useState } from "react";
+import { CircularProgress, Grid, Stack } from "@mui/material";
+import { FunctionComponent, ReactElement, useState } from "react";
 import { KeyedMutator } from "swr";
 import { BookingForm } from "../Modal/BookingForm";
+import { BookingCard } from "./BookingCard";
 
 interface PropTypes extends I_PoolBookings, I_NewCalSession {
     date: string;
@@ -26,31 +26,37 @@ export const IconConfig = {
     [E_BookingType.table]: TableBarTwoToneIcon,
 };
 
-export const BookingSuite: FunctionComponent<PropTypes> = (props) => {
+export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement => {
     const [open, setOpen] = useState<boolean>(false);
     const [currentSlot, setCurrentSlot] = useState<number | null>(null);
     const handleBookingForm = (slot: number) => {
         setCurrentSlot(slot);
         setOpen(true);
     };
-    const nowDate = new Date();
-    const nowTime = nowDate.toLocaleTimeString();
+    const selectedDate = new Date(props.date);
+    const nowTime = new Date().toLocaleTimeString();
     const { end } = getFortnightAway();
     const isFortnightAway = getDateString(new Date(props.date)) > end;
+    const today = isToday(props.date);
 
     const pendingBookings = props.bookings?.filter((b) => {
         const details = defaultSlotDetails({ type: props.type, slot: b.slot });
-        const exists = !(
-            details.end < nowTime &&
-            b.flat === props.session?.flat &&
-            getDateString(nowDate) === props.date
-        );
+        const isUpcoming = details.end > nowTime;
+        const isReserved =
+            b.flat === props.session?.flat && getDateString(selectedDate) === getDateString(props.date["$d"]);
+        const exists = today ? isUpcoming : isReserved;
+        console.log({
+            B_FLAT: b.flat,
+            S_FLAT: props.session?.flat,
+            now: getDateString(selectedDate),
+            PROP_DATE: getDateString(props.date["$d"]),
+        });
         return exists;
     });
 
     const pending = pendingBookings ? pendingBookings[0] : null;
 
-    // if (![0, 1].includes(pendingBookings?.length))
+    // if (pendingBookings && ![0, 1].includes(pendingBookings.length))
     //     return (
     //         <AppError
     //             source="Bookings Suite"
@@ -64,11 +70,12 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props) => {
             <PageHeader
                 type={props.type}
                 title={`${capitalise(props.type)} Bookings`}
-                subtitle={niceDate(props.date)}
+                subtitle={today ? "Today" : niceDate(props.date)}
             />
-            <CustomDatePicker type={props.type} date={props.date} setDate={props.setDate} />
+            <BookingDatePicker type={props.type} date={props.date} setDate={props.setDate} />
             <BookingForm
                 open={open}
+                today={today}
                 date={props.date}
                 setOpen={setOpen}
                 pending={pending}
@@ -82,56 +89,23 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props) => {
                     <CircularProgress />
                 ) : (
                     <Grid item xs={10} sm={8} md={4} sx={{ pt: 1, pb: 2 }}>
-                        {slotStrings[props.type].map((booking) => {
-                            const isBooked = props.bookings?.some((b) => b.slot === booking.slot);
-                            const isExpired =
-                                (booking.end <= nowTime && isToday(props.date)) ||
-                                getDateString(props.date["$d"]) < getDateString(nowDate);
+                        {slotStrings[props.type].map((slot) => {
+                            const isBooked = props.bookings?.some((b) => b.slot === slot.slot);
+                            const isExpired = today
+                                ? slot.end <= nowTime
+                                : getDateString(props.date["$d"]) < getDateString(selectedDate);
                             const isDisabled = isExpired || isFortnightAway;
                             return (
-                                <Paper
-                                    elevation={3}
-                                    key={booking.slot}
-                                    onClick={() =>
-                                        isExpired || isFortnightAway ? undefined : handleBookingForm(booking.slot)
-                                    }
-                                    sx={{
-                                        mb: 1.5,
-                                        padding: "3px 6px",
-                                        cursor: isDisabled ? undefined : "pointer",
-                                        bgcolor: isDisabled ? "lightgray" : isBooked ? "lightsalmon" : "lightgreen",
-                                    }}
-                                >
-                                    <Stack sx={{ alignItems: "center" }}>
-                                        <Stack direction="row" sx={{ alignItems: "center" }}>
-                                            {isFortnightAway ? (
-                                                <LockIcon sx={{ opacity: 0.6, mt: -0.2, mr: 0.5 }} fontSize="small" />
-                                            ) : null}
-                                            <Typography variant="h6">
-                                                {booking.start.slice(0, -3)} - {booking.end.slice(0, -3)}
-                                            </Typography>
-                                        </Stack>
-                                        <Typography variant="body1">
-                                            {isFortnightAway
-                                                ? "Unlocks one week prior to date"
-                                                : // ? `Unlocks on ${new Date(middle).toDateString()}`
-                                                  new Date(props.date).toDateString()}
-                                        </Typography>
-                                        <Typography variant="caption">
-                                            {isFortnightAway
-                                                ? null
-                                                : isExpired && !isBooked
-                                                ? `Expired`
-                                                : isBooked
-                                                ? `Flat ${
-                                                      props.bookings.filter(
-                                                          (reserved) => reserved.slot === booking.slot
-                                                      )[0].flat
-                                                  }`
-                                                : "Available"}
-                                        </Typography>
-                                    </Stack>
-                                </Paper>
+                                <BookingCard
+                                    key={slot.slot}
+                                    flat={props.bookings.filter((reserved) => reserved.slot === slot?.slot)[0]?.flat}
+                                    isBooked={isBooked}
+                                    isDisabled={isDisabled}
+                                    isFortnightAway={isFortnightAway}
+                                    isExpired={isExpired}
+                                    slot={slotStrings[props.type].filter((s) => s.slot === slot.slot)[0]}
+                                    handleBookingForm={handleBookingForm}
+                                />
                             );
                         })}
                     </Grid>

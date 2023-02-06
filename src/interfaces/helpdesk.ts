@@ -17,3 +17,8 @@ export interface I_Issue {
         comment: Maybe<string>;
     };
 }
+
+export interface I_Mailbox {
+    flat: number;
+    pending: boolean;
+}
