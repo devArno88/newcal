@@ -1,3 +1,5 @@
+import dateFormat from "dateformat";
+
 export const getDateString = (date: Date) => date?.toISOString()?.split("T")[0];
 
 export const getDateRange = (date: Date) => {
@@ -37,3 +39,5 @@ export const isToday = (date: Date | string) => {
         return false;
     }
 };
+
+export const niceDate = (date: Date | string) => dateFormat(date, "dddd, mmmm dS, yyyy");

@@ -5,8 +5,8 @@ import { AppError } from "@/src/components/AppError";
 import { useAlert } from "@/src/context";
 import { E_BookingType, I_GymBooking, I_NewCalSession, I_PoolBooking, I_TableBooking } from "@/src/interfaces";
 import { capitalise, defaultSlotDetails, getErrorMessage } from "@/src/utils";
-import { Box, Button, Modal, Stack, Typography } from "@mui/material";
-import { FunctionComponent } from "react";
+import { Box, Button, CircularProgress, Modal, Stack, Typography } from "@mui/material";
+import { FunctionComponent, useState } from "react";
 import { KeyedMutator } from "swr";
 
 const style = {
@@ -49,6 +49,7 @@ const handleActions = (type: E_BookingType) => {
 
 export const BookingForm: FunctionComponent<PropTypes> = (props) => {
     const { setAlert } = useAlert();
+    const [loading, setLoading] = useState<boolean>(false);
     const actions = handleActions(props?.type);
     if (!actions)
         return (
@@ -60,6 +61,7 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
         );
 
     const handleCreateBooking = async () => {
+        setLoading(true);
         const res = await actions.create({
             slot: props.slot,
             date: props.date,
@@ -67,14 +69,15 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
 
         console.log({ res });
 
-        props.setOpen(false);
-
-        // if (res?.err) {
-        //     setAlert({ type: E_AlertTypes.error, subtitle: "COCK" });
-        // } else {
-        props.mutate();
-        //     setAlert({ type: E_AlertTypes.success, subtitle: "AND BALLS" });
-        // }
+        if (res?.err) {
+            setLoading(false);
+            // setAlert({ type: E_AlertTypes.error, subtitle: "COCK" });
+        } else {
+            setLoading(false);
+            props.mutate();
+            props.setOpen(false);
+            // setAlert({ type: E_AlertTypes.success, subtitle: "AND BALLS" });
+        }
     };
 
     const handleDeleteBooking = async () => {
@@ -82,16 +85,15 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
             id: props.pending?._id,
         });
 
-        console.log({ res });
-
-        props.setOpen(false);
-
-        // if (res?.err) {
-        //     setAlert({ type: E_AlertTypes.error, subtitle: "COCK" });
-        // } else {
-        props.mutate();
-        //     setAlert({ type: E_AlertTypes.success, subtitle: "AND BALLS" });
-        // }
+        if (res?.err) {
+            setLoading(false);
+            // setAlert({ type: E_AlertTypes.error, subtitle: "COCK" });
+        } else {
+            setLoading(false);
+            props.mutate();
+            props.setOpen(false);
+            // setAlert({ type: E_AlertTypes.success, subtitle: "AND BALLS" });
+        }
     };
     const defaultDetails = defaultSlotDetails({ slot: props.slot, type: props.type });
     const pendingDetails = props.pending ? defaultSlotDetails({ slot: props.pending?.slot, type: props.type }) : null;
@@ -134,8 +136,8 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
                         <Button variant="contained" sx={{ bgcolor: "gray" }} onClick={() => props.setOpen(false)}>
                             Keep It
                         </Button>
-                        <Button variant="contained" color="error" onClick={handleDeleteBooking}>
-                            Cancel It
+                        <Button variant="contained" color="error" sx={{ width: 120 }} onClick={handleDeleteBooking}>
+                            {loading ? <CircularProgress size="small" /> : "Cancel It"}
                         </Button>
                     </Stack>
                 ) : props.pending ? null : (
@@ -143,8 +145,8 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
                         <Button variant="contained" sx={{ bgcolor: "gray" }} onClick={() => props.setOpen(false)}>
                             Cancel
                         </Button>
-                        <Button variant="contained" color="primary" onClick={handleCreateBooking}>
-                            Confirm
+                        <Button variant="contained" color="primary" sx={{ width: 100 }} onClick={handleCreateBooking}>
+                            {loading ? <CircularProgress size="small" /> : "Confirm"}
                         </Button>
                     </Stack>
                 )}

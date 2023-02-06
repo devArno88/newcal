@@ -5,7 +5,6 @@ import { Types } from "mongoose";
 const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 export const createGymBooking = async ({ date, slot }: { date: string; slot: number }): Promise<any> => {
-    console.log({ NEXTAUTH_URL });
     try {
         return await fetcher(`/api/gym/${date}/${slot}`, createFetchParams({ method: E_Fetches.post }));
     } catch (err) {

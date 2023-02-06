@@ -1,6 +1,5 @@
 import { AppError } from "@/src/components/AppError";
 import Layout from "@/src/components/Layout";
-import { PageHeader } from "@/src/components/PageHeader";
 import { BookingSuite } from "@/src/content/Bookings";
 import { E_BookingType } from "@/src/interfaces";
 import { fetcher, getDateString } from "@/src/utils";
@@ -21,7 +20,6 @@ const Index = () => {
             </Head>
 
             <Layout>
-                <PageHeader title="NewCal Bookings" subtitle="Swimming Pool" />
                 <BookingSuite
                     date={date}
                     mutate={mutate}

@@ -1,7 +1,8 @@
 import { CustomDatePicker } from "@/src/components/CustomDatePicker";
+import { PageHeader } from "@/src/components/PageHeader";
 import { E_BookingType, I_NewCalSession, I_PoolBookings } from "@/src/interfaces";
 import { slotStrings } from "@/src/strings";
-import { defaultSlotDetails, getDateString, getFortnightAway, isToday } from "@/src/utils";
+import { capitalise, defaultSlotDetails, getDateString, getFortnightAway, isToday, niceDate } from "@/src/utils";
 import FitnessCenterTwoToneIcon from "@mui/icons-material/FitnessCenterTwoTone";
 import LockIcon from "@mui/icons-material/Lock";
 import PoolTwoToneIcon from "@mui/icons-material/PoolTwoTone";
@@ -59,7 +60,12 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props) => {
     //     );
 
     return (
-        <>
+        <Stack gap={4}>
+            <PageHeader
+                type={props.type}
+                title={`${capitalise(props.type)} Bookings`}
+                subtitle={niceDate(props.date)}
+            />
             <CustomDatePicker type={props.type} date={props.date} setDate={props.setDate} />
             <BookingForm
                 open={open}
@@ -86,7 +92,9 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props) => {
                                 <Paper
                                     elevation={3}
                                     key={booking.slot}
-                                    onClick={() => (isExpired ? undefined : handleBookingForm(booking.slot))}
+                                    onClick={() =>
+                                        isExpired || isFortnightAway ? undefined : handleBookingForm(booking.slot)
+                                    }
                                     sx={{
                                         mb: 1.5,
                                         padding: "3px 6px",
@@ -129,6 +137,6 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props) => {
                     </Grid>
                 )}
             </Grid>
-        </>
+        </Stack>
     );
 };

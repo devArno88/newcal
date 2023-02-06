@@ -1,11 +1,10 @@
-import { PoolTwoTone } from "@mui/icons-material";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { FunctionComponent } from "react";
-import { IconConfig } from "../content/Bookings";
 import { E_BookingType } from "../interfaces";
 import { withinTwoWeeks } from "../utils";
 
@@ -16,16 +15,17 @@ interface PropTypes {
 }
 
 export const CustomDatePicker: FunctionComponent<PropTypes> = (props) => (
-    <Box sx={{ textAlign: "center", mb: 3 }}>
+    <Box sx={{ textAlign: "center" }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-                label="Please select a date"
+                label="Select date"
                 value={props.date}
                 onChange={(newValue) => {
                     props.setDate(newValue);
                 }}
                 components={{
-                    OpenPickerIcon: IconConfig[props.type] || PoolTwoTone,
+                    // OpenPickerIcon: IconConfig[props.type],
+                    OpenPickerIcon: ExpandMoreRoundedIcon,
                 }}
                 onAccept={(value: any) => {
                     console.log({ WITHIN_2_WEEKS: withinTwoWeeks(new Date(value)) });
