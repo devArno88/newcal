@@ -1,2 +1,2 @@
 export * from "./BookingCards";
-export * from "./PoolBooker";
+export * from "./BookingSuite";

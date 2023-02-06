@@ -1,12 +1,7 @@
-import {
-    SessionContextValue,
-    signIn,
-    signOut,
-    useSession,
-} from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
-import { Avatar, IconButton, Button } from "@mui/material";
+import { Avatar, Box, Button } from "@mui/material";
 
 export default function AuthBar(props: any): JSX.Element {
     const { session } = props;
@@ -22,19 +17,15 @@ export default function AuthBar(props: any): JSX.Element {
         >
             {session ? (
                 <>
-                    <Avatar
-                        alt={session.name}
-                        src={session.user?.image ?? "/user.png"}
-                        style={{ marginRight: 8 }}
-                    />
+                    <Avatar alt={session.name} src={session.user?.image ?? "/user.png"} style={{ marginRight: 8 }} />
 
-                    <span>
-                        <small>{`Flat ${session.flat}`}</small>
-                        <br />
-                        <strong>
-                            {session && session.name ? session.name : null}
+                    <Box sx={{ display: { xs: "none", sm: "block", overflow: "none" } }}>
+                        <strong style={{ fontSize: 12 }}>
+                            {session && session.name ? session.name.split(" ")[0] : null}
                         </strong>
-                    </span>
+                        <br />
+                        <small style={{ fontSize: 12 }}>{`Flat ${session.flat}`}</small>
+                    </Box>
 
                     <ExitToAppTwoToneIcon
                         fontSize="large"

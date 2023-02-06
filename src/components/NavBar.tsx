@@ -1,15 +1,15 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import { Toolbar, Box, SvgIconTypeMap, Tooltip } from "@mui/material";
-import Container from "@mui/material/Container";
-import AuthBar from "./AuthBar";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
+import BusinessTwoToneIcon from "@mui/icons-material/BusinessTwoTone";
+import ContactSupportTwoToneIcon from "@mui/icons-material/ContactSupportTwoTone";
 import EventAvailableTwoToneIcon from "@mui/icons-material/EventAvailableTwoTone";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
 import HouseTwoToneIcon from "@mui/icons-material/HouseTwoTone";
 import PushPinTwoToneIcon from "@mui/icons-material/PushPinTwoTone";
-import ContactSupportTwoToneIcon from "@mui/icons-material/ContactSupportTwoTone";
+import { Box, SvgIconTypeMap, Toolbar, Tooltip } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Container from "@mui/material/Container";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import AuthBar from "./AuthBar";
 
 interface NavItemData {
     name: string;
@@ -51,7 +51,7 @@ export default function NavBar() {
     const { data: session, status } = useSession();
 
     return (
-        <AppBar position="static" sx={{ pt: 2, pb: 2, bgcolor: "blue" }}>
+        <AppBar position="static" sx={{ bgcolor: "#333" }}>
             <Container maxWidth="xl">
                 <Toolbar
                     disableGutters
@@ -62,11 +62,8 @@ export default function NavBar() {
                     }}
                 >
                     <Link href="/">
-                        <img
-                            src="/favicon.ico"
-                            alt="NewCal"
-                            style={{ height: 50, width: 50, cursor: "pointer" }}
-                        />
+                        <BusinessTwoToneIcon fontSize="large" sx={{ cursor: "pointer" }} />
+                        {/* <img src="/favicon.ico" alt="NewCal" style={{ height: 50, width: 50, cursor: "pointer" }} /> */}
                     </Link>
 
                     <Box
@@ -81,10 +78,7 @@ export default function NavBar() {
                             ? navItems.map((item: any, i: number) => (
                                   <Link href={item.href} key={i}>
                                       <Tooltip title={item.name}>
-                                          <item.icon
-                                              sx={{ cursor: "pointer" }}
-                                              fontSize="large"
-                                          />
+                                          <item.icon sx={{ cursor: "pointer", color: "gree" }} fontSize="large" />
                                       </Tooltip>
                                   </Link>
                               ))

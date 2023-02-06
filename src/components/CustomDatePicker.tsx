@@ -1,30 +1,38 @@
-import * as React from "react";
-import { Dayjs } from "dayjs";
+import { PoolTwoTone } from "@mui/icons-material";
+import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PoolTwoToneIcon from "@mui/icons-material/PoolTwoTone";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { FunctionComponent } from "react";
+import { IconConfig } from "../content/Bookings";
+import { E_BookingType } from "../interfaces";
+import { withinTwoWeeks } from "../utils";
 
-export default function BasicDatePicker() {
-    const [value, setValue] = React.useState<Dayjs | null>();
+interface PropTypes {
+    date: string;
+    type: E_BookingType;
+    setDate: (x) => void;
+}
 
-    return (
+export const CustomDatePicker: FunctionComponent<PropTypes> = (props) => (
+    <Box sx={{ textAlign: "center", mb: 3 }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
                 label="Please select a date"
-                value={value}
+                value={props.date}
                 onChange={(newValue) => {
-                    setValue(newValue);
+                    props.setDate(newValue);
                 }}
                 components={{
-                    OpenPickerIcon: PoolTwoToneIcon,
+                    OpenPickerIcon: IconConfig[props.type] || PoolTwoTone,
                 }}
-                onAccept={(value: Dayjs) => {
+                onAccept={(value: any) => {
+                    console.log({ WITHIN_2_WEEKS: withinTwoWeeks(new Date(value)) });
                     console.log(new Date(value["$d"]).toISOString());
                 }}
                 renderInput={(params) => <TextField {...params} />}
             />
         </LocalizationProvider>
-    );
-}
+    </Box>
+);
