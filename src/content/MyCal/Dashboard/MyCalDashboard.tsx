@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import Link from "next/link";
 import { FunctionComponent } from "react";
+import { KeyedMutator } from "swr";
 import { BookingsPanel } from "./BookingsPanel";
 import { MailboxPanel } from "./MailboxPanel";
 import { PostsPanel } from "./PostsPanel";
@@ -40,6 +41,8 @@ interface DashboardData extends I_Posts, I_Tickets {
 
 interface PropTypes {
     data: DashboardData;
+    loading: boolean;
+    mutate: KeyedMutator<any>;
 }
 
 export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {

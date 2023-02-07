@@ -1,10 +1,12 @@
 import { PageHeader } from "@/src/components";
 import { PostCard } from "@/src/components/PostCard";
-import { I_Post } from "@/src/interfaces";
+import { I_Post, I_Posts } from "@/src/interfaces";
 import { Button, CircularProgress, Stack } from "@mui/material";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, ReactElement, useState } from "react";
 import { KeyedMutator } from "swr";
-import { PostForm } from "../../Modal/PostForm";
+import { PostForm } from "../Modal/PostForm";
+
+interface Data extends I_Posts {}
 
 interface PropTypes {
     data: I_Post[];
@@ -12,21 +14,22 @@ interface PropTypes {
     mutate: KeyedMutator<any>;
 }
 
-export const MyCalPosts: FunctionComponent<PropTypes> = (props) => {
+export const Activity: FunctionComponent<PropTypes> = (props): ReactElement => {
     const [open, setOpen] = useState(false);
     return (
         <Stack gap={4}>
-            <PageHeader title="My Posts" subtitle="Residents Space Activity" />
+            <PageHeader title="Activity" subtitle="NewCal Residents Space" />
+
             <Stack sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Button variant="contained" sx={{ width: "fit-content", pl: 6, pr: 6 }} onClick={() => setOpen(true)}>
                     New Post
                 </Button>
-                <PostForm open={open} handleClose={() => setOpen(false)} mutate={props.mutate} />
+                <PostForm mutate={props.mutate} open={open} handleClose={() => setOpen(false)} />
                 <Stack gap={2} mt={4} sx={{ width: { xs: "100%", sm: "70%", md: "65%" } }}>
                     {props.loading ? (
                         <CircularProgress />
                     ) : (
-                        props.data?.map((p) => <PostCard key={p._id.toString()} {...p} />)
+                        props.data?.reverse().map((p) => <PostCard key={p._id.toString()} {...p} />)
                     )}
                 </Stack>
             </Stack>

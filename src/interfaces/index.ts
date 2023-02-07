@@ -1,3 +1,4 @@
+export * from "./activity";
 export * from "./app";
 export * from "./bookings";
 export * from "./help";

@@ -1,6 +1,6 @@
 import { E_Fetches } from "@/src/interfaces";
 
-export const createFetchParams = ({ method, body = null }: { method: E_Fetches; body?: any }): any => ({
+export const fetcherPrep = ({ method, body = null }: { method: E_Fetches; body?: any }): any => ({
     method,
     body: body ? JSON.stringify(body) : undefined,
     headers: { "Content-Type": "application/json" },

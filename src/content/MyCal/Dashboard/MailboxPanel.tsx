@@ -1,7 +1,6 @@
-import { appColors } from "@/src/utils";
+import { appColors, fromNowDate } from "@/src/utils";
 import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
 import { Paper, Stack, Typography } from "@mui/material";
-import moment from "moment";
 
 export const MailboxPanel = (props) => {
     const mailToCollect = props?.mailbox?.items !== 0;
@@ -14,7 +13,7 @@ export const MailboxPanel = (props) => {
                     collect
                 </Typography>
                 <Typography variant="caption" sx={{ color: "gray" }} mt={0.5} mb={2}>
-                    Last updated {moment(props?.mailbox?.updated).fromNow()}
+                    Last updated {fromNowDate(props?.mailbox?.updated)}
                 </Typography>
                 <Paper
                     sx={{

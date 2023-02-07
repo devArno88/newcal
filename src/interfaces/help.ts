@@ -1,5 +1,5 @@
-import { Types } from "mongoose";
-import { Maybe } from "./app";
+import { I_Resident, Maybe } from "./app";
+import { I_MongoID } from "./mongo";
 
 export enum E_TicketStatus {
     received = "received",
@@ -14,10 +14,10 @@ export enum E_TicketType {
     question = "question",
 }
 
-export interface I_Ticket {
+export interface I_Ticket extends I_MongoID {
     type: Maybe<E_TicketType>;
     date: Maybe<Date>;
-    resident: Maybe<Types.ObjectId>;
+    resident: Maybe<I_Resident>;
     title: Maybe<string>;
     content: Maybe<string>;
     review: {

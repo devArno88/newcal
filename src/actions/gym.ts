@@ -1,12 +1,10 @@
 import { E_Fetches } from "@/interfaces";
-import { createFetchParams, fetcher } from "@/utils";
+import { fetcher, fetcherPrep } from "@/utils";
 import { Types } from "mongoose";
-
-const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 export const createGymBooking = async ({ date, slot }: { date: string; slot: number }): Promise<any> => {
     try {
-        return await fetcher(`/api/gym/${date}/${slot}`, createFetchParams({ method: E_Fetches.post }));
+        return await fetcher(`/api/gym/${date}/${slot}`, fetcherPrep({ method: E_Fetches.post }));
     } catch (err) {
         console.error(err);
     }
@@ -14,7 +12,7 @@ export const createGymBooking = async ({ date, slot }: { date: string; slot: num
 
 export const deleteGymBooking = async ({ id }: { id: Types.ObjectId }): Promise<any> => {
     try {
-        return await fetcher(`/api/gym/${id}`, createFetchParams({ method: E_Fetches.delete }));
+        return await fetcher(`/api/gym/${id}`, fetcherPrep({ method: E_Fetches.delete }));
     } catch (err) {
         console.error(err);
     }

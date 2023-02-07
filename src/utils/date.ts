@@ -1,6 +1,9 @@
 import dateFormat from "dateformat";
+import moment from "moment";
 
 export const getDateString = (date: Date) => date?.toISOString()?.split("T")[0];
+
+export const fromNowDate = (date: Date) => moment(date).fromNow();
 
 export const getDateRange = (date: Date) => {
     const start = new Date(date);

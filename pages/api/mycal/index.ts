@@ -28,33 +28,33 @@ const routes = {
             });
 
             const post_notice_total = await PostSchema.count({ type: E_PostType.notice });
-            const post_notice_own = await PostSchema.count({ type: E_PostType.notice, resident: session?.resident });
+            const post_notice_own = await PostSchema.count({ type: E_PostType.notice, resident: session?.id });
 
             const post_listing_total = await PostSchema.count({ type: E_PostType.listing });
-            const post_listing_own = await PostSchema.count({ type: E_PostType.listing, resident: session?.resident });
+            const post_listing_own = await PostSchema.count({ type: E_PostType.listing, resident: session?.id });
 
             const post_question_total = await PostSchema.count({ type: E_PostType.question });
             const post_question_own = await PostSchema.count({
                 type: E_PostType.question,
-                resident: session?.resident,
+                resident: session?.id,
             });
 
             const ticket_enhancement_total = await TicketSchema.count({ type: E_TicketType.enhancement });
             const ticket_enhancement_own = await TicketSchema.count({
                 type: E_TicketType.enhancement,
-                resident: session?.resident,
+                resident: session?.id,
             });
 
             const ticket_issue_total = await TicketSchema.count({ type: E_TicketType.issue });
             const ticket_issue_own = await TicketSchema.count({
                 type: E_TicketType.issue,
-                resident: session?.resident,
+                resident: session?.id,
             });
 
             const ticket_question_total = await TicketSchema.count({ type: E_TicketType.question });
             const ticket_question_own = await TicketSchema.count({
                 type: E_TicketType.question,
-                resident: session?.resident,
+                resident: session?.id,
             });
 
             res.json({

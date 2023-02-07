@@ -29,7 +29,7 @@ export const authOptions = {
             const newCalData = await clientPromise;
             const residentData = await newCalData.db("newcal").collection("residents").findOne({ email: user.email });
 
-            session.id = residentData._id;
+            session.id = residentData._id.toString();
             session.flat = residentData.flat;
             session.name = residentData.name;
             session.role = "resident";

@@ -42,7 +42,7 @@ const navItems: NavItemData[] = [
 ];
 
 export const NavBar = (props: I_NewCalSession) => (
-    <AppBar position="static" sx={{ bgcolor: "#0d1117" }}>
+    <AppBar position="sticky" sx={{ bgcolor: "#0d1117" }}>
         <Container maxWidth="xl">
             <Toolbar
                 disableGutters

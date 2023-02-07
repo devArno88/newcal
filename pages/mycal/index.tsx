@@ -8,8 +8,9 @@ import Head from "next/head";
 import useSWR from "swr";
 
 const Index = () => {
-    const { data: session } = useSession();
-    const { data, error, isLoading } = useSWR(`/api/mycal`, fetcher);
+    const { data: session, status } = useSession();
+    const { data, error, isLoading, isValidating, mutate } = useSWR(`/api/mycal`, fetcher);
+    const loading = isLoading || isValidating || status === "loading";
     if (error) return <AppError source="MyCal Dashboard" error={error.message} session={session} />;
     return (
         <>
@@ -17,7 +18,9 @@ const Index = () => {
                 <title>MyCal | NewCal</title>
             </Head>
 
-            <Layout session={session}>{isLoading ? <CircularProgress /> : <MyCalDashboard data={data} />}</Layout>
+            <Layout session={session}>
+                {data ? <MyCalDashboard mutate={mutate} loading={loading} data={data} /> : <CircularProgress />}
+            </Layout>
         </>
     );
 };

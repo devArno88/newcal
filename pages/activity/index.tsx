@@ -1,11 +1,16 @@
+import { AppError } from "@/src/components";
 import Layout from "@/src/components/Layout";
-import { Paper } from "@mui/material";
+import { Activity } from "@/src/content/Activity";
+import { fetcher } from "@/src/utils";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
+import useSWR from "swr";
 
 const Index = () => {
     const { data: session, status } = useSession();
+    const { data, error, isLoading, isValidating, mutate } = useSWR(`/api/posts`, fetcher);
+    const loading = isLoading || isValidating || status === "loading";
+    if (error) return <AppError source="Activity" error={error.message} session={session} />;
     return (
         <>
             <Head>
@@ -13,10 +18,7 @@ const Index = () => {
             </Head>
 
             <Layout session={session}>
-                <h2>ACTIVITY</h2>
-                <Link href="/activity/h2jkhjkl456kl34hj">
-                    <Paper sx={{ p: 4 }}>TEST POST</Paper>
-                </Link>
+                <Activity data={data} loading={loading} mutate={mutate} />
             </Layout>
         </>
     );

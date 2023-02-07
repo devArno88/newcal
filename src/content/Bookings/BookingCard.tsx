@@ -44,7 +44,7 @@ export const BookingCard: FunctionComponent<PropTypes> = (props): ReactElement =
                 </Stack>
                 <Typography variant="body1">
                     {isFortnightAway
-                        ? "Unlocked 1 week before"
+                        ? "Unlocks 1 week prior"
                         : isExpired && !isBooked
                         ? `Expired`
                         : isBooked

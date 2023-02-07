@@ -1,10 +1,14 @@
+import { createPost } from "@/src/actions/post";
 import { FormSelect } from "@/src/components/FormSelect";
+import { E_PostType } from "@/src/interfaces";
+import { S_PostOptions } from "@/src/strings";
 import { appColors } from "@/src/utils";
 import { Button, Stack, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { FunctionComponent, useState } from "react";
+import { KeyedMutator } from "swr";
 
 const style = {
     position: "absolute" as "absolute",
@@ -21,19 +25,42 @@ const style = {
 interface PropTypes {
     open: boolean;
     handleClose: () => void;
+    mutate: KeyedMutator<any>;
 }
 
+export interface PostFormData {
+    type: E_PostType;
+    title: string;
+    content: string;
+}
+
+const initState = {
+    type: "" as E_PostType,
+    title: "",
+    content: "",
+};
+
 export const PostForm: FunctionComponent<PropTypes> = (props) => {
-    const [formData, setFormData] = useState({
-        title: "",
-        content: "",
-    });
-    const { title, content } = formData;
+    const [formData, setFormData] = useState(initState);
+    const { type, title, content } = formData;
     const onChange = (e) => setFormData((x) => ({ ...x, [e.target.name]: e.target.value }));
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const res = await createPost({ formData });
+        if (res.error) {
+        } else {
+            // Success
+            props.mutate();
+            props.handleClose();
+        }
+    };
     return (
         <Modal
             open={props.open}
-            onClose={props.handleClose}
+            onClose={() => {
+                props.handleClose();
+                setFormData(initState);
+            }}
             aria-labelledby="post-modal-title"
             aria-describedby="post-modal-description"
         >
@@ -45,7 +72,12 @@ export const PostForm: FunctionComponent<PropTypes> = (props) => {
                     Create a new post for the NewCal residents space
                 </Typography>
                 <Stack spacing={2} mt={3} mb={3}>
-                    <FormSelect />
+                    <FormSelect
+                        helperText="What type of post is this?"
+                        options={S_PostOptions}
+                        value={type}
+                        onChange={onChange}
+                    />
                     <TextField
                         variant="outlined"
                         name="title"
@@ -90,9 +122,10 @@ export const PostForm: FunctionComponent<PropTypes> = (props) => {
                         Cancel
                     </Button>
                     <Button
+                        onClick={onSubmit}
                         variant="contained"
+                        disabled={!type.length || !title.length || !content.length}
                         sx={{ bgcolor: "greenyellow", color: "black" }}
-                        onClick={() => console.log({ formData })}
                     >
                         Submit
                     </Button>
