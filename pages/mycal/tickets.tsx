@@ -7,11 +7,11 @@ const Index = () => {
     return (
         <>
             <Head>
-                <title>My Issues | NewCal</title>
+                <title>My Tickets | NewCal</title>
             </Head>
 
             <Layout session={session}>
-                <h2>MYCAL ISSUES</h2>
+                <h2>MYCAL TICKETS</h2>
             </Layout>
         </>
     );

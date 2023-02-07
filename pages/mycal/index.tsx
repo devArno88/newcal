@@ -1,32 +1,23 @@
+import { AppError } from "@/src/components";
 import Layout from "@/src/components/Layout";
-import { Paper } from "@mui/material";
+import { MyCalDashboard } from "@/src/content/MyCal";
+import { fetcher } from "@/src/utils";
+import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
+import useSWR from "swr";
 
 const Index = () => {
     const { data: session } = useSession();
+    const { data, error, isLoading } = useSWR(`/api/mycal`, fetcher);
+    if (error) return <AppError source="MyCal Dashboard" error={error.message} session={session} />;
     return (
         <>
             <Head>
                 <title>MyCal | NewCal</title>
             </Head>
 
-            <Layout session={session}>
-                <h2>MYCAL</h2>
-                <Link href="/mycal/mailbox">
-                    <Paper sx={{ p: 4 }}>MAILBOX</Paper>
-                </Link>
-                <Link href="/mycal/bookings">
-                    <Paper sx={{ p: 4 }}>BOOKINGS SUMMARY</Paper>
-                </Link>
-                <Link href="/mycal/posts">
-                    <Paper sx={{ p: 4 }}>POSTS SUMMARY</Paper>
-                </Link>
-                <Link href="/mycal/issues">
-                    <Paper sx={{ p: 4 }}>ISSUES SUMMARY</Paper>
-                </Link>
-            </Layout>
+            <Layout session={session}>{isLoading ? <CircularProgress /> : <MyCalDashboard data={data} />}</Layout>
         </>
     );
 };

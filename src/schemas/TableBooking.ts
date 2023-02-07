@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import { I_TableBooking } from "../interfaces";
+import { E_MongoCollection, I_TableBooking } from "../interfaces";
 
 const Schema = new mongoose.Schema<I_TableBooking>({
     date: { type: Date },
@@ -8,4 +8,5 @@ const Schema = new mongoose.Schema<I_TableBooking>({
 });
 
 export const TableBookingSchema: mongoose.Model<I_TableBooking> =
-    mongoose.models.gymbooking || mongoose.model<I_TableBooking>("tablebooking", Schema);
+    mongoose.models[E_MongoCollection.tablebooking] ||
+    mongoose.model<I_TableBooking>(E_MongoCollection.tablebooking, Schema);

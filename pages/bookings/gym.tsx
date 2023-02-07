@@ -10,7 +10,7 @@ import useSWR from "swr";
 
 const Index = () => {
     const [date, setDate] = useState(getDateString(new Date()));
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const { data: bookings, error, isLoading, mutate } = useSWR(`/api/gym/${date}`, fetcher);
     if (error) return <AppError source="Gym" error={error.message} session={session} />;
     return (

@@ -3,11 +3,9 @@ import { I_Resident, Maybe } from "./app";
 import { I_MongoID } from "./mongo";
 
 export enum E_PostType {
-    issue = "issue", // Sent privately
     notice = "notice", // Updates/warnings
     listing = "listing", // Flat availabilities
     question = "question", // Building-wide questions
-    suggestion = "suggestion", //
 }
 
 export interface I_Likes {
@@ -30,5 +28,10 @@ export interface I_Post extends I_MongoID, I_Likes, I_Comments {
     title: Maybe<string>;
     content: Maybe<string>;
     date: Maybe<Date>;
-    // files
+    // TODO: Incorporate S3 bucket logic
+    files: [];
+}
+
+export interface I_Posts {
+    posts: Maybe<I_Post[]>;
 }

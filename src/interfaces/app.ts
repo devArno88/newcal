@@ -24,3 +24,8 @@ export interface I_Resident extends I_MongoID {
     email: Maybe<string>;
     flat: Maybe<number>;
 }
+
+export interface I_Mailbox {
+    flat: number;
+    pending: boolean;
+}

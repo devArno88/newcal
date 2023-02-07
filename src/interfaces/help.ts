@@ -8,9 +8,17 @@ export enum E_TicketStatus {
     dismissed = "dismissed",
 }
 
-export interface I_Issue {
+export enum E_TicketType {
+    issue = "issue",
+    enhancement = "enhancement",
+    question = "question",
+}
+
+export interface I_Ticket {
+    type: Maybe<E_TicketType>;
     date: Maybe<Date>;
     resident: Maybe<Types.ObjectId>;
+    title: Maybe<string>;
     content: Maybe<string>;
     review: {
         status: Maybe<E_TicketStatus>;
@@ -18,7 +26,6 @@ export interface I_Issue {
     };
 }
 
-export interface I_Mailbox {
-    flat: number;
-    pending: boolean;
+export interface I_Tickets {
+    tickets: Maybe<I_Ticket[]>;
 }

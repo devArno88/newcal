@@ -15,7 +15,7 @@ export default function Layout(props: PropTypes) {
         <Box sx={{ bgcolor: "#161b22", height: "100vh" }}>
             <NavBar session={props.session} />
             {/* <AlertBar {...alertState} /> */}
-            <Container maxWidth="xl" sx={{ pt: 4, pb: 4 }}>
+            <Container maxWidth="md" sx={{ pt: 4, pb: 4 }}>
                 {props.children}
             </Container>
         </Box>

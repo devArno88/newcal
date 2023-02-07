@@ -7,6 +7,9 @@ export enum E_MongoCollection {
     poolbooking = "poolbooking",
     resident = "resident",
     tablebooking = "tablebooking",
+    ticket = "ticket",
+    post = "post",
+    mailboard = "mailboard",
 }
 
 export interface I_MongoID {

@@ -45,12 +45,6 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
         const isReserved =
             b.flat === props.session?.flat && getDateString(selectedDate) === getDateString(props.date["$d"]);
         const exists = today ? isUpcoming : isReserved;
-        console.log({
-            B_FLAT: b.flat,
-            S_FLAT: props.session?.flat,
-            now: getDateString(selectedDate),
-            PROP_DATE: getDateString(props.date["$d"]),
-        });
         return exists;
     });
 
