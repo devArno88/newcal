@@ -1,5 +1,5 @@
 import { E_TicketType } from "@/src/interfaces";
-import { appColors, capitalise } from "@/src/utils";
+import { appColors } from "@/src/utils";
 import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
 import QuizTwoToneIcon from "@mui/icons-material/QuizTwoTone";
 import ReportProblemTwoToneIcon from "@mui/icons-material/ReportProblemTwoTone";
@@ -14,6 +14,12 @@ const IconConfig = {
 export const TicketsPanel = (props) => {
     const PanelCard = ({ type }: { type: E_TicketType }) => {
         const Icon = IconConfig[type];
+        const strings = {
+            [E_TicketType.enhancement]: "suggested",
+            [E_TicketType.issue]: "reported",
+            [E_TicketType.question]: "asked",
+        };
+        const action = strings[type];
         return (
             <Paper
                 sx={{
@@ -27,15 +33,15 @@ export const TicketsPanel = (props) => {
                 }}
                 elevation={5}
             >
-                <Stack direction="row" justifyContent="center" alignItems="center">
-                    <Icon sx={{ fill: appColors.text.primary, mr: 1 }} />
-                    <Typography variant="h6" sx={{ color: appColors.text.primary }}>
-                        {capitalise(type)}s
-                    </Typography>
-                </Stack>
-                <Typography sx={{ color: "greenyellow" }}>Yours: {props.tickets[type].own}</Typography>
+                <Icon sx={{ fill: appColors.text.primary, mr: 1 }} fontSize="large" />
+                <Typography sx={{ color: "greenyellow" }}>
+                    {props.tickets[type].total || "No"} {type}
+                    {props.tickets[type].total !== 1 ? "s" : null}
+                </Typography>
                 <Typography variant="caption" sx={{ color: "gray" }}>
-                    Total: {props.tickets[type].total}
+                    You have {props.tickets[type].own ? `${action} ${props.tickets[type].own} ` : `not ${action} any `}
+                    {type}
+                    {props.tickets[type].total !== 1 ? "s" : null}
                 </Typography>
             </Paper>
         );
@@ -45,9 +51,9 @@ export const TicketsPanel = (props) => {
         <>
             <Typography variant="h5">Tickets</Typography>
             <Stack mt={2}>
-                <PanelCard type={E_TicketType.enhancement} />
-                <PanelCard type={E_TicketType.issue} />
-                <PanelCard type={E_TicketType.question} />
+                {Object.values(E_TicketType).map((x) => (
+                    <PanelCard key={x} type={x} />
+                ))}
             </Stack>
         </>
     );

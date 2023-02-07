@@ -1,5 +1,5 @@
 import { E_PostType } from "@/src/interfaces/activity";
-import { appColors, capitalise } from "@/src/utils";
+import { appColors } from "@/src/utils";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
 import QuizTwoToneIcon from "@mui/icons-material/QuizTwoTone";
@@ -27,15 +27,15 @@ export const PostsPanel = (props) => {
                 }}
                 elevation={5}
             >
-                <Stack direction="row" justifyContent="center" alignItems="center">
-                    <Icon sx={{ fill: appColors.text.primary, mr: 1 }} />
-                    <Typography variant="h6" sx={{ color: appColors.text.primary }}>
-                        {capitalise(type)}s
-                    </Typography>
-                </Stack>
-                <Typography sx={{ color: "greenyellow" }}>Yours: {props.posts[type].own}</Typography>
+                <Icon sx={{ fill: appColors.text.primary, mr: 1 }} fontSize="large" />
+                <Typography sx={{ color: "greenyellow" }}>
+                    {props.posts[type].total || "No"} {type}
+                    {props.posts[type].total !== 1 ? "s" : null}
+                </Typography>
                 <Typography variant="caption" sx={{ color: "gray" }}>
-                    Total: {props.posts[type].total}
+                    You have {props.posts[type].own ? `posted ${props.posts[type].own} ` : "not posted any "}
+                    {type}
+                    {props.posts[type].total !== 1 ? "s" : null}
                 </Typography>
             </Paper>
         );
@@ -44,9 +44,9 @@ export const PostsPanel = (props) => {
         <>
             <Typography variant="h5">Posts</Typography>
             <Stack mt={2}>
-                <PanelCard type={E_PostType.notice} />
-                <PanelCard type={E_PostType.listing} />
-                <PanelCard type={E_PostType.question} />
+                {Object.values(E_PostType).map((x) => (
+                    <PanelCard key={x} type={x} />
+                ))}
             </Stack>
         </>
     );

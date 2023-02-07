@@ -1,4 +1,5 @@
 import Layout from "@/src/components/Layout";
+import { MyCalPosts } from "@/src/content/MyCal/Pages";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 
@@ -11,7 +12,7 @@ const Index = () => {
             </Head>
 
             <Layout session={session}>
-                <h2>MYCAL POSTS</h2>
+                <MyCalPosts />
             </Layout>
         </>
     );

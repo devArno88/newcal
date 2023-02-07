@@ -43,28 +43,30 @@ interface PropTypes {
 }
 
 export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
+    const {
+        data: { bookings, posts, tickets, mailbox },
+    } = props;
     const MyCalConfig: DashboardPanel[] = [
         {
             href: "/mycal/bookings",
-            element: <BookingsPanel bookings={props.data.bookings} />,
+            element: <BookingsPanel bookings={bookings} />,
         },
         {
             href: "/mycal/posts",
-            element: <PostsPanel posts={props.data.posts} />,
+            element: <PostsPanel posts={posts} />,
         },
         {
             href: "/mycal/tickets",
-            element: <TicketsPanel tickets={props.data.tickets} />,
+            element: <TicketsPanel tickets={tickets} />,
         },
-        { href: null, element: <MailboxPanel mailbox={props.data.mailbox} /> },
+        { href: null, element: <MailboxPanel mailbox={mailbox} /> },
     ];
-
     return (
         <Stack gap={4}>
             <PageHeader title="MyCal" />
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {MyCalConfig.map((x, i) => {
-                    const Panel: JSX.Element = (
+                    const Panel = (
                         <Grid item xs={12} sm={4} md={6} key={i}>
                             <Item>{x.element}</Item>
                         </Grid>

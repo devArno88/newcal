@@ -1,9 +1,9 @@
 import { E_BookingType } from "@/src/interfaces";
 import { slotStrings } from "@/src/strings";
-import { appColors, capitalise, isToday } from "@/src/utils";
+import { appColors, isToday } from "@/src/utils";
 import { Paper, Stack, Typography } from "@mui/material";
 
-import { IconConfig } from "../Bookings";
+import { IconConfig } from "../../Bookings";
 
 export const BookingsPanel = (props) => {
     const handleTodaySlot = (type: E_BookingType) => {
@@ -11,7 +11,7 @@ export const BookingsPanel = (props) => {
         const slot = exists ? props.bookings[type].filter((x) => isToday(x.date))[0].slot : null;
         const details = slot ? slotStrings[type].filter((s) => s.slot === slot)[0] : null;
         return details ? (
-            <Typography sx={{ color: "greenyellow" }}>
+            <Typography variant="caption" sx={{ color: "gray" }}>
                 Today: {`${details.start.slice(0, -3)} - ${details.end.slice(0, -3)}`}
             </Typography>
         ) : null;
@@ -32,16 +32,12 @@ export const BookingsPanel = (props) => {
                 elevation={5}
             >
                 <Stack direction="row" justifyContent="center" alignItems="center">
-                    <Icon sx={{ fill: appColors.text.primary, mr: 1 }} />
-                    <Typography variant="h6" sx={{ color: appColors.text.primary }}>
-                        {capitalise(type)}
-                    </Typography>
+                    <Icon sx={{ fill: appColors.text.primary }} fontSize="large" />
                 </Stack>
-                {handleTodaySlot(type)}
-                <Typography variant="caption" sx={{ color: "gray" }}>
-                    {props.bookings[type].length || "No"} upcoming booking
-                    {props.bookings[type].length !== 1 ? "s" : null}
+                <Typography sx={{ color: "greenyellow" }}>
+                    {props.bookings[type].length || "No"} {type} booking{props.bookings[type].length !== 1 ? "s" : null}
                 </Typography>
+                {handleTodaySlot(type)}
             </Paper>
         );
     };
@@ -49,9 +45,9 @@ export const BookingsPanel = (props) => {
         <>
             <Typography variant="h5">Bookings</Typography>
             <Stack mt={2}>
-                <PanelCard type={E_BookingType.pool} />
-                <PanelCard type={E_BookingType.gym} />
-                <PanelCard type={E_BookingType.table} />
+                {Object.values(E_BookingType).map((x) => (
+                    <PanelCard key={x} type={x} />
+                ))}
             </Stack>
         </>
     );

@@ -1,6 +1,6 @@
 import { AppError } from "@/src/components";
 import Layout from "@/src/components/Layout";
-import { MyCalDashboard } from "@/src/content/MyCal";
+import { MyCalDashboard } from "@/src/content/MyCal/Dashboard";
 import { fetcher } from "@/src/utils";
 import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
