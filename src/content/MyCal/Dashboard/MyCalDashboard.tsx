@@ -66,16 +66,16 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
     ];
     return (
         <Stack gap={4}>
-            <PageHeader title="MyCal" />
+            <PageHeader title="MyCal" subtitle="My NewCal Dashboard" />
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {MyCalConfig.map((x, i) => {
                     const Panel = (
-                        <Grid item xs={12} sm={4} md={6} key={i}>
+                        <Grid item xs={12} sm={4} md={6} key={x.href ? undefined : i}>
                             <Item>{x.element}</Item>
                         </Grid>
                     );
                     return x.href ? (
-                        <Link href={x.href} key={x.href}>
+                        <Link href={x.href} key={i}>
                             {Panel}
                         </Link>
                     ) : (
