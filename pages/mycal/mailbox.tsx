@@ -2,7 +2,7 @@ import Layout from "@/src/components/Layout";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 
-const Index = () => {
+export default function Page() {
     const { data: session } = useSession();
     return (
         <>
@@ -15,6 +15,4 @@ const Index = () => {
             </Layout>
         </>
     );
-};
-
-export default Index;
+}

@@ -1,26 +1,29 @@
+import { PageHeader } from "@/src/components";
+import { appColors } from "@/src/utils";
 import FitnessCenterTwoToneIcon from "@mui/icons-material/FitnessCenterTwoTone";
 import PoolTwoToneIcon from "@mui/icons-material/PoolTwoTone";
 import TableBarTwoToneIcon from "@mui/icons-material/TableBarTwoTone";
-import { SvgIconTypeMap, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import { Stack, SvgIconTypeMap, Typography } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
 import Link from "next/link";
 import { FunctionComponent, ReactElement } from "react";
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    padding: theme.spacing(1),
+const sx = {
+    backgroundColor: "#22272D",
+    border: `2px solid ${appColors.border}`,
+    padding: 1,
     textAlign: "center",
-    color: theme.palette.text.secondary,
+    color: appColors.text.primary,
+    borderRadius: "1rem",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
     cursor: "pointer",
-}));
+    width: { xs: "90%", sm: "60%", md: "40%" },
+    height: 50,
+};
 
 interface BookingCard {
     name: string;
@@ -49,18 +52,18 @@ const bookingCardData: BookingCard[] = [
 ];
 
 export const BookingsMenu: FunctionComponent = (): ReactElement => (
-    <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={4} justifyContent="center" alignItems="center" display="flex">
-            {bookingCardData.map((card: any, i: number) => (
-                <Grid item xs={12} sm={10} md={4} key={i}>
-                    <Link href={card.href}>
-                        <Item>
-                            <Typography variant="h5">{card.name}</Typography>
-                            <card.icon fontSize="large" sx={{ ml: 1 }} />
-                        </Item>
-                    </Link>
-                </Grid>
-            ))}
-        </Grid>
-    </Box>
+    <Stack spacing={4} alignItems="center" justifyContent="center">
+        <PageHeader title="NewCal Bookings" subtitle="Residents Booking Suite" />
+        {bookingCardData.map((card) => (
+            <Link href={card.href} key={card.name}>
+                <Paper elevation={5} sx={sx}>
+                    <Stack direction="row" alignItems="center" spacing={2}>
+                        <card.icon fontSize="medium" />
+                        <Typography variant="h5">{card.name}</Typography>
+                        <span>&rarr;</span>
+                    </Stack>
+                </Paper>
+            </Link>
+        ))}
+    </Stack>
 );

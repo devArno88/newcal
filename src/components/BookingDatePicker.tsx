@@ -6,7 +6,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { FunctionComponent } from "react";
 import { E_BookingType } from "../interfaces";
-import { withinTwoWeeks } from "../utils";
 
 interface PropTypes {
     date: string;
@@ -47,20 +46,20 @@ export const BookingDatePicker: FunctionComponent<PropTypes> = (props) => {
                 <DatePicker
                     label="Select date"
                     value={props.date}
-                    onChange={(newValue) => {
-                        props.setDate(newValue);
-                    }}
-                    components={{
-                        // OpenPickerIcon: IconConfig[props.type],
-                        OpenPickerIcon: ExpandMoreRoundedIcon,
-                    }}
-                    onAccept={(value: any) => {
-                        console.log({ WITHIN_2_WEEKS: withinTwoWeeks(new Date(value)) });
-                        console.log(new Date(value["$d"]).toISOString());
-                    }}
+                    onChange={(newValue) => props.setDate(newValue)}
+                    components={{ OpenPickerIcon: ExpandMoreRoundedIcon }}
+                    // onAccept={(value) => {
+                    //     console.log({ WITHIN_2_WEEKS: withinTwoWeeks(new Date(value)) });
+                    //     console.log(new Date(value["$d"]).toISOString());
+                    // }}
                     renderInput={(params) => (
                         <ThemeProvider theme={theme}>
-                            <TextField {...params} />
+                            <TextField
+                                {...params}
+                                sx={{
+                                    fieldset: { borderColor: "#ccc" },
+                                }}
+                            />
                         </ThemeProvider>
                     )}
                 />

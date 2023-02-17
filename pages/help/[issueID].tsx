@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-const Index = () => {
+export default function Page() {
     const router = useRouter();
     const { data: session, status } = useSession();
     return (
@@ -17,6 +17,4 @@ const Index = () => {
             </Layout>
         </>
     );
-};
-
-export default Index;
+}

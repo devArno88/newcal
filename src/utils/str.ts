@@ -17,7 +17,7 @@ export const capitaliseAll = (sentence: string): string =>
     sentence
         ? sentence
               .split(" ")
-              .map((word: any) => capitalise(word))
+              .map((word) => capitalise(word))
               .join(" ")
         : "";
 

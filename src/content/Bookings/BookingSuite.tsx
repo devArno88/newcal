@@ -6,7 +6,8 @@ import { capitalise, defaultSlotDetails, getDateString, getFortnightAway, isToda
 import FitnessCenterTwoToneIcon from "@mui/icons-material/FitnessCenterTwoTone";
 import PoolTwoToneIcon from "@mui/icons-material/PoolTwoTone";
 import TableBarTwoToneIcon from "@mui/icons-material/TableBarTwoTone";
-import { CircularProgress, Grid, Stack } from "@mui/material";
+import { Button, CircularProgress, Grid, Stack } from "@mui/material";
+import Link from "next/link";
 import { FunctionComponent, ReactElement, useState } from "react";
 import { KeyedMutator } from "swr";
 import { BookingForm } from "../Modal/BookingForm";
@@ -60,12 +61,17 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
     //     );
 
     return (
-        <Stack gap={4}>
+        <Stack gap={4} alignItems="center" justifyContent="center">
             <PageHeader
                 type={props.type}
                 title={`${capitalise(props.type)} Bookings`}
                 subtitle={today ? "Today" : niceDate(props.date)}
             />
+            <Link href="/mycal/bookings">
+                <Button variant="contained" color="info" sx={{ width: { xs: 200, sm: 220, md: 240 }, pl: 1, pr: 1 }}>
+                    View My Bookings
+                </Button>
+            </Link>
             <BookingDatePicker type={props.type} date={props.date} setDate={props.setDate} />
             <BookingForm
                 open={open}

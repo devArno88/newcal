@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import useSWR from "swr";
 
-const Index = () => {
+export default function Page() {
     const { data: session, status } = useSession();
     const { data, error, isLoading, isValidating, mutate } = useSWR(`/api/tickets/me`, fetcher);
     const loading = isLoading || isValidating || status === "loading";
@@ -22,6 +22,4 @@ const Index = () => {
             </Layout>
         </>
     );
-};
-
-export default Index;
+}

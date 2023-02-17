@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 
-const Index = () => {
+export default function Page() {
     const { data: session, status } = useSession();
     return (
         <>
@@ -20,6 +20,4 @@ const Index = () => {
             </Layout>
         </>
     );
-};
-
-export default Index;
+}

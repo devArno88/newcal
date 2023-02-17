@@ -1,7 +1,7 @@
 import Layout from "@/src/components/Layout";
 import { useSession } from "next-auth/react";
 
-export default function IndexPage() {
+export default function Page() {
     const { data: session } = useSession();
     return (
         <Layout session={session}>

@@ -8,7 +8,7 @@ import Head from "next/head";
 import { useState } from "react";
 import useSWR from "swr";
 
-const Index = () => {
+export default function Page() {
     const [date, setDate] = useState(getDateString(new Date()));
     const { data: session, status } = useSession();
     const { data: bookings, error, isLoading, mutate } = useSWR(`/api/pool/${date}`, fetcher);
@@ -32,6 +32,4 @@ const Index = () => {
             </Layout>
         </>
     );
-};
-
-export default Index;
+}
