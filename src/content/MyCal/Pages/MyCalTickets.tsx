@@ -1,16 +1,14 @@
-import { PageHeader } from "@/src/components";
+import { Loading, PageHeader } from "@/src/components";
 import { TicketCard } from "@/src/components/TicketCard";
-import { I_Ticket } from "@/src/interfaces";
-import { Button, CircularProgress, Stack } from "@mui/material";
+import { I_Mutator, I_Ticket } from "@/src/interfaces";
+import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, useState } from "react";
-import { KeyedMutator } from "swr";
 import { TicketForm } from "../../Modal/TicketForm";
 
-interface PropTypes {
+interface PropTypes extends I_Mutator {
     data: I_Ticket[];
     loading: boolean;
-    mutate: KeyedMutator<any>;
 }
 
 export const MyCalTickets: FunctionComponent<PropTypes> = (props) => {
@@ -40,11 +38,7 @@ export const MyCalTickets: FunctionComponent<PropTypes> = (props) => {
                 </Stack>
                 <TicketForm open={open} handleClose={() => setOpen(false)} mutate={props.mutate} />
                 <Stack gap={2} mt={4} sx={{ width: { xs: "100%", sm: "70%", md: "65%" } }}>
-                    {props.loading ? (
-                        <CircularProgress />
-                    ) : (
-                        props.data?.map((t) => <TicketCard key={t._id.toString()} {...t} />)
-                    )}
+                    {props.loading ? <Loading /> : props.data?.map((t) => <TicketCard key={t._id.toString()} {...t} />)}
                 </Stack>
             </Stack>
         </Stack>

@@ -1,4 +1,6 @@
-export interface I_MailBoard {
+import { I_MongoID } from "./mongo";
+
+export interface I_MailBoard extends I_MongoID {
     updated: Date;
     Flat1: number;
     Flat2: number;

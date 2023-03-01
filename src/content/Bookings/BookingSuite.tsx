@@ -1,24 +1,23 @@
+import { Loading } from "@/src/components";
 import { BookingDatePicker } from "@/src/components/BookingDatePicker";
 import { PageHeader } from "@/src/components/PageHeader";
-import { E_BookingType, I_NewCalSession, I_PoolBookings } from "@/src/interfaces";
+import { E_BookingType, I_Mutator, I_NewCalSession, I_PoolBookings } from "@/src/interfaces";
 import { slotStrings } from "@/src/strings";
 import { capitalise, defaultSlotDetails, getDateString, getFortnightAway, isToday, niceDate } from "@/src/utils";
 import FitnessCenterTwoToneIcon from "@mui/icons-material/FitnessCenterTwoTone";
 import PoolTwoToneIcon from "@mui/icons-material/PoolTwoTone";
 import TableBarTwoToneIcon from "@mui/icons-material/TableBarTwoTone";
-import { Button, CircularProgress, Grid, Stack } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, ReactElement, useState } from "react";
-import { KeyedMutator } from "swr";
 import { BookingForm } from "../Modal/BookingForm";
 import { BookingCard } from "./BookingCard";
 
-interface PropTypes extends I_PoolBookings, I_NewCalSession {
+interface PropTypes extends I_PoolBookings, I_NewCalSession, I_Mutator {
     date: string;
-    isLoading: boolean;
+    loading: boolean;
     type: E_BookingType;
     setDate: (x) => void;
-    mutate: KeyedMutator<any>;
 }
 
 export const IconConfig = {
@@ -39,14 +38,14 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
     const { end } = getFortnightAway();
     const isFortnightAway = getDateString(new Date(props.date)) > end;
     const today = isToday(props.date);
+    const isResident = props.session?.role === "resident";
 
     const pendingBookings = props.bookings?.filter((b) => {
         const details = defaultSlotDetails({ type: props.type, slot: b.slot });
         const isUpcoming = details.end > nowTime;
         const isReserved =
             b.flat === props.session?.flat && getDateString(selectedDate) === getDateString(props.date["$d"]);
-        const exists = today ? isUpcoming : isReserved;
-        return exists;
+        return today ? isUpcoming : isReserved;
     });
 
     const pending = pendingBookings ? pendingBookings[0] : null;
@@ -67,11 +66,17 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
                 title={`${capitalise(props.type)} Bookings`}
                 subtitle={today ? "Today" : niceDate(props.date)}
             />
-            <Link href="/mycal/bookings">
-                <Button variant="contained" color="info" sx={{ width: { xs: 200, sm: 220, md: 240 }, pl: 1, pr: 1 }}>
-                    View My Bookings
-                </Button>
-            </Link>
+            {isResident ? (
+                <Link href="/mycal/bookings">
+                    <Button
+                        variant="contained"
+                        color="info"
+                        sx={{ width: { xs: 200, sm: 220, md: 240 }, pl: 1, pr: 1 }}
+                    >
+                        View My Bookings
+                    </Button>
+                </Link>
+            ) : null}
             <BookingDatePicker type={props.type} date={props.date} setDate={props.setDate} />
             <BookingForm
                 open={open}
@@ -85,8 +90,8 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
                 session={props.session}
             />
             <Grid container sx={{ alignItems: "center", justifyContent: "center" }}>
-                {props.isLoading ? (
-                    <CircularProgress />
+                {props.loading ? (
+                    <Loading />
                 ) : (
                     <Grid item xs={10} sm={8} md={4} sx={{ pt: 1, pb: 2 }}>
                         {slotStrings[props.type].map((slot) => {
@@ -98,13 +103,14 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
                             return (
                                 <BookingCard
                                     key={slot.slot}
-                                    flat={props.bookings.filter((reserved) => reserved.slot === slot?.slot)[0]?.flat}
                                     isBooked={isBooked}
+                                    isExpired={isExpired}
+                                    isAdmin={!isResident}
                                     isDisabled={isDisabled}
                                     isFortnightAway={isFortnightAway}
-                                    isExpired={isExpired}
-                                    slot={slotStrings[props.type].filter((s) => s.slot === slot.slot)[0]}
                                     handleBookingForm={handleBookingForm}
+                                    slot={slotStrings[props.type].filter((s) => s.slot === slot.slot)[0]}
+                                    flat={props.bookings?.filter((reserved) => reserved.slot === slot?.slot)[0]?.flat}
                                 />
                             );
                         })}

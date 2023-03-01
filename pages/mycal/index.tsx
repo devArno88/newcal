@@ -1,8 +1,7 @@
-import { AppError } from "@/src/components";
+import { AppError, Loading } from "@/src/components";
 import Layout from "@/src/components/Layout";
 import { MyCalDashboard } from "@/src/content/MyCal/Dashboard";
 import { fetcher } from "@/src/utils";
-import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import useSWR from "swr";
@@ -10,6 +9,7 @@ import useSWR from "swr";
 export default function Page() {
     const { data: session, status } = useSession();
     const { data, error, isLoading, isValidating, mutate } = useSWR(`/api/mycal`, fetcher);
+    console.log({ data });
     const loading = isLoading || isValidating || status === "loading";
     if (error) return <AppError source="MyCal Dashboard" error={error.message} session={session} />;
     return (
@@ -19,7 +19,7 @@ export default function Page() {
             </Head>
 
             <Layout session={session}>
-                {data ? <MyCalDashboard mutate={mutate} loading={loading} data={data} /> : <CircularProgress />}
+                {loading ? <Loading /> : <MyCalDashboard session={session} data={data} mutate={mutate} />}
             </Layout>
         </>
     );

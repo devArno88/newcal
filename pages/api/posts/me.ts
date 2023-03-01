@@ -34,7 +34,7 @@ const handler = async (req, res) => {
         const execute = routes[req.method] || routes[E_Fetches.forbidden];
         return execute(req, res, session);
     } else {
-        res.status(500).json({ msg: "Invalid authentication" });
+        res.status(500).json({ err: "Invalid authentication" });
     }
 };
 

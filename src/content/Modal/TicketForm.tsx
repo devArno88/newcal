@@ -1,11 +1,10 @@
 import { createTicket } from "@/src/actions/ticket";
 import { FormSelect } from "@/src/components/FormSelect";
-import { E_TicketType } from "@/src/interfaces";
+import { E_TicketType, I_Mutator } from "@/src/interfaces";
 import { S_TicketOptions } from "@/src/strings";
 import { appColors } from "@/src/utils";
 import { Button, FormControl, Modal, Stack, TextField, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { KeyedMutator } from "swr";
 
 const style = {
     position: "absolute" as "absolute",
@@ -19,10 +18,9 @@ const style = {
     bgcolor: "#0d1117",
 };
 
-interface PropTypes {
+interface PropTypes extends I_Mutator {
     open: boolean;
     handleClose: () => void;
-    mutate: KeyedMutator<any>;
 }
 
 export interface TicketFormData {

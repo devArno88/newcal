@@ -1,16 +1,29 @@
+import { I_MailBoard } from "@/src/interfaces";
 import { appColors, fromNowDate } from "@/src/utils";
 import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
 import { Paper, Stack, Typography } from "@mui/material";
+import { FunctionComponent } from "react";
 
-export const MailboxPanel = (props) => {
+interface PropTypes {
+    isAdmin: boolean;
+    mailboard?: I_MailBoard;
+    mailbox?: {
+        items: number;
+        updated: Date;
+    };
+}
+
+export const MailboardPanel: FunctionComponent<PropTypes> = (props) => {
     const mailToCollect = props?.mailbox?.items !== 0;
+    console.log({ props });
     return (
         <>
-            <Typography variant="h5">Mailbox</Typography>
+            <Typography letterSpacing={1} variant="h5">
+                Mailbo{props.isAdmin ? "ard" : "x"}
+            </Typography>
             <Stack>
                 <Typography sx={{ color: mailToCollect ? "greenyellow" : "lightseagreen" }} variant="h6" mt={0.5}>
-                    {props?.mailbox?.items || "No"} item{!mailToCollect || props?.mailbox?.items > 1 ? "s" : null} to
-                    collect
+                    {props?.mailbox?.items || "No"} item{props?.mailbox?.items === 1 ? null : "s"} to collect
                 </Typography>
                 <Typography variant="caption" sx={{ color: "gray" }} mt={0.5} mb={2}>
                     Last updated {fromNowDate(props?.mailbox?.updated)}

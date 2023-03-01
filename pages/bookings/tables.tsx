@@ -12,6 +12,7 @@ export default function Page() {
     const { data: session, status } = useSession();
     const [date, setDate] = useState(getDateString(new Date()));
     const { data: bookings, error, isLoading, mutate } = useSWR(`/api/table/${date}`, fetcher);
+    const loading = isLoading || status === "loading";
     if (error) return <AppError source="Table Bookings" error={error.message} session={session} />;
     return (
         <>
@@ -23,10 +24,10 @@ export default function Page() {
                 <BookingSuite
                     date={date}
                     mutate={mutate}
+                    loading={loading}
                     setDate={setDate}
                     session={session}
                     bookings={bookings}
-                    isLoading={isLoading}
                     type={E_BookingType.table}
                 />
             </Layout>

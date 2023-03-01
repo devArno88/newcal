@@ -1,13 +1,20 @@
 import { createPoolBooking, deletePoolBooking } from "@/src/actions";
 import { createGymBooking, deleteGymBooking } from "@/src/actions/gym";
 import { createTableBooking, deleteTableBooking } from "@/src/actions/table";
+import { Loading } from "@/src/components";
 import { AppError } from "@/src/components/AppError";
-import { useAlert } from "@/src/context";
-import { E_BookingType, I_GymBooking, I_NewCalSession, I_PoolBooking, I_TableBooking } from "@/src/interfaces";
+import { E_AlertTypes, useAlert } from "@/src/context";
+import {
+    E_BookingType,
+    I_GymBooking,
+    I_Mutator,
+    I_NewCalSession,
+    I_PoolBooking,
+    I_TableBooking,
+} from "@/src/interfaces";
 import { capitalise, defaultSlotDetails, getErrorMessage, shortDate } from "@/src/utils";
-import { Box, Button, CircularProgress, Modal, Stack, Typography } from "@mui/material";
+import { Box, Button, Modal, Stack, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { KeyedMutator } from "swr";
 
 const style = {
     position: "absolute" as "absolute",
@@ -21,14 +28,13 @@ const style = {
     bgcolor: "#0d1117",
 };
 
-interface PropTypes extends I_NewCalSession {
+interface PropTypes extends I_NewCalSession, I_Mutator {
     slot: number;
     date: string;
     open: boolean;
     today: boolean;
     type: E_BookingType;
     setOpen: (x) => void;
-    mutate: KeyedMutator<any>;
     pending?: I_PoolBooking | I_GymBooking | I_TableBooking | null;
 }
 
@@ -68,16 +74,16 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
             date: props.date,
         });
 
-        console.log({ res });
-
         if (res?.err) {
             setLoading(false);
-            // setAlert({ type: E_AlertTypes.error, subtitle: "COCK" });
-        } else {
+            setAlert({ type: E_AlertTypes.error, text: res?.err });
+        }
+
+        if (res?.msg) {
             setLoading(false);
             props.mutate();
             props.setOpen(false);
-            // setAlert({ type: E_AlertTypes.success, subtitle: "AND BALLS" });
+            setAlert({ type: E_AlertTypes.success, text: res?.msg });
         }
     };
 
@@ -88,12 +94,14 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
 
         if (res?.err) {
             setLoading(false);
-            // setAlert({ type: E_AlertTypes.error, subtitle: "COCK" });
-        } else {
+            setAlert({ type: E_AlertTypes.error, text: res?.err });
+        }
+
+        if (res?.msg) {
             setLoading(false);
             props.mutate();
             props.setOpen(false);
-            // setAlert({ type: E_AlertTypes.success, subtitle: "AND BALLS" });
+            setAlert({ type: E_AlertTypes.success, text: res?.msg });
         }
     };
     const defaultDetails = defaultSlotDetails({ slot: props.slot, type: props.type });
@@ -136,7 +144,7 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
                             Keep It
                         </Button>
                         <Button variant="contained" color="error" sx={{ width: 120 }} onClick={handleDeleteBooking}>
-                            {loading ? <CircularProgress size="small" /> : "Cancel It"}
+                            {loading ? <Loading size="small" /> : "Cancel It"}
                         </Button>
                     </Stack>
                 ) : props.pending ? null : (
@@ -145,7 +153,7 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
                             Cancel
                         </Button>
                         <Button variant="contained" color="primary" sx={{ width: 100 }} onClick={handleCreateBooking}>
-                            {loading ? <CircularProgress size="small" /> : "Confirm"}
+                            {loading ? <Loading size="small" /> : "Confirm"}
                         </Button>
                     </Stack>
                 )}

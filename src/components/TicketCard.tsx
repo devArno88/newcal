@@ -1,16 +1,9 @@
+import { E_TicketType, I_Ticket } from "@/src/interfaces";
+import { appColors, capitalise, fromNowDate, getFlatColor } from "@/src/utils";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Avatar from "@mui/material/Avatar";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-// import CardMedia from "@mui/material/CardMedia";
 import QuestionAnswerTwoToneIcon from "@mui/icons-material/QuestionAnswerTwoTone";
-import { Chip } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { Avatar, Card, CardActions, CardContent, CardHeader, Chip, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
-import { E_TicketType, I_Ticket } from "../interfaces";
-import { appColors, capitalise, fromNowDate, getFlatColor } from "../utils";
 
 const ChipColors = {
     [E_TicketType.enhancement]: "success",

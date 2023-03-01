@@ -8,6 +8,7 @@ interface PropTypes {
     slot: I_Slot;
     isBooked: boolean;
     isExpired: boolean;
+    isAdmin: boolean;
     isDisabled: boolean;
     isFortnightAway: boolean;
     handleBookingForm: (x: number) => void;
@@ -15,24 +16,25 @@ interface PropTypes {
 
 export const BookingCard: FunctionComponent<PropTypes> = (props): ReactElement => {
     const {
-        slot: { slot, start, end },
-        isExpired,
-        isFortnightAway,
-        isDisabled,
-        isBooked,
-        handleBookingForm,
         flat,
+        isAdmin,
+        isBooked,
+        isExpired,
+        isDisabled,
+        isFortnightAway,
+        handleBookingForm,
+        slot: { slot, start, end },
     } = props;
     return (
         <Paper
-            elevation={3}
             key={slot}
-            onClick={() => (isExpired || isFortnightAway ? undefined : handleBookingForm(slot))}
+            elevation={3}
+            onClick={() => (isExpired || isFortnightAway || isAdmin ? undefined : handleBookingForm(slot))}
             sx={{
                 mb: 1.5,
                 padding: "3px 6px",
-                cursor: isDisabled ? undefined : "pointer",
                 bgcolor: isDisabled ? "lightgray" : isBooked ? "lightsalmon" : "lightgreen",
+                cursor: isExpired || isFortnightAway || isAdmin || isDisabled ? undefined : "pointer",
             }}
         >
             <Stack sx={{ alignItems: "center" }}>

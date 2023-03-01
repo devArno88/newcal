@@ -12,6 +12,7 @@ export default function Page() {
     const [date, setDate] = useState(getDateString(new Date()));
     const { data: session, status } = useSession();
     const { data: bookings, error, isLoading, mutate } = useSWR(`/api/pool/${date}`, fetcher);
+    const loading = isLoading || status === "loading";
     if (error) return <AppError source="Pool Bookings" error={error.message} session={session} />;
     return (
         <>
@@ -25,8 +26,8 @@ export default function Page() {
                     mutate={mutate}
                     setDate={setDate}
                     session={session}
+                    loading={loading}
                     bookings={bookings}
-                    isLoading={isLoading}
                     type={E_BookingType.pool}
                 />
             </Layout>

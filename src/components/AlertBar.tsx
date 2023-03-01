@@ -1,68 +1,46 @@
-import { AlertState, useAlert } from "@/context";
-// import { capitalise } from "@/utils";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import InfoIcon from "@mui/icons-material/Info";
-import ReportIcon from "@mui/icons-material/Report";
-import WarningIcon from "@mui/icons-material/Warning";
-import { Alert, Box, Typography } from "@mui/material";
-import { FunctionComponent } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import { IconButton, Snackbar } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Slide, { SlideProps } from "@mui/material/Slide";
+import { forwardRef, FunctionComponent } from "react";
+import { E_AlertTypes } from "../context";
 
-export const AlertBar: FunctionComponent<AlertState> = (props): JSX.Element => {
-    const { closeAlert } = useAlert();
-    const { open, title, subtitle, type } = props;
+type TransitionProps = Omit<SlideProps, "direction">;
 
-    const icons = {
-        success: <CheckCircleIcon />,
-        warning: <WarningIcon />,
-        danger: <ReportIcon />,
-        info: <InfoIcon />,
-    };
+interface PropTypes {
+    open: boolean;
+    text: string;
+    type: E_AlertTypes;
+    closeAlert: () => void;
+}
 
-    const AlertIcon = icons[type ?? "info"];
+function TransitionUp(props: TransitionProps) {
+    return <Slide {...props} direction="up" />;
+}
+
+const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+export const AlertBar: FunctionComponent<PropTypes> = (props) => {
+    const action = (
+        <IconButton size="small" aria-label="close" color="inherit" onClick={props.closeAlert}>
+            <CloseIcon fontSize="small" />
+        </IconButton>
+    );
 
     return (
-        <Box
-            sx={{
-                pl: 3,
-                pr: 4,
-                gap: 2,
-                width: "100%",
-                zIndex: 10000000,
-                position: "fixed",
-                alignItems: "center",
-                flexDirection: "column",
-                justifyContent: "center",
-                bottom: { xs: 32, sm: 20 },
-                display: open ? "flex" : "none",
-            }}
+        <Snackbar
+            action={action}
+            open={props.open}
+            onClose={props.closeAlert}
+            autoHideDuration={6000}
+            TransitionComponent={TransitionUp}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
-            <Alert
-                key={title}
-                data-cyid="app-alert"
-                sx={{ alignItems: "flex-start" }}
-                // startDecorator={cloneElement(AlertIcon, {
-                //     fontSize: "xl2",
-                //     sx: { mt: "2px", mx: "4px" },
-                // })}
-                // variant="solid"
-                color={type}
-                // endDecorator={
-                //     <IconButton sx={{ ml: 2 }} variant="solid" size="sm" color={type} onClick={() => closeAlert()}>
-                //         <CloseRoundedIcon />
-                //     </IconButton>
-                // }
-            >
-                <div>
-                    <Typography fontWeight="lg" mt={0.25} sx={{ wordBreak: "break-word" }}>
-                        {title ?? type}
-                    </Typography>
-                    {subtitle ? (
-                        <Typography fontSize="sm" sx={{ opacity: 0.8, wordBreak: "break-word" }}>
-                            {subtitle}
-                        </Typography>
-                    ) : null}
-                </div>
+            <Alert onClose={props.closeAlert} severity={props.type} sx={{ width: "100%" }}>
+                {props.text}
             </Alert>
-        </Box>
+        </Snackbar>
     );
 };

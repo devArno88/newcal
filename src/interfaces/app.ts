@@ -1,4 +1,5 @@
 import { Session } from "next-auth";
+import { KeyedMutator } from "swr";
 import { I_MongoID } from "./mongo";
 
 export type Maybe<T> = T | null | undefined;
@@ -15,8 +16,18 @@ export enum E_Fetches {
     forbidden = "FORBIDDEN",
 }
 
+export enum E_Roles {
+    resident = "resident",
+    management = "management",
+    concierge = "concierge",
+}
+
 export interface I_NewCalSession {
     session?: Maybe<Session>;
+}
+
+export interface I_Mutator {
+    mutate: KeyedMutator<any>;
 }
 
 export interface I_Resident extends I_MongoID {

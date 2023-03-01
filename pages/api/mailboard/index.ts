@@ -1,45 +1,49 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { PoolBookingSchema } from "@/src/schemas";
-import { connectDB, getDateRange } from "@/src/utils";
+import { MailBoardSchema } from "@/src/schemas/MailBoard";
+import { connectDB } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    GET api/pool/[date]
-    // @desc      Get pool bookings for specific date
+    // @route    GET api/mailboard
+    // @desc     Get mailboard (only one should exist)
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.get](req, res, session) {
         try {
-            const { start, end } = getDateRange(req.query.input);
-            const bookings = await PoolBookingSchema.find({
-                date: {
-                    $gte: start,
-                    $lt: end,
-                },
-            });
-            res.status(200).json(bookings);
+            const mailboard = await MailBoardSchema.find({});
+            if (mailboard.length > 1) return res.status(500).json({ err: "More than one mailboard exists" });
+            res.json(mailboard[0]);
         } catch (err) {
             console.error(err);
         }
     },
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    DELETE api/pool/[date]/[slot]
-    // @desc      Delete existing pool booking
+    // @route    POST api/mailboard
+    // @desc     Create new mailboard
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    async [E_Fetches.delete](req, res, session) {
+    async [E_Fetches.put](req, res, session) {
         try {
-            const booking = await PoolBookingSchema.findById(req.query.input);
-            if (!booking) return res.status(500).json({ err: "Booking not found" });
-            await PoolBookingSchema.findOneAndDelete({ _id: req.query.input });
-            res.status(200).json({ msg: `Pool booking deleted successfully` });
+            const { _id, updated, __v, ...mailboxes } = req.body;
+            console.log({ mailboxes });
+            await MailBoardSchema.findOneAndUpdate(
+                { _id },
+                {
+                    $set: {
+                        ...mailboxes,
+                        updated: new Date().toISOString(),
+                    },
+                },
+                { returnDocument: "after" }
+            );
+            res.json({ msg: "Mailboard updated successfully" });
         } catch (err) {
-            res.status(500).json({ err: `Pool booking could not be deleted` });
+            res.status(500).json({ err: "Mailboard could not be updated" });
         }
     },
     ///////////////////////////////////////////////////////////
-    // @routes    FORBIDDEN
-    // @desc      When a forbidden method is requested
+    // @route    FORBIDDEN
+    // @desc     When a forbidden method is requested
     ///////////////////////////////////////////////////////////
     async [E_Fetches.forbidden](req, res, session) {
         res.status(405).end(`${req.method} Not Allowed`);
@@ -56,4 +60,10 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/pool/[date]");
+export default connectDB(handler, "/api/mailboard");
+
+export const config = {
+    api: {
+        externalResolver: true,
+    },
+};

@@ -29,13 +29,12 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.delete](req, res, session) {
         try {
-            // const { start, end } = getDateRange(req.query.date);
             const booking = await TableBookingSchema.findById(req.query.input);
             if (!booking) return res.status(500).json({ err: "Booking not found" });
             await TableBookingSchema.findOneAndDelete({ _id: req.query.input });
-            res.json({ msg: `Table booking deleted successfully` });
+            res.status(200).json({ msg: `Table booking deleted successfully` });
         } catch (err) {
-            console.error(err);
+            res.status(500).json({ err: `Table booking could not be deleted` });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -53,8 +52,8 @@ const handler = async (req, res) => {
         const execute = routes[req.method] || routes[E_Fetches.forbidden];
         return execute(req, res, session);
     } else {
-        res.status(500).json({ msg: "Invalid authentication" });
+        res.status(500).json({ err: "Invalid authentication" });
     }
 };
 
-export default connectDB(handler, "/api/pool/[date]");
+export default connectDB(handler, "/api/table/[date]");

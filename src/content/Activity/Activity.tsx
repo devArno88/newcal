@@ -1,19 +1,15 @@
-import { PageHeader } from "@/src/components";
+import { Loading, PageHeader } from "@/src/components";
 import { PostCard } from "@/src/components/PostCard";
-import { I_Post, I_Posts } from "@/src/interfaces";
+import { I_Mutator, I_Post } from "@/src/interfaces";
 import { sortArrayByDate } from "@/src/utils";
-import { Button, CircularProgress, Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, ReactElement, useState } from "react";
-import { KeyedMutator } from "swr";
 import { PostForm } from "../Modal/PostForm";
 
-interface Data extends I_Posts {}
-
-interface PropTypes {
+interface PropTypes extends I_Mutator {
     data: I_Post[];
     loading: boolean;
-    mutate: KeyedMutator<any>;
 }
 
 export const Activity: FunctionComponent<PropTypes> = (props): ReactElement => {
@@ -45,7 +41,7 @@ export const Activity: FunctionComponent<PropTypes> = (props): ReactElement => {
                 <PostForm mutate={props.mutate} open={open} handleClose={() => setOpen(false)} />
                 <Stack gap={2} mt={4} sx={{ width: { xs: "100%", sm: "70%", md: "65%" } }}>
                     {props.loading ? (
-                        <CircularProgress />
+                        <Loading />
                     ) : (
                         props.data?.sort(sortArrayByDate).map((p) => <PostCard key={p._id.toString()} {...p} />)
                     )}

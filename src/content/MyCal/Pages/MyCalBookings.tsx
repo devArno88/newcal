@@ -1,5 +1,12 @@
 import { PageHeader } from "@/src/components";
-import { E_BookingType, I_GymBooking, I_NewCalSession, I_PoolBooking, I_TableBooking } from "@/src/interfaces";
+import {
+    E_BookingType,
+    I_GymBooking,
+    I_Mutator,
+    I_NewCalSession,
+    I_PoolBooking,
+    I_TableBooking,
+} from "@/src/interfaces";
 import { slotStrings } from "@/src/strings";
 import { capitalise, getDateString, isToday, niceDate, sortArrayByDate } from "@/src/utils";
 import FitnessCenterTwoToneIcon from "@mui/icons-material/FitnessCenterTwoTone";
@@ -8,7 +15,6 @@ import TableBarTwoToneIcon from "@mui/icons-material/TableBarTwoTone";
 import { Box, Button, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, ReactNode, SyntheticEvent, useState } from "react";
-import { KeyedMutator } from "swr";
 
 interface TabPanelProps {
     children?: ReactNode;
@@ -16,7 +22,7 @@ interface TabPanelProps {
     value: number;
 }
 
-interface PropTypes extends I_NewCalSession {
+interface PropTypes extends I_NewCalSession, I_Mutator {
     data: {
         bookings: {
             pool: I_PoolBooking[];
@@ -25,7 +31,6 @@ interface PropTypes extends I_NewCalSession {
         };
     };
     loading: boolean;
-    mutate: KeyedMutator<any>;
 }
 
 function TabPanel(props: TabPanelProps) {

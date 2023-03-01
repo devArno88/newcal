@@ -2,7 +2,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
 import { TableBookingSchema } from "@/src/schemas";
 // import { TableBookingSchema } from "@/src/schemas";
-import { connectDB } from "@/src/utils";
+import { connectDB, niceDate } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -12,17 +12,15 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.post](req, res, session) {
         try {
-            // const existingBooking = await TableBookingSchema.findOne({ date: req.query.date, flat: session?.flat });
-            // if (existingBooking) return res.status(500).json({ err: "You already have a booking for this day" });
             const booking = new TableBookingSchema({
                 date: req.query.input,
                 slot: req.query.slot,
                 flat: session?.flat,
             });
             await booking.save();
-            res.json({ msg: `Table booked successfully for ${req.query.input}` });
+            res.status(200).json({ msg: `Table booked successfully for ${niceDate(req.query.input)}` });
         } catch (err) {
-            console.error(err);
+            res.status(500).json({ err: "Table booking could not be created" });
         }
     },
 
@@ -41,8 +39,8 @@ const handler = async (req, res) => {
         const execute = routes[req.method] || routes[E_Fetches.forbidden];
         return execute(req, res, session);
     } else {
-        res.status(500).json({ msg: "Invalid authentication" });
+        res.status(500).json({ err: "Invalid authentication" });
     }
 };
 
-export default connectDB(handler, "/api/pool/[date]/[slot]");
+export default connectDB(handler, "/api/table/[input]/[slot]");

@@ -7,5 +7,6 @@ export * from "./Authenticator";
 export * from "./BookingDatePicker";
 export * from "./footer";
 export * from "./Layout";
+export * from "./Loading";
 export * from "./NavBar";
 export * from "./PageHeader";

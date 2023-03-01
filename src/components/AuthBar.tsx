@@ -5,7 +5,7 @@ import { Avatar, Box, Button } from "@mui/material";
 
 export default function AuthBar(props: any): JSX.Element {
     const { session } = props;
-
+    const isAdmin = ["management", "reception"].includes(session?.role);
     return (
         <div
             style={{
@@ -20,11 +20,9 @@ export default function AuthBar(props: any): JSX.Element {
                     <Avatar alt={session.name} src={session.user?.image ?? "/user.png"} style={{ marginRight: 8 }} />
 
                     <Box sx={{ display: { xs: "none", sm: "block", overflow: "none" } }}>
-                        <strong style={{ fontSize: 12 }}>
-                            {session && session.name ? session.name.split(" ")[0] : null}
-                        </strong>
+                        <strong style={{ fontSize: 12 }}>{isAdmin ? session?.name : session.name.split(" ")[0]}</strong>
                         <br />
-                        <small style={{ fontSize: 12 }}>{`Flat ${session.flat}`}</small>
+                        <small style={{ fontSize: 12 }}>{isAdmin ? "NewCal Admin" : `Flat ${session.flat}`}</small>
                     </Box>
 
                     <ExitToAppTwoToneIcon

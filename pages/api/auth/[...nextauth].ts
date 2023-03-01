@@ -26,14 +26,28 @@ export const authOptions = {
         },
 
         async session({ session, token, user }) {
+            let activeSession = session;
             const newCalData = await clientPromise;
             const residentData = await newCalData.db("newcal").collection("residents").findOne({ email: user.email });
+            const adminData = await newCalData.db("newcal").collection("admins").findOne({ email: user.email });
 
-            session.id = residentData._id.toString();
-            session.flat = residentData.flat;
-            session.name = residentData.name;
-            session.role = "resident";
-            return session;
+            // Try as resident
+            if (residentData) {
+                activeSession.id = residentData._id.toString();
+                activeSession.flat = residentData.flat;
+                activeSession.name = residentData.name;
+                activeSession.role = "resident";
+                // return activeSession;
+            }
+
+            // Try as management
+            if (adminData) {
+                activeSession.id = adminData._id.toString();
+                activeSession.name = adminData.name;
+                activeSession.role = adminData.role;
+            }
+
+            return activeSession;
         },
 
         async signIn({ user, account, profile, email, credentials }) {
@@ -42,7 +56,8 @@ export const authOptions = {
                 .db("newcal")
                 .collection("residents")
                 .findOne({ email: user.email });
-            if (!isValidResident) return false;
+            const isValidAdmin = await newCalData.db("newcal").collection("admins").findOne({ email: user.email });
+            if (!isValidResident && !isValidAdmin) return false;
             return true;
         },
     },

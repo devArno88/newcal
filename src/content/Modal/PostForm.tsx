@@ -1,6 +1,6 @@
 import { createPost } from "@/src/actions/post";
 import { FormSelect } from "@/src/components/FormSelect";
-import { E_PostType } from "@/src/interfaces";
+import { E_PostType, I_Mutator } from "@/src/interfaces";
 import { S_PostOptions } from "@/src/strings";
 import { appColors } from "@/src/utils";
 import { Button, Stack, TextField } from "@mui/material";
@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { FunctionComponent, useState } from "react";
-import { KeyedMutator } from "swr";
 
 const style = {
     position: "absolute" as "absolute",
@@ -22,10 +21,9 @@ const style = {
     bgcolor: "#0d1117",
 };
 
-interface PropTypes {
+interface PropTypes extends I_Mutator {
     open: boolean;
     handleClose: () => void;
-    mutate: KeyedMutator<any>;
 }
 
 export interface PostFormData {
