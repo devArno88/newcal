@@ -6,18 +6,24 @@ import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    GET api/post/[postID]
-    // @desc      Get post
+    // @routes    PUT api/post/comment/like/[postID]/[commentID]
+    // @desc      Like/unlike post comment
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    async [E_Fetches.get](req, res, session) {
+    async [E_Fetches.put](req, res, session) {
         try {
-            const post = await PostSchema.findById(req.query.postID).populate("resident comments.resident", [
-                "name",
-                "flat",
-            ]);
-            res.status(200).json(post);
+            const post = await PostSchema.findById(req.query.postID);
+            if (!post) return res.status(500).json({ err: "Invalid post" });
+            const comment = post.comments.filter((x) => x._id.toString() === req.query.commentID)[0];
+            if (!comment) return res.status(500).json({ err: "Invalid comment" });
+            if (comment.likes.some((id) => id.toString() === session?.id)) {
+                comment.likes = comment.likes.filter((id) => id.toString() !== session?.id);
+            } else {
+                comment.likes.unshift(session?.id);
+            }
+            await post.save();
+            res.status(200).json({ msg: "Post comment liked successfully" });
         } catch (err) {
-            res.status(500).json({ err: "Invalid post" });
+            res.status(500).json({ err: "Post comment could not be liked" });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -39,4 +45,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/post/[postID]");
+export default connectDB(handler, "/api/post/like/[postID]");

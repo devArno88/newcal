@@ -13,5 +13,5 @@ export enum E_MongoCollection {
 }
 
 export interface I_MongoID {
-    _id: Maybe<Types.ObjectId>;
+    _id?: Maybe<Types.ObjectId>;
 }

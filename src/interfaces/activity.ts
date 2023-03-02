@@ -14,7 +14,7 @@ export interface I_Likes {
 export interface I_Comment extends I_MongoID, I_Likes {
     resident: Maybe<I_Resident>;
     text: Maybe<string>;
-    date: Maybe<Date>;
+    date?: Maybe<Date>;
 }
 
 export interface I_Comments {

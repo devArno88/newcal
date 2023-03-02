@@ -90,10 +90,10 @@ export const MyCalMailboard: FunctionComponent<PropTypes> = (props) => {
                     {buttonState.text}
                 </Button>
             </Stack>
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Grid container spacing={{ xs: 2, md: 3 }}>
                 {Object.keys(props.mailboard).map((flat, i) => {
                     return ["_id", "__v", "updated"].includes(flat) ? null : (
-                        <Grid item xs={2} sm={4} md={4} key={i}>
+                        <Grid item xs={12} sm={6} md={4} key={i}>
                             <Card>
                                 <Typography variant="h6" sx={{ color: appColors.text.secondary }}>
                                     {flat.replace("Flat", "Flat ")}

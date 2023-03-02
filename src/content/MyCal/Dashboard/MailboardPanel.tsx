@@ -15,7 +15,6 @@ interface PropTypes {
 
 export const MailboardPanel: FunctionComponent<PropTypes> = (props) => {
     const mailToCollect = props?.mailbox?.items !== 0;
-    console.log({ props });
     return (
         <>
             <Typography letterSpacing={1} variant="h5">

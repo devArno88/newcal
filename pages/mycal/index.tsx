@@ -9,7 +9,6 @@ import useSWR from "swr";
 export default function Page() {
     const { data: session, status } = useSession();
     const { data, error, isLoading, isValidating, mutate } = useSWR(`/api/mycal`, fetcher);
-    console.log({ data });
     const loading = isLoading || isValidating || status === "loading";
     if (error) return <AppError source="MyCal Dashboard" error={error.message} session={session} />;
     return (

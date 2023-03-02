@@ -6,18 +6,22 @@ import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    GET api/post/[postID]
-    // @desc      Get post
+    // @routes    PUT api/post/like/[postID]
+    // @desc      Like/unlike post
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    async [E_Fetches.get](req, res, session) {
+    async [E_Fetches.put](req, res, session) {
         try {
-            const post = await PostSchema.findById(req.query.postID).populate("resident comments.resident", [
-                "name",
-                "flat",
-            ]);
-            res.status(200).json(post);
+            const post = await PostSchema.findById(req.query.postID);
+            if (!post) return res.status(500).json({ err: "Invalid post" });
+            if (post.likes.some((id) => id.toString() === session?.id)) {
+                post.likes = post.likes.filter((id) => id.toString() !== session?.id);
+            } else {
+                post.likes.unshift(session?.id);
+            }
+            await post.save();
+            res.status(200).json({ msg: "Post liked successfully" });
         } catch (err) {
-            res.status(500).json({ err: "Invalid post" });
+            res.status(500).json({ err: "Post could not be liked" });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -39,4 +43,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/post/[postID]");
+export default connectDB(handler, "/api/post/like/[postID]");

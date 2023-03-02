@@ -1,11 +1,11 @@
 import { Loading, PageHeader } from "@/src/components";
 import { PostCard } from "@/src/components/PostCard";
+import { PostForm } from "@/src/content/Modal";
 import { I_Mutator, I_Post } from "@/src/interfaces";
 import { sortArrayByDate } from "@/src/utils";
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, useState } from "react";
-import { PostForm } from "../../Modal/PostForm";
 
 interface PropTypes extends I_Mutator {
     data: I_Post[];

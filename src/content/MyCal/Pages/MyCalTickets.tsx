@@ -1,10 +1,10 @@
 import { Loading, PageHeader } from "@/src/components";
 import { TicketCard } from "@/src/components/TicketCard";
+import { TicketForm } from "@/src/content/Modal";
 import { I_Mutator, I_Ticket } from "@/src/interfaces";
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, useState } from "react";
-import { TicketForm } from "../../Modal/TicketForm";
 
 interface PropTypes extends I_Mutator {
     data: I_Ticket[];

@@ -25,7 +25,6 @@ const routes = {
     async [E_Fetches.put](req, res, session) {
         try {
             const { _id, updated, __v, ...mailboxes } = req.body;
-            console.log({ mailboxes });
             await MailBoardSchema.findOneAndUpdate(
                 { _id },
                 {

@@ -48,10 +48,6 @@ export const BookingDatePicker: FunctionComponent<PropTypes> = (props) => {
                     value={props.date}
                     onChange={(newValue) => props.setDate(newValue)}
                     components={{ OpenPickerIcon: ExpandMoreRoundedIcon }}
-                    // onAccept={(value) => {
-                    //     console.log({ WITHIN_2_WEEKS: withinTwoWeeks(new Date(value)) });
-                    //     console.log(new Date(value["$d"]).toISOString());
-                    // }}
                     renderInput={(params) => (
                         <ThemeProvider theme={theme}>
                             <TextField

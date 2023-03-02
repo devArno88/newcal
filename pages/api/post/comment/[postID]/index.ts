@@ -6,18 +6,18 @@ import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    GET api/post/[postID]
-    // @desc      Get post
+    // @routes    PUT api/post/comment/[postID]
+    // @desc      Add post comment
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    async [E_Fetches.get](req, res, session) {
+    async [E_Fetches.put](req, res, session) {
         try {
-            const post = await PostSchema.findById(req.query.postID).populate("resident comments.resident", [
-                "name",
-                "flat",
-            ]);
-            res.status(200).json(post);
+            const { text } = req.body;
+            const post = await PostSchema.findById(req.query.postID);
+            post.comments.unshift({ text, resident: session?.id });
+            await post.save();
+            res.status(200).json({ msg: "Comment created successfully" });
         } catch (err) {
-            res.status(500).json({ err: "Invalid post" });
+            res.status(500).json({ err: "Comment could not be created" });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -39,4 +39,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/post/[postID]");
+export default connectDB(handler, "/api/post/comment/[postID]");

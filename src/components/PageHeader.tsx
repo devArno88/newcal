@@ -12,12 +12,14 @@ interface PropTypes {
 export const PageHeader: FunctionComponent<PropTypes> = (props) => {
     const Icon = props.type ? IconConfig[props.type] : null;
     return (
-        <Stack sx={{ textAlign: "center" }}>
+        <Stack sx={{ textAlign: "center", mt: 3 }}>
             <Stack direction="row" display="flex" alignItems="center" justifyContent="center" marginBottom={1}>
                 {Icon ? <Icon fontSize="large" sx={{ mr: 1 }} /> : null}
                 <Typography variant="h4">{props.title}</Typography>
             </Stack>
-            <Typography variant="h6">{props.subtitle}</Typography>
+            <Typography variant="h6" fontFamily="monospace" sx={{ color: "#708090" }}>
+                {props.subtitle}
+            </Typography>
         </Stack>
     );
 };

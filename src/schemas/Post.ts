@@ -9,7 +9,16 @@ const Schema = new mongoose.Schema<I_Post>({
     content: { type: String, required: true },
     date: { type: Date, default: Date.now },
 
-    // LIKES, COMMENTS
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident }],
+
+    comments: [
+        {
+            resident: { type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident },
+            text: { type: String, required: true },
+            date: { type: Date, default: Date.now },
+            likes: [{ type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident }],
+        },
+    ],
 
     // TODO: Incorporate S3 bucket logic
     files: [],
