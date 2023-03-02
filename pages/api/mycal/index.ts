@@ -1,6 +1,6 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches, E_Roles, E_TicketType } from "@/src/interfaces";
-import { E_PostType } from "@/src/interfaces/activity";
+import { E_PostType } from "@/src/interfaces/post";
 import { GymBookingSchema, PoolBookingSchema, TableBookingSchema, TicketSchema } from "@/src/schemas";
 import { MailBoardSchema } from "@/src/schemas/MailBoard";
 import { PostSchema } from "@/src/schemas/Post";

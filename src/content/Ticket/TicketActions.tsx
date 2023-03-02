@@ -1,6 +1,6 @@
-import { handlePostLike } from "@/src/actions/post";
+import { handleTicketLike } from "@/src/actions/ticket";
 import { E_AlertTypes } from "@/src/context";
-import { E_PostType, I_Alerter, I_Likes, I_Mutator, I_NewCalSession } from "@/src/interfaces";
+import { E_TicketType, I_Alerter, I_Likes, I_Mutator, I_NewCalSession } from "@/src/interfaces";
 import { appColors } from "@/src/utils";
 import AddCommentTwoToneIcon from "@mui/icons-material/AddCommentTwoTone";
 import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
@@ -25,16 +25,16 @@ const sxIcon = {
 };
 
 interface PropTypes extends I_Likes, I_NewCalSession, I_Mutator, I_Alerter {
-    postID: Types.ObjectId;
-    type: E_PostType;
+    ticketID: Types.ObjectId;
+    type: E_TicketType;
 }
 
-export const PostActions: FunctionComponent<PropTypes> = (props) => {
+export const TicketActions: FunctionComponent<PropTypes> = (props) => {
     const [open, setOpen] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const onLike = async () => {
         setLoading(true);
-        const res = await handlePostLike({ postID: props.postID });
+        const res = await handleTicketLike({ ticketID: props.ticketID });
         if (res) {
             setLoading(false);
             if (res?.err)
@@ -74,10 +74,10 @@ export const PostActions: FunctionComponent<PropTypes> = (props) => {
             </Paper>
             <CommentForm
                 open={open}
-                itemType="post"
-                itemID={props.postID}
+                itemType="ticket"
                 mutate={props.mutate}
                 titleType={props.type}
+                itemID={props.ticketID}
                 handleClose={() => setOpen(false)}
             />
         </Stack>

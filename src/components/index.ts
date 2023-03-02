@@ -3,8 +3,6 @@ export * from "./AlertBar";
 export * from "./AppError";
 export * from "./AppMeta";
 export * from "./AuthBar";
-export * from "./Authenticator";
-export * from "./BookingDatePicker";
 export * from "./footer";
 export * from "./Layout";
 export * from "./Loading";

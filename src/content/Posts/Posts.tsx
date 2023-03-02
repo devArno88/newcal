@@ -1,44 +1,49 @@
 import { Loading, PageHeader } from "@/src/components";
-import { TicketCard } from "@/src/components/TicketCard";
-import { TicketForm } from "@/src/content/Modal";
-import { I_Mutator, I_Ticket } from "@/src/interfaces";
+import { PostCard } from "@/src/components/PostCard";
+import { PostForm } from "@/src/content/Modal";
+import { I_Mutator, I_Post } from "@/src/interfaces";
+import { sortArrayByDate } from "@/src/utils";
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, ReactElement, useState } from "react";
 
 interface PropTypes extends I_Mutator {
-    data: I_Ticket[];
+    data: I_Post[];
     loading: boolean;
 }
 
-export const MyCalTickets: FunctionComponent<PropTypes> = (props) => {
+export const Posts: FunctionComponent<PropTypes> = (props): ReactElement => {
     const [open, setOpen] = useState(false);
     return (
         <Stack gap={4}>
-            <PageHeader title="My Tickets" subtitle="My Enquiries" />
+            <PageHeader title="NewCal Posts" subtitle="Residents Activity" />
             <Stack sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Stack gap={1.5}>
+                <Stack sx={{ gap: 1.5 }}>
                     <Button
                         color="secondary"
                         variant="contained"
                         sx={{ width: { xs: 200, sm: 220, md: 240 }, pl: 1, pr: 1 }}
                         onClick={() => setOpen(true)}
                     >
-                        Create New Ticket
+                        Create New Post
                     </Button>
-                    <Link href="/tickets">
+                    <Link href="/mycal/posts">
                         <Button
                             color="info"
                             variant="contained"
                             sx={{ width: { xs: 200, sm: 220, md: 240 }, pl: 1, pr: 1 }}
                         >
-                            View All Tickets
+                            View My Posts
                         </Button>
                     </Link>
                 </Stack>
-                <TicketForm open={open} handleClose={() => setOpen(false)} mutate={props.mutate} />
+                <PostForm mutate={props.mutate} open={open} handleClose={() => setOpen(false)} />
                 <Stack gap={2} mt={4} sx={{ width: { xs: "100%", sm: "70%", md: "65%" } }}>
-                    {props.loading ? <Loading /> : props.data?.map((t) => <TicketCard key={t._id.toString()} {...t} />)}
+                    {props.loading ? (
+                        <Loading />
+                    ) : (
+                        props.data?.sort(sortArrayByDate).map((p) => <PostCard key={p._id.toString()} {...p} />)
+                    )}
                 </Stack>
             </Stack>
         </Stack>

@@ -1,6 +1,7 @@
 import { createPostComment } from "@/src/actions/post";
+import { createTicketComment } from "@/src/actions/ticket";
 import { E_AlertTypes, useAlert } from "@/src/context";
-import { E_PostType, I_Mutator } from "@/src/interfaces";
+import { E_PostType, E_TicketType, I_Mutator } from "@/src/interfaces";
 import { appColors, capitalise } from "@/src/utils";
 import { Button, FormControl, Modal, Stack, TextField, Typography } from "@mui/material";
 import { Types } from "mongoose";
@@ -19,9 +20,10 @@ const style = {
 };
 
 interface PropTypes extends I_Mutator {
-    postID: Types.ObjectId;
+    itemType: "post" | "ticket";
+    itemID: Types.ObjectId;
     open: boolean;
-    type: E_PostType;
+    titleType: E_PostType | E_TicketType;
     handleClose: () => void;
 }
 
@@ -39,12 +41,19 @@ export const CommentForm: FunctionComponent<PropTypes> = (props) => {
     const { text } = formData;
     const onSubmit = async (e) => {
         e.preventDefault();
-        const res = await createPostComment({ postID: props.postID, formData });
-        if (res.err) setAlert({ type: E_AlertTypes.error, text: res.err });
-        if (res.msg) {
-            props.mutate();
-            props.handleClose();
-            setAlert({ type: E_AlertTypes.success, text: res.msg });
+        const res =
+            props.itemType === "post"
+                ? await createPostComment({ postID: props.itemID, formData })
+                : props.itemType === "ticket"
+                ? await createTicketComment({ ticketID: props.itemID, formData })
+                : null;
+        if (res) {
+            if (res.err) setAlert({ type: E_AlertTypes.error, text: res.err });
+            if (res.msg) {
+                props.mutate();
+                props.handleClose();
+                setAlert({ type: E_AlertTypes.success, text: res.msg });
+            }
         }
     };
     return (
@@ -56,7 +65,7 @@ export const CommentForm: FunctionComponent<PropTypes> = (props) => {
         >
             <FormControl sx={style}>
                 <Typography id="comment-modal-title" variant="h6" component="h2" mb={2}>
-                    Add {capitalise(props.type)} Comment
+                    Add {capitalise(props.titleType)} Comment
                 </Typography>
                 <TextField
                     variant="outlined"

@@ -16,7 +16,7 @@ export const MyCalPosts: FunctionComponent<PropTypes> = (props) => {
     const [open, setOpen] = useState(false);
     return (
         <Stack gap={4}>
-            <PageHeader title="My Activity" subtitle="My Residents Space Posts" />
+            <PageHeader title="My Activity" subtitle="My Activity" />
             <Stack sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Stack sx={{ gap: 1.5 }}>
                     <Button
@@ -27,7 +27,7 @@ export const MyCalPosts: FunctionComponent<PropTypes> = (props) => {
                     >
                         Create New Post
                     </Button>
-                    <Link href="/activity">
+                    <Link href="/posts">
                         <Button
                             color="info"
                             variant="contained"

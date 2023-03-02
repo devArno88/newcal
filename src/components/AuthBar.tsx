@@ -5,7 +5,7 @@ import { Avatar, Box, Button } from "@mui/material";
 
 export default function AuthBar(props: any): JSX.Element {
     const { session } = props;
-    const isAdmin = ["management", "reception"].includes(session?.role);
+    const isAdmin = ["management", "concierge", "development"].includes(session?.role);
     return (
         <div
             style={{

@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import { E_MongoCollection } from "../interfaces";
-import { E_PostType, I_Post } from "../interfaces/activity";
+import { E_PostType, I_Post } from "../interfaces/post";
 
 const Schema = new mongoose.Schema<I_Post>({
     type: { type: String, enum: Object.values(E_PostType) },
@@ -8,9 +8,7 @@ const Schema = new mongoose.Schema<I_Post>({
     title: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: Date, default: Date.now },
-
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident }],
-
     comments: [
         {
             resident: { type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident },
@@ -19,7 +17,6 @@ const Schema = new mongoose.Schema<I_Post>({
             likes: [{ type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident }],
         },
     ],
-
     // TODO: Incorporate S3 bucket logic
     files: [],
 });

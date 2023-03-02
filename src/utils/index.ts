@@ -1,4 +1,5 @@
 export * from "./arr";
+export * from "./bool";
 export * from "./css";
 export * from "./date";
 export * from "./db";

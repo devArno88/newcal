@@ -1,4 +1,5 @@
 import { DefaultSession } from "next-auth";
+import { E_Roles } from "./src/interfaces";
 
 interface extendedSession {}
 
@@ -11,7 +12,7 @@ declare module "next-auth" {
         id?: string;
         flat?: number;
         name?: string;
-        role?: string;
+        role?: E_Roles;
         expires: string;
     }
 }

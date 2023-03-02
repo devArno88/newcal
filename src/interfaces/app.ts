@@ -21,6 +21,7 @@ export enum E_Roles {
     resident = "resident",
     management = "management",
     concierge = "concierge",
+    development = "development",
 }
 
 export interface I_NewCalSession {

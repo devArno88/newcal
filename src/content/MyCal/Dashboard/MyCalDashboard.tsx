@@ -9,8 +9,8 @@ import {
     I_TableBooking,
     I_Tickets,
 } from "@/src/interfaces";
-import { I_Posts } from "@/src/interfaces/activity";
-import { appColors } from "@/src/utils";
+import { I_Posts } from "@/src/interfaces/post";
+import { appColors, isAdmin } from "@/src/utils";
 import { Grid, Paper, Stack } from "@mui/material";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import Link from "next/link";
@@ -68,20 +68,21 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
-            { href: null, element: <MailboardPanel isAdmin={props.session?.role !== "resident"} mailbox={mailbox} /> },
+            { href: null, element: <MailboardPanel isAdmin={isAdmin(props.session)} mailbox={mailbox} /> },
         ],
         [E_Roles.management]: [
             {
                 href: "/mycal/mailboard",
-                element: <MailboardPanel isAdmin={props.session?.role !== "resident"} mailboard={mailboard} />,
+                element: <MailboardPanel isAdmin={isAdmin(props.session)} mailboard={mailboard} />,
             },
         ],
         [E_Roles.concierge]: [
             {
                 href: "/mycal/mailboard",
-                element: <MailboardPanel isAdmin={props.session?.role !== "resident"} mailboard={mailboard} />,
+                element: <MailboardPanel isAdmin={isAdmin(props.session)} mailboard={mailboard} />,
             },
         ],
+        [E_Roles.development]: [],
     };
     return (
         <Stack gap={4}>

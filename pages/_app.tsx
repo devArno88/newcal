@@ -1,4 +1,3 @@
-import { Authenticator } from "@/src/components";
 import AppMeta from "@/src/components/AppMeta";
 import { AlertProvider } from "@/src/context";
 import { Session } from "next-auth";
@@ -11,11 +10,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         <>
             <AppMeta />
             <SessionProvider session={session}>
-                <Authenticator session={session}>
-                    <AlertProvider>
-                        <Component {...pageProps} />
-                    </AlertProvider>
-                </Authenticator>
+                <AlertProvider>
+                    <Component {...pageProps} />
+                </AlertProvider>
             </SessionProvider>
         </>
     );

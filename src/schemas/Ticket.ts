@@ -3,14 +3,22 @@ import * as mongoose from "mongoose";
 
 const Schema = new mongoose.Schema<I_Ticket>({
     type: { type: String, enum: Object.values(E_TicketType) },
-    date: { type: Date, default: Date.now },
     resident: { type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident },
     title: { type: String, required: true },
     content: { type: String, required: true },
-    review: {
-        status: { type: String, enum: Object.values(E_TicketStatus) },
-        comment: { type: String || null },
-    },
+    date: { type: Date, default: Date.now },
+    status: { type: String, enum: Object.values(E_TicketStatus) },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident }],
+    comments: [
+        {
+            resident: { type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident },
+            text: { type: String, required: true },
+            date: { type: Date, default: Date.now },
+            likes: [{ type: mongoose.Schema.Types.ObjectId, ref: E_MongoCollection.resident }],
+        },
+    ],
+    // TODO: Incorporate S3 bucket logic
+    files: [],
 });
 
 export const TicketSchema: mongoose.Model<I_Ticket> =

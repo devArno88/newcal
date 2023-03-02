@@ -1,5 +1,6 @@
 import { I_Resident, Maybe } from "./app";
 import { I_MongoID } from "./mongo";
+import { I_Comments, I_Likes } from "./post";
 
 export enum E_TicketStatus {
     received = "received",
@@ -14,16 +15,15 @@ export enum E_TicketType {
     question = "question",
 }
 
-export interface I_Ticket extends I_MongoID {
+export interface I_Ticket extends I_MongoID, I_Likes, I_Comments {
     type: Maybe<E_TicketType>;
     date: Maybe<Date>;
     resident: Maybe<I_Resident>;
     title: Maybe<string>;
     content: Maybe<string>;
-    review: {
-        status: Maybe<E_TicketStatus>;
-        comment: Maybe<string>;
-    };
+    status: Maybe<E_TicketStatus>;
+    // TODO: Incorporate S3 bucket logic
+    files: [];
 }
 
 export interface I_Tickets {

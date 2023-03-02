@@ -6,18 +6,20 @@ import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    GET api/ticket/[ticketID]
-    // @desc      Get ticket
+    // @routes    DELETE api/ticket/comment/[ticketID]/[commentID]
+    // @desc      Add ticket comment
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    async [E_Fetches.get](req, res, session) {
+    async [E_Fetches.delete](req, res, session) {
         try {
-            const ticket = await TicketSchema.findById(req.query.ticketID).populate("resident comments.resident", [
-                "name",
-                "flat",
-            ]);
-            res.status(200).json(ticket);
+            const ticket = await TicketSchema.findById(req.query.ticketID);
+            if (!ticket) return res.status(500).json({ err: "Invalid ticket" });
+            const comment = ticket.comments.filter((x) => x._id.toString() === req.query.commentID)[0];
+            if (!comment) return res.status(500).json({ err: "Invalid comment" });
+            ticket.comments = ticket.comments.filter((x) => x._id.toString() !== req.query.commentID);
+            await ticket.save();
+            res.status(200).json({ msg: "Comment deleted successfully" });
         } catch (err) {
-            res.status(500).json({ err: "Invalid ticket" });
+            res.status(500).json({ err: "Comment could not be created" });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -39,4 +41,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/ticket/[ticketID]");
+export default connectDB(handler, "/api/ticket/comment/[ticketID]/[commentID]");

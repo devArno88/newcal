@@ -6,18 +6,18 @@ import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    GET api/ticket/[ticketID]
-    // @desc      Get ticket
+    // @routes    PUT api/ticket/comment/[ticketID]
+    // @desc      Add ticket comment
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    async [E_Fetches.get](req, res, session) {
+    async [E_Fetches.put](req, res, session) {
         try {
-            const ticket = await TicketSchema.findById(req.query.ticketID).populate("resident comments.resident", [
-                "name",
-                "flat",
-            ]);
-            res.status(200).json(ticket);
+            const { text } = req.body;
+            const ticket = await TicketSchema.findById(req.query.ticketID);
+            ticket.comments.unshift({ text, resident: session?.id });
+            await ticket.save();
+            res.status(200).json({ msg: "Comment created successfully" });
         } catch (err) {
-            res.status(500).json({ err: "Invalid ticket" });
+            res.status(500).json({ err: "Comment could not be created" });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -39,4 +39,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/ticket/[ticketID]");
+export default connectDB(handler, "/api/ticket/comment/[ticketID]");

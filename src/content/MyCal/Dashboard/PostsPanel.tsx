@@ -1,4 +1,4 @@
-import { E_PostType } from "@/src/interfaces/activity";
+import { E_PostType } from "@/src/interfaces/post";
 import { appColors } from "@/src/utils";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";

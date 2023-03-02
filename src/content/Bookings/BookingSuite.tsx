@@ -1,5 +1,4 @@
 import { Loading } from "@/src/components";
-import { BookingDatePicker } from "@/src/components/BookingDatePicker";
 import { PageHeader } from "@/src/components/PageHeader";
 import { BookingForm } from "@/src/content/Modal";
 import { E_BookingType, I_Mutator, I_NewCalSession, I_PoolBookings } from "@/src/interfaces";
@@ -12,6 +11,7 @@ import { Button, Grid, Stack } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, ReactElement, useState } from "react";
 import { BookingCard } from "./BookingCard";
+import { BookingDatePicker } from "./BookingDatePicker";
 
 interface PropTypes extends I_PoolBookings, I_NewCalSession, I_Mutator {
     date: string;

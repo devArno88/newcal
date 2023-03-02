@@ -8,8 +8,6 @@ interface PropTypes extends I_NewCalSession {
     children: ReactNode;
 }
 
-// const light: boolean = true;
-
 export default function Layout(props: PropTypes) {
     const { alertState, closeAlert } = useAlert();
     const state = { ...alertState, closeAlert };
