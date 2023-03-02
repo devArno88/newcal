@@ -1,6 +1,7 @@
 import { AppError, Loading } from "@/src/components";
 import Layout from "@/src/components/Layout";
 import { Post } from "@/src/content/Post";
+import { useAlert } from "@/src/context";
 import { fetcher } from "@/src/utils";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -9,6 +10,7 @@ import useSWR from "swr";
 
 export default function Page() {
     const router = useRouter();
+    const { setAlert } = useAlert();
     const {
         query: { postID },
     } = router;
@@ -23,7 +25,7 @@ export default function Page() {
             </Head>
 
             <Layout session={session}>
-                {loading ? <Loading /> : <Post post={post} mutate={mutate} session={session} />}
+                {loading ? <Loading /> : <Post post={post} mutate={mutate} session={session} setAlert={setAlert} />}
             </Layout>
         </>
     );

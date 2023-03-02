@@ -1,5 +1,6 @@
 import { Session } from "next-auth";
 import { KeyedMutator } from "swr";
+import { E_AlertTypes } from "../context";
 import { I_MongoID } from "./mongo";
 
 export type Maybe<T> = T | null | undefined;
@@ -39,4 +40,8 @@ export interface I_Resident extends I_MongoID {
 export interface I_Mailbox {
     flat: number;
     pending: boolean;
+}
+
+export interface I_Alerter {
+    setAlert: ({ type, text }: { type: E_AlertTypes; text: string }) => void;
 }
