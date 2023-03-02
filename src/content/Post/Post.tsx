@@ -13,7 +13,7 @@ import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
 import QuizTwoToneIcon from "@mui/icons-material/QuizTwoTone";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
-import { Avatar, Divider, IconButton, Paper, Stack, Typography } from "@mui/material";
+import { Avatar, CircularProgress, Divider, IconButton, Paper, Stack, Typography } from "@mui/material";
 import { Types } from "mongoose";
 import { Fragment, FunctionComponent, ReactElement, useState } from "react";
 
@@ -37,20 +37,31 @@ const sxIcon = {
 export const Post: FunctionComponent<PropTypes> = (props): ReactElement => {
     const { setAlert } = useAlert();
     const [open, setOpen] = useState<boolean>(false);
+    const [loadingPost, setLoadingPost] = useState<boolean>(false);
+    const [loadingComment, setLoadingComment] = useState<boolean>(false);
     const handleLikePost = async () => {
+        setLoadingPost(true);
         const res = await handlePostLike({ postID: props.post._id });
-        if (res?.err) setAlert({ type: E_AlertTypes.error, text: "Something went wrong, please try again later" });
-        if (res?.msg) {
-            props.mutate();
-            // setAlert({ type: E_AlertTypes.success, text: res?.msg });
+        if (res) {
+            setLoadingPost(false);
+            if (res?.err) setAlert({ type: E_AlertTypes.error, text: "Something went wrong, please try again later" });
+            if (res?.msg) {
+                props.mutate();
+                // setAlert({ type: E_AlertTypes.success, text: res?.msg });
+            }
         }
     };
     const handleLikeComment = async (commentID: Types.ObjectId) => {
+        setLoadingComment(true);
         const res = await handlePostCommentLike({ postID: props.post._id, commentID });
-        if (res?.err) setAlert({ type: E_AlertTypes.error, text: "Something went wrong, please try again later" });
-        if (res?.msg) {
-            props.mutate();
-            // setAlert({ type: E_AlertTypes.success, text: res?.msg });
+        if (res) {
+            setLoadingComment(false);
+
+            if (res?.err) setAlert({ type: E_AlertTypes.error, text: "Something went wrong, please try again later" });
+            if (res?.msg) {
+                props.mutate();
+                // setAlert({ type: E_AlertTypes.success, text: res?.msg });
+            }
         }
     };
     const handleDeleteComment = async (commentID: Types.ObjectId) => {
@@ -103,7 +114,9 @@ export const Post: FunctionComponent<PropTypes> = (props): ReactElement => {
                     </Paper>
                     <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={handleLikePost}>
                         <Stack direction="row" spacing={1} alignItems="center">
-                            {props.post.likes.some((x) => x.toString() === props.session?.id) ? (
+                            {loadingPost ? (
+                                <CircularProgress />
+                            ) : props.post.likes.some((x) => x.toString() === props.session?.id) ? (
                                 <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: "greenyellow" }} />
                             ) : (
                                 <FavoriteBorderTwoToneIcon sx={sxIcon} />
@@ -168,7 +181,9 @@ export const Post: FunctionComponent<PropTypes> = (props): ReactElement => {
                                             sx={{ border: `1px solid ${appColors.border}`, borderRadius: 2 }}
                                         >
                                             <Stack direction="row" spacing={1} alignItems="center">
-                                                {comment.likes.some((x) => x.toString() === props.session?.id) ? (
+                                                {loadingComment ? (
+                                                    <CircularProgress />
+                                                ) : comment.likes.some((x) => x.toString() === props.session?.id) ? (
                                                     <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: "greenyellow" }} />
                                                 ) : (
                                                     <FavoriteBorderTwoToneIcon sx={sxIcon} />
