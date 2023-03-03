@@ -78,13 +78,13 @@ export const TicketComment: FunctionComponent<PropTypes> = (props) => {
                     >
                         <Stack direction="row" spacing={1} alignItems="center">
                             {loading ? (
-                                <CircularProgress size="small" />
+                                <CircularProgress />
                             ) : props.likes.some((x) => x.toString() === props.session?.id) ? (
                                 <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: "greenyellow" }} />
                             ) : (
                                 <FavoriteBorderTwoToneIcon sx={sxIcon} />
                             )}
-                            {props.likes.length ? (
+                            {loading ? null : props.likes.length ? (
                                 <Typography sx={{ color: appColors.text.primary }}>
                                     {`${props.likes.length} like${props.likes.length === 1 ? "" : "s"}`}
                                 </Typography>
