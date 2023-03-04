@@ -55,11 +55,11 @@ export const TicketPageActions: FunctionComponent<PropTypes> = (props) => {
                         ) : (
                             <FavoriteBorderTwoToneIcon sx={sxIcon} />
                         )}
-                        {loading ? null : props.likes.length ? (
-                            <Typography sx={{ color: appColors.text.primary }}>
-                                {`${props.likes.length} like${props.likes.length === 1 ? "" : "s"}`}
-                            </Typography>
-                        ) : null}
+                        {/* {loading ? null : props.likes.length ? ( */}
+                        <Typography sx={{ color: appColors.text.primary }}>
+                            {props.likes.length || "No"} like{props.likes.length === 1 ? null : "s"}
+                        </Typography>
+                        {/* ) : null} */}
                     </Stack>
                 </Paper>
                 <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={() => setOpen(true)}>

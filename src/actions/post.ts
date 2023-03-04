@@ -11,9 +11,9 @@ export const createPost = async ({ formData }: { formData: PostFormData }): Prom
     }
 };
 
-export const deletePost = async ({ id }: { id: Types.ObjectId }): Promise<any> => {
+export const deletePost = async ({ postID }: { postID: Types.ObjectId }): Promise<any> => {
     try {
-        return await fetcher(`/api/post/${id}`, fetcherPrep({ method: E_Fetches.delete }));
+        return await fetcher(`/api/post/${postID}`, fetcherPrep({ method: E_Fetches.delete }));
     } catch (err) {
         console.error(err);
     }

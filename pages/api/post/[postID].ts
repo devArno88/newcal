@@ -23,6 +23,20 @@ const routes = {
             res.status(500).json({ err: "Invalid post" });
         }
     },
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // @routes    DELETE api/post/[postID]
+    // @desc      Delete post
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    async [E_Fetches.delete](req, res, session) {
+        try {
+            const post = await PostSchema.findById(req.query.postID);
+            if (!post) return res.status(500).json({ err: "Invalid post" });
+            await PostSchema.findByIdAndDelete(req.query.postID);
+            res.status(200).json({ msg: "Post deleted successfully" });
+        } catch (err) {
+            res.status(500).json({ err: "Post could not be deleted" });
+        }
+    },
     ///////////////////////////////////////////////////////////
     // @routes    FORBIDDEN
     // @desc      When a forbidden method is requested

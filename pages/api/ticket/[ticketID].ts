@@ -23,6 +23,20 @@ const routes = {
             res.status(500).json({ err: "Invalid ticket" });
         }
     },
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // @routes    DELETE api/ticket/[ticketID]
+    // @desc      Delete ticket
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    async [E_Fetches.delete](req, res, session) {
+        try {
+            const ticket = await TicketSchema.findById(req.query.ticketID);
+            if (!ticket) return res.status(500).json({ err: "Invalid ticket" });
+            await TicketSchema.findByIdAndDelete(req.query.ticketID);
+            res.status(200).json({ msg: "Ticket deleted successfully" });
+        } catch (err) {
+            res.status(500).json({ err: "Ticket could not be deleted" });
+        }
+    },
     ///////////////////////////////////////////////////////////
     // @routes    FORBIDDEN
     // @desc      When a forbidden method is requested

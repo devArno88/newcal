@@ -11,9 +11,9 @@ export const createTicket = async ({ formData }: { formData: TicketFormData }): 
     }
 };
 
-export const deleteTicket = async ({ id }: { id: Types.ObjectId }): Promise<any> => {
+export const deleteTicket = async ({ ticketID }: { ticketID: Types.ObjectId }): Promise<any> => {
     try {
-        return await fetcher(`/api/ticket/${id}`, fetcherPrep({ method: E_Fetches.delete }));
+        return await fetcher(`/api/ticket/${ticketID}`, fetcherPrep({ method: E_Fetches.delete }));
     } catch (err) {
         console.error(err);
     }
