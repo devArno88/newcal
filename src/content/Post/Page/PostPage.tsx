@@ -16,7 +16,11 @@ export const PostPage: FunctionComponent<PropTypes> = (props): ReactElement => {
         <Stack gap={4}>
             <PageHeader
                 title={`NewCal ${capitalise(props.post.type)}`}
-                subtitle={`Posted ${fromNowDate(props.post.date)} by ${props.post.user.name} (Flat)`}
+                subtitle={`Posted ${fromNowDate(props.post.date)} by ${
+                    props.post.userType === "admin"
+                        ? `NewCal ${props.post.user.name}`
+                        : `${props.post.user.name} (Flat ${props.post.user.flat})`
+                }`}
             />
             <PostPageContent title={props.post.title} content={props.post.content} type={props.post.type} />
             <PostPageActions

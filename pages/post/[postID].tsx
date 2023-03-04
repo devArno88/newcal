@@ -19,13 +19,13 @@ export default function Page() {
     const { data: session, status } = useSession();
     const { data: post, error, isLoading, mutate } = useSWR(postID ? `/api/post/${postID}` : null, fetcher);
     const loading = isLoading || status === "loading";
-    if (error) return <AppError source="Post" error={error.message} session={session} />;
     useEffect(() => {
         async function handleView(id) {
             await addPostView({ postID: id });
         }
         if (post) handleView(post?._id);
     }, [post]);
+    if (error) return <AppError source="Post" error={error.message} session={session} />;
     return (
         <>
             <Head>

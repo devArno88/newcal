@@ -19,13 +19,13 @@ export default function Page() {
     const { data: session, status } = useSession();
     const { data: ticket, error, isLoading, mutate } = useSWR(ticketID ? `/api/ticket/${ticketID}` : null, fetcher);
     const loading = isLoading || status === "loading";
-    if (error) return <AppError source="Ticket" error={error.message} session={session} />;
     useEffect(() => {
         async function handleView(id) {
             await addTicketView({ ticketID: id });
         }
         if (ticket) handleView(ticket?._id);
     }, [ticket]);
+    if (error) return <AppError source="Ticket" error={error.message} session={session} />;
     return (
         <>
             <Head>

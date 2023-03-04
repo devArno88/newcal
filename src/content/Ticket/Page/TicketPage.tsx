@@ -16,7 +16,11 @@ export const TicketPage: FunctionComponent<PropTypes> = (props): ReactElement =>
         <Stack gap={4}>
             <PageHeader
                 title={`NewCal ${capitalise(props.ticket.type)}`}
-                subtitle={`Created ${fromNowDate(props.ticket.date)} by ${props.ticket.user.name} (Flat`}
+                subtitle={`Posted ${fromNowDate(props.ticket.date)} by ${
+                    props.ticket.userType === "admin"
+                        ? `NewCal ${props.ticket.user.name}`
+                        : `${props.ticket.user.name} (Flat ${props.ticket.user.flat})`
+                }`}
             />
             <TicketPageContent title={props.ticket.title} content={props.ticket.content} type={props.ticket.type} />
             <TicketPageActions
