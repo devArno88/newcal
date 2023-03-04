@@ -35,7 +35,20 @@ export interface I_Mutator {
 export interface I_Resident extends I_MongoID {
     name: Maybe<string>;
     email: Maybe<string>;
-    flat: Maybe<number>;
+    flat?: Maybe<number>;
+}
+
+export interface I_User extends I_MongoID {
+    name: Maybe<string>;
+    email: Maybe<string>;
+    role?: Maybe<E_Roles.concierge | E_Roles.development | E_Roles.management>;
+    flat?: Maybe<number>;
+}
+
+export interface I_Admin extends I_MongoID {
+    name: Maybe<string>;
+    email: Maybe<string>;
+    role?: Maybe<E_Roles.concierge | E_Roles.development | E_Roles.management>;
 }
 
 export interface I_Mailbox {

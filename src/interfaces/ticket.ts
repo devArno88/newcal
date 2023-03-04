@@ -1,6 +1,6 @@
-import { I_Resident, Maybe } from "./app";
+import { I_User, Maybe } from "./app";
 import { I_MongoID } from "./mongo";
-import { I_Comments, I_Likes } from "./post";
+import { I_Comments, I_Likes, I_Views } from "./post";
 
 export enum E_TicketStatus {
     received = "received",
@@ -15,10 +15,11 @@ export enum E_TicketType {
     question = "question",
 }
 
-export interface I_Ticket extends I_MongoID, I_Likes, I_Comments {
+export interface I_Ticket extends I_MongoID, I_Likes, I_Comments, I_Views {
     type: Maybe<E_TicketType>;
     date: Maybe<Date>;
-    resident: Maybe<I_Resident>;
+    user: Maybe<I_User>;
+    userType: Maybe<"resident" | "admin">;
     title: Maybe<string>;
     content: Maybe<string>;
     status: Maybe<E_TicketStatus>;

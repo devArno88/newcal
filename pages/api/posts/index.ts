@@ -11,10 +11,16 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.get](req, res, session) {
         try {
-            const posts = await PostSchema.find({}).populate("resident", ["name", "flat"]);
+            const posts = await PostSchema.find({}).populate([
+                "user",
+                "likes.user",
+                "comments.user",
+                "comments.likes.user",
+                "views.user",
+            ]);
             res.status(200).json(posts);
         } catch (err) {
-            console.error(err);
+            res.status(500).json({ err });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -36,4 +42,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/pool/[date]");
+export default connectDB(handler, "/api/posts");

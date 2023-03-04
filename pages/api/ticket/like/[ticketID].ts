@@ -1,7 +1,7 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
 import { TicketSchema } from "@/src/schemas";
-import { connectDB } from "@/src/utils";
+import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -13,10 +13,11 @@ const routes = {
         try {
             const ticket = await TicketSchema.findById(req.query.ticketID);
             if (!ticket) return res.status(500).json({ err: "Invalid ticket" });
-            if (ticket.likes.some((id) => id.toString() === session?.id)) {
-                ticket.likes = ticket.likes.filter((id) => id.toString() !== session?.id);
+            const userType = isAdmin(session) ? "admin" : "resident";
+            if (ticket.likes.some((x) => x.user.toString() === session?.id && x.userType === userType)) {
+                ticket.likes = ticket.likes.filter((x) => x.user.toString() !== session?.id);
             } else {
-                ticket.likes.unshift(session?.id);
+                ticket.likes.unshift({ user: session?.id, userType });
             }
             await ticket.save();
             res.status(200).json({ msg: "Post liked successfully" });

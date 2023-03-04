@@ -11,9 +11,12 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.get](req, res, session) {
         try {
-            const ticket = await TicketSchema.findById(req.query.ticketID).populate("resident comments.resident", [
-                "name",
-                "flat",
+            const ticket = await TicketSchema.findById(req.query.ticketID).populate([
+                "user",
+                "likes.user",
+                "comments.user",
+                "comments.likes.user",
+                "views.user",
             ]);
             res.status(200).json(ticket);
         } catch (err) {

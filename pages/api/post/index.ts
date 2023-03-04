@@ -1,7 +1,7 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { PostSchema } from "@/src/schemas/Post";
-import { connectDB } from "@/src/utils";
+import { PostSchema } from "@/src/schemas";
+import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -12,9 +12,11 @@ const routes = {
     async [E_Fetches.post](req, res, session) {
         try {
             const { ...data } = req.body;
+            const userType = isAdmin(session) ? "admin" : "resident";
             const post = new PostSchema({
                 ...data,
-                resident: session.id,
+                user: session.id,
+                userType,
             });
             await post.save();
             res.status(200).json(post);
@@ -41,4 +43,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/pool/[date]");
+export default connectDB(handler, "/api/post");

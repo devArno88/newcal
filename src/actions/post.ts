@@ -68,3 +68,11 @@ export const handlePostCommentLike = async ({
         console.error(err);
     }
 };
+
+export const addPostView = async ({ postID }: { postID: Types.ObjectId }): Promise<any> => {
+    try {
+        return await fetcher(`/api/post/view/${postID}`, fetcherPrep({ method: E_Fetches.put }));
+    } catch (err) {
+        console.error(err);
+    }
+};

@@ -1,30 +1,28 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { TicketSchema } from "@/src/schemas";
+import { ChatSchema } from "@/src/schemas/Chat";
 import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    PUT api/ticket/comment/like/[ticketID]/[commentID]
-    // @desc      Like/unlike ticket comment
+    // @routes    PUT api/chat/chatID
+    // @desc      Send message
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.put](req, res, session) {
         try {
-            const ticket = await TicketSchema.findById(req.query.ticketID);
-            if (!ticket) return res.status(500).json({ err: "Invalid ticket" });
-            const comment = ticket.comments.filter((x) => x._id.toString() === req.query.commentID)[0];
-            if (!comment) return res.status(500).json({ err: "Invalid comment" });
-            const userType = isAdmin(session) ? "admin" : "resident";
-            if (comment.likes.some((x) => x.user.toString() === session?.id && x.userType === userType)) {
-                comment.likes = comment.likes.filter((x) => x.user.toString() !== session?.id);
-            } else {
-                comment.likes.unshift({ user: session?.id, userType });
-            }
-            await ticket.save();
-            res.status(200).json({ msg: "Post comment liked successfully" });
+            const { text } = req.body;
+            const chat = await ChatSchema.findById(req.query.chatID);
+            if (!chat) return res.status(500).json({ err: "Invalid chat" });
+            chat.messages.unshift({
+                text,
+                author: session?.id,
+                role: isAdmin(session) ? "admin" : "resident",
+            });
+            await chat.save();
+            res.status(200).json({ msg: "Message sent successfully" });
         } catch (err) {
-            res.status(500).json({ err: "Post comment could not be liked" });
+            res.status(500).json({ err: "Message could not be sent" });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -46,4 +44,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/ticket/like/[ticketID]");
+export default connectDB(handler, "/api/chat/[chatID]");

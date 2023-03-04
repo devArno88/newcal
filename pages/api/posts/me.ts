@@ -1,7 +1,7 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
 import { PostSchema } from "@/src/schemas/Post";
-import { connectDB } from "@/src/utils";
+import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -11,9 +11,11 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.get](req, res, session) {
         try {
+            const userType = isAdmin(session) ? "admin" : "resident";
             const posts = await PostSchema.find({
-                resident: session?.id,
-            }).populate("resident", ["name", "flat"]);
+                user: session?.id,
+                userType,
+            }).populate(["user", "likes.user", "comments.user", "comments.likes.user", "views.user"]);
             res.status(200).json(posts);
         } catch (err) {
             console.error(err);
@@ -38,4 +40,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/pool/[date]");
+export default connectDB(handler, "/api/posts/me");

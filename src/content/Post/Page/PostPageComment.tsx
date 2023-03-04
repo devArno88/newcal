@@ -1,7 +1,7 @@
 import { deletePostComment, handlePostCommentLike } from "@/src/actions/post";
 import { E_AlertTypes } from "@/src/context";
 import { I_Alerter, I_Comment, I_Mutator, I_NewCalSession } from "@/src/interfaces";
-import { appColors, fromNowDate, getFlatColor } from "@/src/utils";
+import { AdminIcons, appColors, fromNowDate, getFlatColor } from "@/src/utils";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
@@ -17,7 +17,7 @@ const sxIcon = {
     fill: appColors.text.primary,
 };
 
-export const PostComment: FunctionComponent<PropTypes> = (props) => {
+export const PostPageComment: FunctionComponent<PropTypes> = (props) => {
     const [loading, setLoading] = useState<boolean>(false);
     const onLikeComment = async (commentID: Types.ObjectId) => {
         setLoading(true);
@@ -39,6 +39,7 @@ export const PostComment: FunctionComponent<PropTypes> = (props) => {
             }
         }
     };
+    const Icon = props.userType === "admin" ? AdminIcons[props.user.role] : null;
     return (
         <Stack direction="row" alignItems="flex-start" spacing={3}>
             <Paper
@@ -50,12 +51,12 @@ export const PostComment: FunctionComponent<PropTypes> = (props) => {
                 }}
             >
                 <Stack direction="row" alignItems="center" spacing={1.5}>
-                    <Avatar src="" alt={props.resident.name} sx={{ bgcolor: getFlatColor() }}>
-                        {props.resident.flat}
+                    <Avatar src="" alt={props.user.name} sx={{ bgcolor: getFlatColor() }}>
+                        {Icon ? <Icon /> : props.user.flat || null}
                     </Avatar>
                     <Stack>
                         <Typography noWrap sx={{ color: appColors.text.secondary }}>
-                            {props.resident.name}
+                            {`${props.userType === "admin" ? "NewCal" : null} ${props.user.name}`}
                         </Typography>
                         <Typography
                             variant="caption"
@@ -78,8 +79,8 @@ export const PostComment: FunctionComponent<PropTypes> = (props) => {
                     >
                         <Stack direction="row" spacing={1} alignItems="center">
                             {loading ? (
-                                <CircularProgress />
-                            ) : props.likes.some((x) => x.toString() === props.session?.id) ? (
+                                <CircularProgress sx={{ height: 28, width: 28 }} />
+                            ) : props.likes.some((x) => x.user._id.toString() === props.session?.id) ? (
                                 <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: "greenyellow" }} />
                             ) : (
                                 <FavoriteBorderTwoToneIcon sx={sxIcon} />
@@ -91,7 +92,7 @@ export const PostComment: FunctionComponent<PropTypes> = (props) => {
                             ) : null}
                         </Stack>
                     </IconButton>
-                    {props.resident._id.toString() === props.session?.id ? (
+                    {props.user._id.toString() === props.session?.id ? (
                         <IconButton
                             onClick={() => onDeleteComment(props?._id)}
                             sx={{ border: `1px solid ${appColors.border}`, borderRadius: 2 }}

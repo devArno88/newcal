@@ -1,7 +1,7 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { PostSchema } from "@/src/schemas/Post";
-import { connectDB } from "@/src/utils";
+import { PostSchema } from "@/src/schemas";
+import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -15,10 +15,11 @@ const routes = {
             if (!post) return res.status(500).json({ err: "Invalid post" });
             const comment = post.comments.filter((x) => x._id.toString() === req.query.commentID)[0];
             if (!comment) return res.status(500).json({ err: "Invalid comment" });
-            if (comment.likes.some((id) => id.toString() === session?.id)) {
-                comment.likes = comment.likes.filter((id) => id.toString() !== session?.id);
+            const userType = isAdmin(session) ? "admin" : "resident";
+            if (comment.likes.some((x) => x.user.toString() === session?.id && x.userType === userType)) {
+                comment.likes = comment.likes.filter((x) => x.user.toString() !== session?.id);
             } else {
-                comment.likes.unshift(session?.id);
+                comment.likes.unshift({ user: session?.id, userType });
             }
             await post.save();
             res.status(200).json({ msg: "Post comment liked successfully" });

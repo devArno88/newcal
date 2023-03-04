@@ -1,6 +1,6 @@
 import { Loading, PageHeader } from "@/src/components";
-import { PostCard } from "@/src/components/PostCard";
 import { PostForm } from "@/src/content/Modal";
+import { PostCard } from "@/src/content/Post/Card/PostCard";
 import { I_Mutator, I_Post } from "@/src/interfaces";
 import { sortArrayByDate } from "@/src/utils";
 import { Button, Stack } from "@mui/material";

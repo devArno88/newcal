@@ -1,6 +1,6 @@
 import { Loading, PageHeader } from "@/src/components";
-import { TicketCard } from "@/src/components/TicketCard";
 import { TicketForm } from "@/src/content/Modal";
+import { TicketCard } from "@/src/content/Ticket/Card/TicketCard";
 import { I_Mutator, I_Ticket } from "@/src/interfaces";
 import { sortArrayByDate } from "@/src/utils";
 import { Button, Stack } from "@mui/material";

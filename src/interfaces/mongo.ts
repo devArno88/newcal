@@ -3,6 +3,7 @@ import { Maybe } from "./app";
 
 export enum E_MongoCollection {
     admin = "admin",
+    chat = "chat",
     gymbooking = "gymbooking",
     poolbooking = "poolbooking",
     resident = "resident",

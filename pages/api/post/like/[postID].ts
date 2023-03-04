@@ -1,7 +1,7 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { PostSchema } from "@/src/schemas/Post";
-import { connectDB } from "@/src/utils";
+import { PostSchema } from "@/src/schemas";
+import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -13,10 +13,11 @@ const routes = {
         try {
             const post = await PostSchema.findById(req.query.postID);
             if (!post) return res.status(500).json({ err: "Invalid post" });
-            if (post.likes.some((id) => id.toString() === session?.id)) {
-                post.likes = post.likes.filter((id) => id.toString() !== session?.id);
+            const userType = isAdmin(session) ? "admin" : "resident";
+            if (post.likes.some((x) => x.user.toString() === session?.id && x.userType === userType)) {
+                post.likes = post.likes.filter((x) => x.user.toString() !== session?.id);
             } else {
-                post.likes.unshift(session?.id);
+                post.likes.unshift({ user: session?.id, userType });
             }
             await post.save();
             res.status(200).json({ msg: "Post liked successfully" });

@@ -1,6 +1,6 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { PostSchema } from "@/src/schemas/Post";
+import { PostSchema } from "@/src/schemas";
 import { connectDB } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
@@ -11,9 +11,12 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.get](req, res, session) {
         try {
-            const post = await PostSchema.findById(req.query.postID).populate("resident comments.resident", [
-                "name",
-                "flat",
+            const post = await PostSchema.findById(req.query.postID).populate([
+                "user",
+                "likes.user",
+                "comments.user",
+                "comments.likes.user",
+                "views.user",
             ]);
             res.status(200).json(post);
         } catch (err) {

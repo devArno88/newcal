@@ -71,3 +71,11 @@ export const handleTicketCommentLike = async ({
         console.error(err);
     }
 };
+
+export const addTicketView = async ({ ticketID }: { ticketID: Types.ObjectId }): Promise<any> => {
+    try {
+        return await fetcher(`/api/ticket/view/${ticketID}`, fetcherPrep({ method: E_Fetches.put }));
+    } catch (err) {
+        console.error(err);
+    }
+};

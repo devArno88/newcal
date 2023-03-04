@@ -11,7 +11,13 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.get](req, res, session) {
         try {
-            const tickets = await TicketSchema.find({}).populate("resident", ["name", "flat"]);
+            const tickets = await TicketSchema.find({}).populate([
+                "user",
+                "likes.user",
+                "comments.user",
+                "comments.likes.user",
+                "views.user",
+            ]);
             res.status(200).json(tickets);
         } catch (err) {
             console.error(err);
@@ -36,4 +42,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/pool/[date]");
+export default connectDB(handler, "/api/tickets");

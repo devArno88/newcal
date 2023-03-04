@@ -3,6 +3,7 @@ export * from "./bool";
 export * from "./css";
 export * from "./date";
 export * from "./db";
+export * from "./icon";
 export * from "./obj";
 export * from "./str";
 export * from "./swr";

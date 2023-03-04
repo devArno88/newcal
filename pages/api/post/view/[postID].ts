@@ -1,30 +1,25 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { TicketSchema } from "@/src/schemas";
+import { PostSchema } from "@/src/schemas";
 import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    PUT api/ticket/comment/like/[ticketID]/[commentID]
-    // @desc      Like/unlike ticket comment
+    // @routes    PUT api/post/view/[postID]
+    // @desc      Add post view
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.put](req, res, session) {
         try {
-            const ticket = await TicketSchema.findById(req.query.ticketID);
-            if (!ticket) return res.status(500).json({ err: "Invalid ticket" });
-            const comment = ticket.comments.filter((x) => x._id.toString() === req.query.commentID)[0];
-            if (!comment) return res.status(500).json({ err: "Invalid comment" });
+            const post = await PostSchema.findById(req.query.postID);
+            if (!post) return res.status(500).json({ err: "Invalid post" });
             const userType = isAdmin(session) ? "admin" : "resident";
-            if (comment.likes.some((x) => x.user.toString() === session?.id && x.userType === userType)) {
-                comment.likes = comment.likes.filter((x) => x.user.toString() !== session?.id);
-            } else {
-                comment.likes.unshift({ user: session?.id, userType });
-            }
-            await ticket.save();
-            res.status(200).json({ msg: "Post comment liked successfully" });
+            if (!post.views.some((x) => x.user.toString() === session?.id && x.userType === userType))
+                post.views.unshift({ user: session?.id, userType });
+            await post.save();
+            res.status(200).json({ msg: "Post viewed successfully" });
         } catch (err) {
-            res.status(500).json({ err: "Post comment could not be liked" });
+            res.status(500).json({ err: "Post could not be viewed" });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -46,4 +41,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/ticket/like/[ticketID]");
+export default connectDB(handler, "/api/post/view/[postID]");

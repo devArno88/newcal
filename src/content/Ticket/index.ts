@@ -1,1 +1,2 @@
-export * from "./Ticket";
+export * from "./Card";
+export * from "./Page";

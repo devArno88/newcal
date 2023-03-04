@@ -1,6 +1,6 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { PostSchema } from "@/src/schemas/Post";
+import { PostSchema } from "@/src/schemas";
 import { connectDB } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 

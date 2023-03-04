@@ -1,7 +1,7 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
 import { TicketSchema } from "@/src/schemas";
-import { connectDB } from "@/src/utils";
+import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -12,8 +12,9 @@ const routes = {
     async [E_Fetches.put](req, res, session) {
         try {
             const { text } = req.body;
+            const userType = isAdmin(session) ? "admin" : "resident";
             const ticket = await TicketSchema.findById(req.query.ticketID);
-            ticket.comments.unshift({ text, resident: session?.id });
+            ticket.comments.unshift({ text, user: session?.id, userType });
             await ticket.save();
             res.status(200).json({ msg: "Comment created successfully" });
         } catch (err) {

@@ -1,9 +1,5 @@
 import { E_PostType } from "@/src/interfaces";
-import { appColors } from "@/src/utils";
-import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
-import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
-import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
-import QuizTwoToneIcon from "@mui/icons-material/QuizTwoTone";
+import { appColors, Icon_Info, Icon_Listing, Icon_Notice, Icon_Question } from "@/src/utils";
 import { Stack, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 
@@ -13,25 +9,25 @@ interface PropTypes {
     content: string;
 }
 
-export const PostContent: FunctionComponent<PropTypes> = (props) => {
+export const PostPageContent: FunctionComponent<PropTypes> = (props) => {
     return (
         <Stack spacing={2} mt={4}>
             <Stack direction="row" spacing={2} alignItems="flex-start">
                 {props.type === E_PostType.listing ? (
-                    <HomeTwoToneIcon sx={{ fill: "greenyellow" }} fontSize="large" />
+                    <Icon_Listing sx={{ fill: "greenyellow" }} fontSize="large" />
                 ) : null}
                 {props.type === E_PostType.question ? (
-                    <QuizTwoToneIcon sx={{ fill: "greenyellow" }} fontSize="large" />
+                    <Icon_Question sx={{ fill: "greenyellow" }} fontSize="large" />
                 ) : null}
                 {props.type === E_PostType.notice ? (
-                    <NotificationsNoneTwoToneIcon sx={{ fill: "greenyellow" }} fontSize="large" />
+                    <Icon_Notice sx={{ fill: "greenyellow" }} fontSize="large" />
                 ) : null}
                 <Typography variant="h5" sx={{ color: appColors.text.secondary }}>
                     {props.title}
                 </Typography>
             </Stack>
             <Stack direction="row" spacing={2} alignItems="flex-start">
-                <InfoTwoToneIcon sx={{ fill: "greenyellow" }} fontSize="large" />
+                <Icon_Info sx={{ fill: "greenyellow" }} fontSize="large" />
                 <Typography variant="h6" sx={{ color: appColors.text.primary }}>
                     {props.content}
                 </Typography>

@@ -1,7 +1,7 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { PostSchema } from "@/src/schemas/Post";
-import { connectDB } from "@/src/utils";
+import { PostSchema } from "@/src/schemas";
+import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -13,7 +13,7 @@ const routes = {
         try {
             const { text } = req.body;
             const post = await PostSchema.findById(req.query.postID);
-            post.comments.unshift({ text, resident: session?.id });
+            post.comments.unshift({ text, user: session?.id, userType: isAdmin(session) ? "admin" : "resident" });
             await post.save();
             res.status(200).json({ msg: "Comment created successfully" });
         } catch (err) {
