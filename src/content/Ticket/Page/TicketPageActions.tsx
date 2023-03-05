@@ -1,14 +1,15 @@
-import { handleTicketLike } from "@/src/actions/ticket";
+import { deleteTicket, handleTicketLike } from "@/src/actions/ticket";
 import { CommentForm } from "@/src/content/Modal";
 import { E_AlertTypes } from "@/src/context";
 import { E_TicketType, I_Alerter, I_Likes, I_Mutator, I_NewCalSession, I_Views } from "@/src/interfaces";
-import { appColors } from "@/src/utils";
+import { appColors, Icon_Delete } from "@/src/utils";
 import AddCommentTwoToneIcon from "@mui/icons-material/AddCommentTwoTone";
 import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
 import { CircularProgress, Paper, Stack, Typography } from "@mui/material";
 import { Types } from "mongoose";
+import { NextRouter } from "next/router";
 import { FunctionComponent, useState } from "react";
 
 const sxPaper = {
@@ -27,6 +28,11 @@ const sxIcon = {
 interface PropTypes extends I_Likes, I_NewCalSession, I_Mutator, I_Alerter, I_Views {
     ticketID: Types.ObjectId;
     type: E_TicketType;
+    router: NextRouter;
+    ticketAuthor: {
+        user: Types.ObjectId;
+        userType: "admin" | "resident";
+    };
 }
 
 export const TicketPageActions: FunctionComponent<PropTypes> = (props) => {
@@ -42,9 +48,31 @@ export const TicketPageActions: FunctionComponent<PropTypes> = (props) => {
             if (res?.msg) props.mutate();
         }
     };
+    const onDelete = async () => {
+        if (window.confirm("Are you sure you want to delete this ticket?")) {
+            props.router.push("/tickets");
+            const res = await deleteTicket({ ticketID: props.ticketID });
+            if (res?.err) props.setAlert({ type: E_AlertTypes.error, text: res.err });
+            if (res?.msg) {
+                props.mutate();
+                props.setAlert({ type: E_AlertTypes.success, text: res?.msg });
+            }
+        }
+    };
     const adminLikes = props.likes?.filter((x) => x.user.role).map((x) => x.user.name);
     return (
         <Stack>
+            {adminLikes.length ? (
+                <Typography ml={7} mt={-1} mb={3} sx={{ color: "greenyellow", opacity: 0.8 }}>
+                    {`Liked by NewCal ${
+                        adminLikes.length === 1
+                            ? adminLikes[0]
+                            : adminLikes.length === 2
+                            ? adminLikes.join(" and ")
+                            : `${adminLikes[0]}, ${adminLikes[1]} and ${adminLikes[2]}`
+                    }`}
+                </Typography>
+            ) : null}
             <Stack direction="row" spacing={2} ml={6}>
                 <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={onLike}>
                     <Stack direction="row" spacing={1} alignItems="center">
@@ -76,6 +104,14 @@ export const TicketPageActions: FunctionComponent<PropTypes> = (props) => {
                         </Typography>
                     </Stack>
                 </Paper>
+                {props.ticketAuthor.user.toString() === props.session?.id ? (
+                    <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={onDelete}>
+                        <Stack direction="row" spacing={1} alignItems="center">
+                            <Icon_Delete sx={{ fill: "salmon" }} />
+                            <Typography sx={{ color: "salmon" }}>Delete</Typography>
+                        </Stack>
+                    </Paper>
+                ) : null}
                 <CommentForm
                     open={open}
                     itemType="ticket"
@@ -85,17 +121,6 @@ export const TicketPageActions: FunctionComponent<PropTypes> = (props) => {
                     handleClose={() => setOpen(false)}
                 />
             </Stack>
-            {adminLikes.length ? (
-                <Typography ml={7} mt={3} mb={-3} sx={{ color: "greenyellow", opacity: 0.8 }}>
-                    {`Liked by NewCal ${
-                        adminLikes.length === 1
-                            ? adminLikes[0]
-                            : adminLikes.length === 2
-                            ? adminLikes.join(" and ")
-                            : `${adminLikes[0]}, ${adminLikes[1]} and ${adminLikes[2]}`
-                    }`}
-                </Typography>
-            ) : null}
         </Stack>
     );
 };

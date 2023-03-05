@@ -2,6 +2,7 @@ import { PageHeader } from "@/src/components";
 import { I_Alerter, I_Mutator, I_NewCalSession, I_Post } from "@/src/interfaces";
 import { appColors, capitalise, fromNowDate, sortArrayByDate } from "@/src/utils";
 import { Divider, Stack } from "@mui/material";
+import { NextRouter } from "next/router";
 import { Fragment, FunctionComponent, ReactElement } from "react";
 import { PostPageActions } from "./PostPageActions";
 import { PostPageComment } from "./PostPageComment";
@@ -9,6 +10,7 @@ import { PostPageContent } from "./PostPageContent";
 
 interface PropTypes extends I_Mutator, I_NewCalSession, I_Alerter {
     post: I_Post;
+    router: NextRouter;
 }
 
 export const PostPage: FunctionComponent<PropTypes> = (props): ReactElement => {
@@ -24,10 +26,15 @@ export const PostPage: FunctionComponent<PropTypes> = (props): ReactElement => {
             />
             <PostPageContent title={props.post.title} content={props.post.content} type={props.post.type} />
             <PostPageActions
+                router={props.router}
                 mutate={props.mutate}
                 type={props.post.type}
                 session={props.session}
                 postID={props.post?._id}
+                postAuthor={{
+                    user: props.post.user._id,
+                    userType: props.post.userType,
+                }}
                 likes={props.post.likes}
                 views={props.post.views}
                 setAlert={props.setAlert}

@@ -1,7 +1,6 @@
-import { AppError, Loading } from "@/src/components";
-import AccessDenied from "@/src/components/AccessDenied";
+import { AccessDenied, AppError, Loading } from "@/src/components";
 import Layout from "@/src/components/Layout";
-import { MyCalMailboard } from "@/src/content/MyCal/Pages/MyCalMailboard";
+import { Mailboard } from "@/src/content/Mailboard";
 import { fetcher, isAdmin } from "@/src/utils";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -18,13 +17,13 @@ export default function Page() {
                 <title>Mailboard | NewCal</title>
             </Head>
 
-            <Layout session={session}>
+            <Layout>
                 {!isAdmin(session) ? (
                     <AccessDenied />
                 ) : loading ? (
                     <Loading />
                 ) : (
-                    <MyCalMailboard mailboard={mailboard} mutate={mutate} />
+                    <Mailboard mailboard={mailboard} mutate={mutate} />
                 )}
             </Layout>
         </>

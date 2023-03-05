@@ -33,7 +33,7 @@ const defaultButtonState: ButtonState = {
     disabled: true,
 };
 
-export const MyCalMailboard: FunctionComponent<PropTypes> = (props) => {
+export const Mailboard: FunctionComponent<PropTypes> = (props) => {
     const { setAlert } = useAlert();
     const [mailboardState, setMailboardState] = useState<I_MailBoard>(props.mailboard);
     const [buttonState, setButtonState] = useState<ButtonState>(defaultButtonState);

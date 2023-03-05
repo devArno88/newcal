@@ -44,6 +44,7 @@
         "@mui/x-date-pickers": "^5.0.5",
         "@next-auth/mongodb-adapter": "^1.1.0",
         "@next/bundle-analyzer": "^12.3.1",
+        "cypress": "^12.7.0",
         "dateformat": "^5.0.3",
         "dayjs": "^1.11.6",
         "moment": "^2.29.4",
@@ -58,8 +59,10 @@
         "swr": "^2.0.3"
     },
     "devDependencies": {
+        "@testing-library/cypress": "^9.0.0",
         "@types/node": "^17",
         "@types/react": "^18.0.15",
+        "cypress-social-logins": "^1.14.0",
         "eslint": "8.25.0",
         "eslint-config-next": "12.3.1",
         "typescript": "^4"

@@ -1,14 +1,11 @@
-import { handlePostLike } from "@/src/actions/post";
+import { deletePost, handlePostLike } from "@/src/actions/post";
 import { CommentForm } from "@/src/content/Modal";
 import { E_AlertTypes } from "@/src/context";
 import { E_PostType, I_Alerter, I_Likes, I_Mutator, I_NewCalSession, I_Views } from "@/src/interfaces";
-import { appColors } from "@/src/utils";
-import AddCommentTwoToneIcon from "@mui/icons-material/AddCommentTwoTone";
-import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
-import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
-import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
+import { appColors, Icon_AddComment, Icon_Delete, Icon_LikeActive, Icon_LikeInactive, Icon_View } from "@/src/utils";
 import { CircularProgress, Paper, Stack, Typography } from "@mui/material";
 import { Types } from "mongoose";
+import { NextRouter } from "next/router";
 import { FunctionComponent, useState } from "react";
 
 const sxPaper = {
@@ -20,13 +17,14 @@ const sxPaper = {
     border: `1px solid ${appColors.border}`,
 };
 
-const sxIcon = {
-    fill: appColors.text.primary,
-};
-
 interface PropTypes extends I_Likes, I_NewCalSession, I_Mutator, I_Alerter, I_Views {
     postID: Types.ObjectId;
     type: E_PostType;
+    router: NextRouter;
+    postAuthor: {
+        user: Types.ObjectId;
+        userType: "admin" | "resident";
+    };
 }
 
 export const PostPageActions: FunctionComponent<PropTypes> = (props) => {
@@ -42,51 +40,22 @@ export const PostPageActions: FunctionComponent<PropTypes> = (props) => {
             if (res?.msg) props.mutate();
         }
     };
+    const onDelete = async () => {
+        if (window.confirm("Are you sure you want to delete this post?")) {
+            props.router.push("/posts");
+            const res = await deletePost({ postID: props.postID });
+            if (res?.err) props.setAlert({ type: E_AlertTypes.error, text: res.err });
+            if (res?.msg) {
+                props.mutate();
+                props.setAlert({ type: E_AlertTypes.success, text: res?.msg });
+            }
+        }
+    };
     const adminLikes = props.likes?.filter((x) => x.user.role).map((x) => x.user.name);
     return (
         <Stack>
-            <Stack direction="row" spacing={2} ml={6}>
-                <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={onLike}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        {loading ? (
-                            <CircularProgress sx={{ height: 28, width: 28 }} />
-                        ) : props.likes.some((x) => x.user._id.toString() === props.session?.id) ? (
-                            <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: "greenyellow" }} />
-                        ) : (
-                            <FavoriteBorderTwoToneIcon sx={sxIcon} />
-                        )}
-                        {/* {loading ? null : props.likes.length ? ( */}
-                        <Typography sx={{ color: appColors.text.primary }}>
-                            {props.likes.length || "No"} like{props.likes.length === 1 ? null : "s"}
-                        </Typography>
-                        {/* ) : null} */}
-                    </Stack>
-                </Paper>
-                <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={() => setOpen(true)}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <AddCommentTwoToneIcon sx={sxIcon} />
-                        <Typography sx={{ color: appColors.text.primary }}>Comment</Typography>
-                    </Stack>
-                </Paper>
-                <Paper sx={sxPaper}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <VisibilityTwoToneIcon sx={sxIcon} />
-                        <Typography sx={{ color: appColors.text.primary }}>
-                            {props.views.length || "No"} view{props.views.length === 1 ? null : "s"}
-                        </Typography>
-                    </Stack>
-                </Paper>
-                <CommentForm
-                    open={open}
-                    itemType="post"
-                    itemID={props.postID}
-                    mutate={props.mutate}
-                    titleType={props.type}
-                    handleClose={() => setOpen(false)}
-                />
-            </Stack>
             {adminLikes.length ? (
-                <Typography ml={7} mt={3} mb={-3} sx={{ color: "greenyellow", opacity: 0.8 }}>
+                <Typography ml={7} mt={-1} mb={3} sx={{ color: "greenyellow", opacity: 0.8 }}>
                     {`Liked by NewCal ${
                         adminLikes.length === 1
                             ? adminLikes[0]
@@ -96,6 +65,52 @@ export const PostPageActions: FunctionComponent<PropTypes> = (props) => {
                     }`}
                 </Typography>
             ) : null}
+            <Stack direction="row" spacing={2} ml={6}>
+                <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={onLike}>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        {loading ? (
+                            <CircularProgress sx={{ height: 28, width: 28 }} />
+                        ) : props.likes.some((x) => x.user._id.toString() === props.session?.id) ? (
+                            <Icon_LikeActive sx={{ fill: "greenyellow" }} />
+                        ) : (
+                            <Icon_LikeInactive sx={{ fill: appColors.text.primary }} />
+                        )}
+                        <Typography sx={{ color: appColors.text.primary }}>
+                            {props.likes.length || "No"} like{props.likes.length === 1 ? null : "s"}
+                        </Typography>
+                    </Stack>
+                </Paper>
+                <Paper sx={sxPaper}>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Icon_View sx={{ fill: appColors.text.primary }} />
+                        <Typography sx={{ color: appColors.text.primary }}>
+                            {props.views.length || "No"} view{props.views.length === 1 ? null : "s"}
+                        </Typography>
+                    </Stack>
+                </Paper>
+                <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={() => setOpen(true)}>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Icon_AddComment sx={{ fill: appColors.text.primary }} />
+                        <Typography sx={{ color: appColors.text.primary }}>Comment</Typography>
+                    </Stack>
+                </Paper>
+                {props.postAuthor.user.toString() === props.session?.id ? (
+                    <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={onDelete}>
+                        <Stack direction="row" spacing={1} alignItems="center">
+                            <Icon_Delete sx={{ fill: "salmon" }} />
+                            <Typography sx={{ color: "salmon" }}>Delete</Typography>
+                        </Stack>
+                    </Paper>
+                ) : null}
+                <CommentForm
+                    open={open}
+                    itemType="post"
+                    itemID={props.postID}
+                    mutate={props.mutate}
+                    titleType={props.type}
+                    handleClose={() => setOpen(false)}
+                />
+            </Stack>
         </Stack>
     );
 };

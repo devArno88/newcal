@@ -20,7 +20,7 @@ export default function Page() {
                 <title>Pool | NewCal</title>
             </Head>
 
-            <Layout session={session}>
+            <Layout>
                 <BookingSuite
                     date={date}
                     mutate={mutate}

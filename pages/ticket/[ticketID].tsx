@@ -17,8 +17,14 @@ export default function Page() {
         query: { ticketID },
     } = router;
     const { data: session, status } = useSession();
-    const { data: ticket, error, isLoading, mutate } = useSWR(ticketID ? `/api/ticket/${ticketID}` : null, fetcher);
-    const loading = isLoading || status === "loading";
+    const {
+        data: ticket,
+        error,
+        isLoading,
+        isValidating,
+        mutate,
+    } = useSWR(ticketID ? `/api/ticket/${ticketID}` : null, fetcher);
+    const loading = isLoading || isValidating || status === "loading";
     useEffect(() => {
         async function handleView(id) {
             await addTicketView({ ticketID: id });
@@ -32,12 +38,12 @@ export default function Page() {
                 <title>Ticket | NewCal</title>
             </Head>
 
-            <Layout session={session}>
+            <Layout>
                 {loading ? (
                     <Loading />
-                ) : (
-                    <TicketPage ticket={ticket} mutate={mutate} session={session} setAlert={setAlert} />
-                )}
+                ) : ticket ? (
+                    <TicketPage router={router} ticket={ticket} mutate={mutate} session={session} setAlert={setAlert} />
+                ) : null}
             </Layout>
         </>
     );

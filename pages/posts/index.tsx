@@ -17,7 +17,7 @@ export default function Page() {
                 <title>Posts | NewCal</title>
             </Head>
 
-            <Layout session={session}>
+            <Layout>
                 <Posts data={data} loading={loading} mutate={mutate} />
             </Layout>
         </>

@@ -26,6 +26,7 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: appColors.text.primary,
+    cursor: "pointer",
 }));
 
 interface DashboardPanel {
@@ -79,10 +80,14 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
+            // {
+            //     href: "/admin-chat",
+            //     element: <ChatPanel />,
+            // },
         ],
         [E_Roles.concierge]: [
             {
-                href: "/mycal/mailboard",
+                href: "/mailboard",
                 element: <MailboardPanel isAdmin={isAdmin(props.session)} mailboard={mailboard} />,
             },
             {
@@ -93,6 +98,10 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
+            // {
+            //     href: "/admin-chat",
+            //     element: <ChatPanel />,
+            // },
         ],
         [E_Roles.development]: [
             {
@@ -103,6 +112,10 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
+            // {
+            //     href: "/admin-chat",
+            //     element: <ChatPanel />,
+            // },
         ],
     };
     return (
@@ -114,8 +127,8 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                         <Grid
                             item
                             xs={12}
-                            sm={isAdmin(props.session) && x.href === "/mycal/mailboard" ? 12 : 4}
-                            md={isAdmin(props.session) && x.href === "/mycal/mailboard" ? 12 : 6}
+                            sm={isAdmin(props.session) && x.href === "/mailboard" ? 12 : 4}
+                            md={isAdmin(props.session) && x.href === "/mailboard" ? 12 : 6}
                             key={x.href ? undefined : i}
                         >
                             <Item>{x.element}</Item>

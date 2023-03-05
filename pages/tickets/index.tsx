@@ -17,7 +17,7 @@ export default function Page() {
                 <title>Tickets | NewCal</title>
             </Head>
 
-            <Layout session={session}>
+            <Layout>
                 <Tickets data={data} loading={loading} mutate={mutate} />
             </Layout>
         </>

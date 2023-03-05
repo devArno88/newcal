@@ -2,6 +2,7 @@ import { PageHeader } from "@/src/components";
 import { I_Alerter, I_Mutator, I_NewCalSession, I_Ticket } from "@/src/interfaces";
 import { appColors, capitalise, fromNowDate, sortArrayByDate } from "@/src/utils";
 import { Divider, Stack } from "@mui/material";
+import { NextRouter } from "next/router";
 import { Fragment, FunctionComponent, ReactElement } from "react";
 import { TicketPageActions } from "./TicketPageActions";
 import { TicketPageComment } from "./TicketPageComment";
@@ -9,6 +10,7 @@ import { TicketPageContent } from "./TicketPageContent";
 
 interface PropTypes extends I_Mutator, I_NewCalSession, I_Alerter {
     ticket: I_Ticket;
+    router: NextRouter;
 }
 
 export const TicketPage: FunctionComponent<PropTypes> = (props): ReactElement => {
@@ -24,6 +26,11 @@ export const TicketPage: FunctionComponent<PropTypes> = (props): ReactElement =>
             />
             <TicketPageContent title={props.ticket.title} content={props.ticket.content} type={props.ticket.type} />
             <TicketPageActions
+                router={props.router}
+                ticketAuthor={{
+                    user: props.ticket.user._id,
+                    userType: props.ticket.userType,
+                }}
                 setAlert={props.setAlert}
                 mutate={props.mutate}
                 type={props.ticket.type}

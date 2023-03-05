@@ -17,8 +17,14 @@ export default function Page() {
         query: { postID },
     } = router;
     const { data: session, status } = useSession();
-    const { data: post, error, isLoading, mutate } = useSWR(postID ? `/api/post/${postID}` : null, fetcher);
-    const loading = isLoading || status === "loading";
+    const {
+        data: post,
+        error,
+        isValidating,
+        isLoading,
+        mutate,
+    } = useSWR(postID ? `/api/post/${postID}` : null, fetcher);
+    const loading = isLoading || isValidating || status === "loading";
     useEffect(() => {
         async function handleView(id) {
             await addPostView({ postID: id });
@@ -32,8 +38,12 @@ export default function Page() {
                 <title>Post | NewCal</title>
             </Head>
 
-            <Layout session={session}>
-                {loading ? <Loading /> : <PostPage post={post} mutate={mutate} session={session} setAlert={setAlert} />}
+            <Layout>
+                {loading ? (
+                    <Loading />
+                ) : post ? (
+                    <PostPage router={router} post={post} mutate={mutate} session={session} setAlert={setAlert} />
+                ) : null}
             </Layout>
         </>
     );

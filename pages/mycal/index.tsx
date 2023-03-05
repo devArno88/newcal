@@ -17,9 +17,7 @@ export default function Page() {
                 <title>MyCal | NewCal</title>
             </Head>
 
-            <Layout session={session}>
-                {loading ? <Loading /> : <MyCalDashboard session={session} data={data} mutate={mutate} />}
-            </Layout>
+            <Layout>{loading ? <Loading /> : <MyCalDashboard session={session} data={data} mutate={mutate} />}</Layout>
         </>
     );
 }

@@ -1,15 +1,10 @@
+import { I_NewCalSession } from "@/src/interfaces";
 import BusinessTwoToneIcon from "@mui/icons-material/BusinessTwoTone";
-import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
-import EventAvailableTwoToneIcon from "@mui/icons-material/EventAvailableTwoTone";
-import WarningTwoToneIcon from "@mui/icons-material/WarningTwoTone";
-import WhatshotTwoToneIcon from "@mui/icons-material/WhatshotTwoTone";
-import { Box, SvgIconTypeMap, Toolbar, Tooltip } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Container from "@mui/material/Container";
+import { AppBar, Box, Container, SvgIconTypeMap, Toolbar, Tooltip } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Link from "next/link";
 import { FunctionComponent } from "react";
-import { I_NewCalSession } from "../interfaces";
+import { Icon_Booking, Icon_Dashboard, Icon_Posts, Icon_Tickets } from "../utils";
 import AuthBar from "./AuthBar";
 
 interface NavItemData {
@@ -24,22 +19,22 @@ const navItems: NavItemData[] = [
     {
         name: "MyCal",
         href: "/mycal",
-        icon: DashboardTwoToneIcon,
+        icon: Icon_Dashboard,
     },
     {
         name: "Bookings",
         href: "/bookings",
-        icon: EventAvailableTwoToneIcon,
+        icon: Icon_Booking,
     },
     {
         name: "Activity",
         href: "/posts",
-        icon: WhatshotTwoToneIcon,
+        icon: Icon_Posts,
     },
     {
         name: "Tickets",
         href: "/tickets",
-        icon: WarningTwoToneIcon,
+        icon: Icon_Tickets,
     },
 ];
 

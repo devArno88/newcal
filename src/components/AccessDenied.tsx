@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import Link from "next/link";
 import { PageHeader } from "./PageHeader";
 
-export default function AccessDenied() {
+export const AccessDenied = () => {
     return (
         <>
             <PageHeader title="STOP!" subtitle="You do not have permission to view this page" />
@@ -13,4 +13,4 @@ export default function AccessDenied() {
             </Box>
         </>
     );
-}
+};

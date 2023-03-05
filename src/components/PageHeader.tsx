@@ -2,6 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 import { IconConfig } from "../content/Bookings";
 import { E_BookingType } from "../interfaces";
+import { appColors } from "../utils";
 
 interface PropTypes {
     title: string;
@@ -15,9 +16,11 @@ export const PageHeader: FunctionComponent<PropTypes> = (props) => {
         <Stack sx={{ textAlign: "center", mt: 3 }}>
             <Stack direction="row" display="flex" alignItems="center" justifyContent="center" marginBottom={1}>
                 {Icon ? <Icon fontSize="large" sx={{ mr: 1 }} /> : null}
-                <Typography variant="h4">{props.title}</Typography>
+                <Typography sx={{ color: appColors.text.primary }} variant="h4" letterSpacing={1}>
+                    {props.title}
+                </Typography>
             </Stack>
-            <Typography variant="h6" fontFamily="monospace" sx={{ color: "#708090" }}>
+            <Typography variant="h6" fontFamily="monospace" sx={{ color: "#709561" }}>
                 {props.subtitle}
             </Typography>
         </Stack>

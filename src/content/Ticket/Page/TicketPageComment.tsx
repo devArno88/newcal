@@ -40,6 +40,7 @@ export const TicketPageComment: FunctionComponent<PropTypes> = (props) => {
         }
     };
     const Icon = props.userType === "admin" ? AdminIcons[props.user.role] : null;
+    const adminLikes = props.likes?.filter((x) => x.user.role).map((x) => x.user.name);
     return (
         <Stack direction="row" alignItems="flex-start" spacing={3}>
             <Paper
@@ -56,7 +57,7 @@ export const TicketPageComment: FunctionComponent<PropTypes> = (props) => {
                     </Avatar>
                     <Stack>
                         <Typography noWrap sx={{ color: appColors.text.secondary }}>
-                            {`${props.userType === "admin" ? "NewCal" : null} ${props.user.name}`}
+                            {props.userType === "admin" ? "NewCal" : null} {props.user.name}
                         </Typography>
                         <Typography
                             variant="caption"
@@ -72,6 +73,18 @@ export const TicketPageComment: FunctionComponent<PropTypes> = (props) => {
             </Paper>
             <Stack>
                 <Typography variant="h6">{props.text}</Typography>
+                {adminLikes.length ? (
+                    <Typography mt={1} sx={{ color: "greenyellow", opacity: 0.8 }}>
+                        {`Liked by NewCal ${
+                            adminLikes.length === 1
+                                ? adminLikes[0]
+                                : adminLikes.length === 2
+                                ? adminLikes.join(" and ")
+                                : `${adminLikes[0]}, ${adminLikes[1]} and ${adminLikes[2]}`
+                        }`}
+                    </Typography>
+                ) : null}
+
                 <Stack direction="row" spacing={2} mt={2}>
                     <IconButton
                         onClick={() => onLikeComment(props?._id)}

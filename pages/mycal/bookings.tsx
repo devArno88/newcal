@@ -17,7 +17,7 @@ export default function Page() {
                 <title>My Bookings | NewCal</title>
             </Head>
 
-            <Layout session={session}>
+            <Layout>
                 <MyCalBookings data={data} loading={loading} mutate={mutate} session={session} />
             </Layout>
         </>

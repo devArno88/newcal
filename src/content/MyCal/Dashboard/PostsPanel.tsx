@@ -20,7 +20,6 @@ export const PostsPanel = (props) => {
                     mb: 1,
                     pt: 1,
                     pb: 1,
-                    cursor: "pointer",
                     height: "fit-content",
                     bgcolor: "#22272D",
                     borderRadius: 2,

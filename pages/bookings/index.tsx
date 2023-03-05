@@ -11,7 +11,7 @@ export default function Page() {
                 <title>Bookings | NewCal</title>
             </Head>
 
-            <Layout session={session}>
+            <Layout>
                 <BookingsMenu />
             </Layout>
         </>

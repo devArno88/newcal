@@ -1,11 +1,12 @@
-import { signIn, signOut } from "next-auth/react";
-
+import { AdminIcons, isAdmin } from "@/src/utils";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import { Avatar, Box, Button } from "@mui/material";
+import { signIn, signOut } from "next-auth/react";
 
 export default function AuthBar(props: any): JSX.Element {
     const { session } = props;
-    const isAdmin = ["management", "concierge", "development"].includes(session?.role);
+    const adminAccount = isAdmin(session);
+    const Icon = adminAccount ? AdminIcons[session.role] : null;
     return (
         <div
             style={{
@@ -17,12 +18,20 @@ export default function AuthBar(props: any): JSX.Element {
         >
             {session ? (
                 <>
-                    <Avatar alt={session.name} src={session.user?.image ?? "/user.png"} style={{ marginRight: 8 }} />
+                    {adminAccount && Icon ? (
+                        <Avatar alt={session?.role} src="/" sx={{ bgcolor: "greenyellow", mr: 1, opacity: 0.9 }}>
+                            <Icon sx={{ fill: "#333" }} />
+                        </Avatar>
+                    ) : (
+                        <Avatar alt={session.name} src={session.user?.image ?? "/user.png"} sx={{ mr: 1 }} />
+                    )}
 
                     <Box sx={{ display: { xs: "none", sm: "block", overflow: "none" } }}>
-                        <strong style={{ fontSize: 12 }}>{isAdmin ? session?.name : session.name.split(" ")[0]}</strong>
+                        <strong style={{ fontSize: 12, color: "greenyellow" }}>
+                            {adminAccount ? session?.name : session.name.split(" ")[0]}
+                        </strong>
                         <br />
-                        <small style={{ fontSize: 12 }}>{isAdmin ? "NewCal Admin" : `Flat ${session.flat}`}</small>
+                        <small style={{ fontSize: 11 }}>{adminAccount ? "NewCal Admin" : `Flat ${session.flat}`}</small>
                     </Box>
 
                     <ExitToAppTwoToneIcon

@@ -1,6 +1,7 @@
 import { getRandomArrayElement } from "./arr";
 
 export const appColors = {
+    dark: "#0d1117",
     background: "#161b22",
     card: "#0d1117",
     border: "#555",
