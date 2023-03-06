@@ -17,14 +17,8 @@ export default function Page() {
         query: { ticketID },
     } = router;
     const { data: session, status } = useSession();
-    const {
-        data: ticket,
-        error,
-        isLoading,
-        isValidating,
-        mutate,
-    } = useSWR(ticketID ? `/api/ticket/${ticketID}` : null, fetcher);
-    const loading = isLoading || isValidating || status === "loading";
+    const { data: ticket, error, isLoading, mutate } = useSWR(ticketID ? `/api/ticket/${ticketID}` : null, fetcher);
+    const loading = isLoading || status === "loading";
     useEffect(() => {
         async function handleView(id) {
             await addTicketView({ ticketID: id });

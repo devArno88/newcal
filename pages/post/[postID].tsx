@@ -17,14 +17,8 @@ export default function Page() {
         query: { postID },
     } = router;
     const { data: session, status } = useSession();
-    const {
-        data: post,
-        error,
-        isValidating,
-        isLoading,
-        mutate,
-    } = useSWR(postID ? `/api/post/${postID}` : null, fetcher);
-    const loading = isLoading || isValidating || status === "loading";
+    const { data: post, error, isLoading, mutate } = useSWR(postID ? `/api/post/${postID}` : null, fetcher);
+    const loading = isLoading || status === "loading";
     useEffect(() => {
         async function handleView(id) {
             await addPostView({ postID: id });
