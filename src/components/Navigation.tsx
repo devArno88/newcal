@@ -169,7 +169,7 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
                                 mr: 2,
                             }}
                         >
-                            <Image src="/favicon.ico" height={40} width={40} />
+                            <Image src="/favicon.ico" height={40} width={40} alt="Logo" />
                         </Box>
                     </Link>
                     <Box sx={{ flexGrow: 1, display: props.session ? { xs: "flex", md: "none" } : "none" }}>
