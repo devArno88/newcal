@@ -53,7 +53,12 @@ export const ChatPanel = ({ chat }) => {
                     title="Latest"
                     subtitle={
                         <>
-                            {capitalise(chat?.messages[0].user.role)}: <i>"{abbreviate(chat?.messages[0].text, 20)}"</i>
+                            {capitalise(chat?.messages[0].user.role)}:{" "}
+                            <i>
+                                {`"`}
+                                {abbreviate(chat?.messages[0].text, 20)}
+                                {`"`}
+                            </i>
                         </>
                     }
                 />
