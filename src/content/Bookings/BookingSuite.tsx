@@ -42,7 +42,7 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
 
     const pendingBookings = props.bookings?.filter((b) => {
         const details = defaultSlotDetails({ type: props.type, slot: b.slot });
-        const isUpcoming = details.end > nowTime;
+        const isUpcoming = b.flat === props.session?.flat && details.end > nowTime;
         const isReserved =
             b.flat === props.session?.flat && getDateString(selectedDate) === getDateString(props.date["$d"]);
         return today ? isUpcoming : isReserved;
