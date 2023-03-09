@@ -20,7 +20,7 @@ export const PageHeader: FunctionComponent<PropTypes> = (props) => {
                     {props.title}
                 </Typography>
             </Stack>
-            <Typography variant="h6" fontFamily="monospace" sx={{ color: "#709561" }}>
+            <Typography variant="h5" fontFamily="monospace" sx={{ color: appColors.secondary }}>
                 {props.subtitle}
             </Typography>
         </Stack>

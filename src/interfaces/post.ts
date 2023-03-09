@@ -6,6 +6,7 @@ export enum E_PostType {
     notice = "notice", // Updates/warnings
     listing = "listing", // Flat availabilities
     question = "question", // Building-wide questions
+    warning = "warning",
 }
 
 export interface I_Like {

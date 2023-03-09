@@ -1,6 +1,7 @@
 import { createTicket } from "@/src/actions/ticket";
 import { FormSelect } from "@/src/components/FormSelect";
-import { E_TicketType, I_Mutator } from "@/src/interfaces";
+import { E_AlertTypes } from "@/src/context";
+import { E_TicketType, I_Alerter, I_Mutator } from "@/src/interfaces";
 import { S_TicketOptions } from "@/src/strings";
 import { appColors } from "@/src/utils";
 import { Button, FormControl, Modal, Stack, TextField, Typography } from "@mui/material";
@@ -18,7 +19,7 @@ const style = {
     bgcolor: "#0d1117",
 };
 
-interface PropTypes extends I_Mutator {
+interface PropTypes extends I_Mutator, I_Alerter {
     open: boolean;
     handleClose: () => void;
 }
@@ -42,11 +43,11 @@ export const TicketForm: FunctionComponent<PropTypes> = (props) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const res = await createTicket({ formData });
-        if (res.error) {
-        } else {
-            // Success
+        if (res?.err) props.setAlert({ type: E_AlertTypes.error, text: res?.err });
+        if (res?.msg) {
             props.mutate();
             props.handleClose();
+            props.setAlert({ type: E_AlertTypes.success, text: res?.msg });
         }
     };
     return (

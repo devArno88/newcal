@@ -74,7 +74,7 @@ export const TicketPageComment: FunctionComponent<PropTypes> = (props) => {
             <Stack>
                 <Typography variant="h6">{props.text}</Typography>
                 {adminLikes.length ? (
-                    <Typography mt={1} sx={{ color: "greenyellow", opacity: 0.8 }}>
+                    <Typography mt={1} sx={{ color: appColors.secondary, opacity: 0.8 }}>
                         {`Liked by NewCal ${
                             adminLikes.length === 1
                                 ? adminLikes[0]
@@ -94,7 +94,7 @@ export const TicketPageComment: FunctionComponent<PropTypes> = (props) => {
                             {loading ? (
                                 <CircularProgress sx={{ height: 28, width: 28 }} />
                             ) : props.likes.some((x) => x.user._id.toString() === props.session?.id) ? (
-                                <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: "greenyellow" }} />
+                                <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: appColors.secondary }} />
                             ) : (
                                 <FavoriteBorderTwoToneIcon sx={sxIcon} />
                             )}

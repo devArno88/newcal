@@ -10,10 +10,10 @@ const Schema = new mongoose.Schema<I_Chat>({
     ],
     messages: [
         {
-            author: { type: mongoose.Schema.Types.ObjectId, refPath: "messages.userType" },
+            user: { type: mongoose.Schema.Types.ObjectId, refPath: "messages.userType" },
             userType: { type: String, enum: ["resident", "admin"] },
             text: { type: String, required: true },
-            date: { type: String, default: Date.now },
+            date: { type: Date, default: Date.now },
         },
     ],
 });

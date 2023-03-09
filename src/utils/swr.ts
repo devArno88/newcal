@@ -10,8 +10,9 @@ export const fetcher = async (...args: Parameters<typeof fetch>) => {
     const res = await fetch(...args);
 
     if (!res.ok) {
-        console.error({ error: await res.json(), status: res.status });
-        throw new Error("ERROR (SWR > FETCHER)");
+        const errRes = await res.json();
+        console.error({ error: errRes.err, status: res.status });
+        throw new Error(errRes.err);
     }
 
     return res.json();

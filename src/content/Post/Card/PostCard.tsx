@@ -17,6 +17,7 @@ const ChipColors = {
     [E_PostType.listing]: "warning",
     [E_PostType.notice]: "secondary",
     [E_PostType.question]: "info",
+    [E_PostType.warning]: "error",
 };
 
 export const PostCard: FunctionComponent<PropTypes> = (props) => {
@@ -54,7 +55,7 @@ export const PostCard: FunctionComponent<PropTypes> = (props) => {
                         />
                     }
                     avatar={
-                        <Avatar sx={{ bgcolor: getFlatColor() }} aria-label="recipe">
+                        <Avatar sx={{ bgcolor: getFlatColor() }} aria-label="post-chip">
                             {props.user.role && Icon ? <Icon /> : props.user.flat || null}
                         </Avatar>
                     }

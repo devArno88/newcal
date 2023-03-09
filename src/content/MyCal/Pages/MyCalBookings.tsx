@@ -70,7 +70,7 @@ export const MyCalBookings: FunctionComponent<PropTypes> = (props) => {
             <PageHeader title="My Bookings" subtitle={`${capitalise(type)} Bookings History`} />
             <Link href={`/bookings/${type === E_BookingType.table ? "tables" : type}`}>
                 <Button variant="contained" color="info" sx={{ width: { xs: 200, sm: 220, md: 240 }, pl: 1, pr: 1 }}>
-                    Find New Booking
+                    Find New {capitalise(type)} Booking
                 </Button>
             </Link>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

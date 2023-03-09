@@ -34,6 +34,7 @@ export const AppError: React.FunctionComponent<PropTypes> = (props) => {
                     target="_blank"
                     rel="noreferrer"
                     href={`mailto:${config.supportEmail}?subject=I have an issue&body=${body}`}
+                    style={{ color: "red", textDecoration: "none" }}
                 >
                     email the site developer
                 </a>{" "}

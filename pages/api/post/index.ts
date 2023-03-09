@@ -19,7 +19,7 @@ const routes = {
                 userType,
             });
             await post.save();
-            res.status(200).json(post);
+            res.status(200).json({ msg: "Post created successfully" });
         } catch (err) {
             res.status(500).json({ err: "Post could not be created" });
         }

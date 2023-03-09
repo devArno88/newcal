@@ -5,6 +5,12 @@ export const getDateString = (date: Date) => date?.toISOString()?.split("T")[0];
 
 export const fromNowDate = (date: Date) => moment(date).fromNow();
 
+export const daysToSeconds = (days: number) => days * 24 * 60 * 60 * 1000;
+
+export const shortDate = (date: Date | string) => dateFormat(date, "dddd, mmmm dS");
+
+export const niceDate = (date: Date | string) => dateFormat(date, "dddd, mmmm dS, yyyy");
+
 export const getDateRange = (date: Date) => {
     const start = new Date(date);
     const end = new Date(start.getTime() + 24 * 60 * 60 * 1000);
@@ -25,7 +31,7 @@ export const getFortnightAway = () => {
 
 export const withinTwoWeeks = (date: Date) => {
     const start = new Date();
-    const end = new Date(start.getTime() + 14 * 24 * 60 * 60 * 1000);
+    const end = new Date(start.getTime() + daysToSeconds(14));
     return start <= date && date <= end;
 };
 
@@ -42,6 +48,15 @@ export const isToday = (date: Date | string) => {
         return false;
     }
 };
-export const shortDate = (date: Date | string) => dateFormat(date, "dddd, mmmm dS");
 
-export const niceDate = (date: Date | string) => dateFormat(date, "dddd, mmmm dS, yyyy");
+export const within3Days = (date: Date) => {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - daysToSeconds(3));
+    return weekAgo <= date && date <= now;
+};
+
+export const within24Hours = (date: Date) => {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - daysToSeconds(1));
+    return weekAgo <= date && date <= now;
+};

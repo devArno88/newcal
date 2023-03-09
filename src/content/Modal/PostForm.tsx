@@ -1,6 +1,7 @@
 import { createPost } from "@/src/actions/post";
 import { FormSelect } from "@/src/components/FormSelect";
-import { E_PostType, I_Mutator } from "@/src/interfaces";
+import { E_AlertTypes } from "@/src/context";
+import { E_PostType, E_Roles, I_Alerter, I_Mutator, I_NewCalSession } from "@/src/interfaces";
 import { S_PostOptions } from "@/src/strings";
 import { appColors } from "@/src/utils";
 import { Button, Stack, TextField } from "@mui/material";
@@ -21,7 +22,7 @@ const style = {
     bgcolor: "#0d1117",
 };
 
-interface PropTypes extends I_Mutator {
+interface PropTypes extends I_Mutator, I_NewCalSession, I_Alerter {
     open: boolean;
     handleClose: () => void;
 }
@@ -45,11 +46,11 @@ export const PostForm: FunctionComponent<PropTypes> = (props) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const res = await createPost({ formData });
-        if (res.error) {
-        } else {
-            // Success
+        if (res?.err) props.setAlert({ type: E_AlertTypes.error, text: res?.err });
+        if (res?.msg) {
             props.mutate();
             props.handleClose();
+            props.setAlert({ type: E_AlertTypes.success, text: res?.msg });
         }
     };
     return (
@@ -72,7 +73,11 @@ export const PostForm: FunctionComponent<PropTypes> = (props) => {
                 <Stack spacing={2} mt={3} mb={3}>
                     <FormSelect
                         helperText="What type of post is this?"
-                        options={S_PostOptions}
+                        options={
+                            [E_Roles.management, E_Roles.development].includes(props.session?.role)
+                                ? S_PostOptions
+                                : S_PostOptions.slice(1)
+                        }
                         value={type}
                         onChange={onChange}
                     />

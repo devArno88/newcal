@@ -13,13 +13,13 @@ const routes = {
         try {
             const { ...data } = req.body;
             const userType = isAdmin(session) ? "admin" : "resident";
-            const post = new TicketSchema({
+            const ticket = new TicketSchema({
                 ...data,
                 user: session.id,
                 userType,
             });
-            await post.save();
-            res.status(200).json(post);
+            await ticket.save();
+            res.status(200).json({ msg: "Ticket created successfully" });
         } catch (err) {
             res.status(500).json({ err: "Ticket could not be created" });
         }

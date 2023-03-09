@@ -18,7 +18,9 @@ import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneT
 import QuestionAnswerTwoToneIcon from "@mui/icons-material/QuestionAnswerTwoTone";
 import QuizTwoToneIcon from "@mui/icons-material/QuizTwoTone";
 import ReportProblemTwoToneIcon from "@mui/icons-material/ReportProblemTwoTone";
+import ReportTwoToneIcon from "@mui/icons-material/ReportTwoTone";
 import RoomServiceTwoToneIcon from "@mui/icons-material/RoomServiceTwoTone";
+import SendTwoToneIcon from "@mui/icons-material/SendTwoTone";
 import ThreePTwoToneIcon from "@mui/icons-material/ThreePTwoTone";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
 import WarningTwoToneIcon from "@mui/icons-material/WarningTwoTone";
@@ -48,9 +50,11 @@ export const Icon_LikeActive = FavoriteBorderTwoToneIcon;
 export const Icon_LikeInactive = FavoriteTwoToneIcon;
 export const Icon_AddComment = AddCommentTwoToneIcon;
 export const Icon_Delete = DeleteTwoToneIcon;
+export const Icon_Send = SendTwoToneIcon;
+export const Icon_Warning = ReportTwoToneIcon;
 
 export const AdminIcons = {
+    [E_Roles.management]: Icon_Management,
     [E_Roles.concierge]: Icon_Concierge,
     [E_Roles.development]: Icon_Developer,
-    [E_Roles.management]: Icon_Management,
 };

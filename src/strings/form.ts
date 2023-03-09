@@ -22,6 +22,10 @@ export const S_TicketOptions: Option[] = [
 
 export const S_PostOptions: Option[] = [
     {
+        title: E_PostType.warning,
+        subtitle: "Important updates displayed to residents upon login",
+    },
+    {
         title: E_PostType.notice,
         subtitle: "Any notification or warning of building-related activities",
     },

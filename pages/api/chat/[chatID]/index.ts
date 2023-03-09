@@ -1,13 +1,25 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { ChatSchema } from "@/src/schemas/Chat";
+import { ChatSchema } from "@/src/schemas";
 import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // @routes    GET api/chat/chatID
+    // @desc      Get chat
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    async [E_Fetches.get](req, res, session) {
+        try {
+            const chat = await ChatSchema.findOne({ _id: req.query.chatID }).populate("messages.user");
+            res.status(200).json(chat);
+        } catch (err) {
+            res.status(500).json({ err: `Could not fetch and populate chat ${req.query.chatID}` });
+        }
+    },
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // @routes    PUT api/chat/chatID
-    // @desc      Send message
+    // @desc      Send chat message
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.put](req, res, session) {
         try {
@@ -16,8 +28,8 @@ const routes = {
             if (!chat) return res.status(500).json({ err: "Invalid chat" });
             chat.messages.unshift({
                 text,
-                author: session?.id,
-                role: isAdmin(session) ? "admin" : "resident",
+                user: session?.id,
+                userType: isAdmin(session) ? "admin" : "resident",
             });
             await chat.save();
             res.status(200).json({ msg: "Message sent successfully" });

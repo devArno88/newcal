@@ -1,10 +1,9 @@
-import { Types } from "mongoose";
-import { Maybe } from "./app";
+import { I_User, Maybe } from "./app";
 import { I_MongoID } from "./mongo";
 
 export interface I_Message extends I_MongoID {
-    author: Maybe<Types.ObjectId>;
-    role: Maybe<"resident" | "admin">;
+    user: Maybe<I_User>;
+    userType: Maybe<"resident" | "admin">;
     text: Maybe<string>;
     date?: Maybe<Date>;
 }
@@ -15,7 +14,7 @@ export interface I_Messages {
 
 export interface I_Chat extends I_MongoID, I_Messages {
     participants: {
-        user: Maybe<Types.ObjectId>;
-        role: Maybe<"resident" | "admin">;
+        user: Maybe<I_User>;
+        userType: Maybe<"resident" | "admin">;
     }[];
 }

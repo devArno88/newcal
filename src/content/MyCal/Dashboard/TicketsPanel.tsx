@@ -1,9 +1,10 @@
+import { PanelHeader, PanelSubtitle, PanelTitle } from "@/src/components";
 import { E_TicketType } from "@/src/interfaces";
 import { appColors } from "@/src/utils";
 import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
 import QuizTwoToneIcon from "@mui/icons-material/QuizTwoTone";
 import ReportProblemTwoToneIcon from "@mui/icons-material/ReportProblemTwoTone";
-import { Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 
 const IconConfig = {
     [E_TicketType.enhancement]: AutoAwesomeTwoToneIcon,
@@ -20,35 +21,32 @@ export const TicketsPanel = (props) => {
             [E_TicketType.question]: "asked",
         };
         const action = strings[type];
+        const title = `${props.tickets[type].total || "No"} ${type}${props.tickets[type].total === 1 ? "" : "s"}`;
+        const subtitle = `You have ${
+            props.tickets[type].own ? `${action} ${props.tickets[type].own} ` : `not ${action} any `
+        }${type}${props.tickets[type].own === 1 ? "" : "s"}`;
         return (
             <Paper
                 sx={{
                     mb: 1,
-                    pt: 1,
-                    pb: 1,
+                    pt: 2,
+                    pb: 2,
                     height: "fit-content",
-                    bgcolor: "#22272D",
+                    bgcolor: appColors.panel,
                     borderRadius: 2,
+                    border: `1px solid ${appColors.border}`,
                 }}
                 elevation={5}
             >
                 <Icon sx={{ fill: appColors.text.primary, mr: 1 }} fontSize="large" />
-                <Typography sx={{ color: "greenyellow" }}>
-                    {props.tickets[type].total || "No"} {type}
-                    {props.tickets[type].total !== 1 ? "s" : null}
-                </Typography>
-                <Typography variant="caption" sx={{ color: "gray" }}>
-                    You have {props.tickets[type].own ? `${action} ${props.tickets[type].own} ` : `not ${action} any `}
-                    {type}
-                    {props.tickets[type].total !== 1 ? "s" : null}
-                </Typography>
+                <PanelTitle text={title} />
+                <PanelSubtitle text={subtitle} />
             </Paper>
         );
     };
-
     return (
         <>
-            <Typography variant="h5">Tickets</Typography>
+            <PanelHeader text="Tickets" />
             <Stack mt={2}>
                 {Object.values(E_TicketType).map((x) => (
                     <PanelCard key={x} type={x} />

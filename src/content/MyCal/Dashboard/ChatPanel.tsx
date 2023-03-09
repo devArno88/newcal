@@ -1,40 +1,62 @@
-import { E_PostType } from "@/src/interfaces/post";
-import { Paper, Stack, Typography } from "@mui/material";
+import { PanelHeader, PanelSubtitle, PanelTitle } from "@/src/components";
+import { abbreviate, appColors, capitalise, Icon_Info, within24Hours } from "@/src/utils";
+import { Paper, Stack, Tooltip } from "@mui/material";
 
-export const ChatPanel = (props) => {
-    const PanelCard = ({ type }: { type: E_PostType }) => {
+export const ChatPanel = ({ chat }) => {
+    const PanelCard = ({ title, subtitle }) => {
         return (
             <Paper
+                elevation={5}
                 sx={{
                     mb: 1,
                     pt: 1,
                     pb: 1,
-                    height: "fit-content",
-                    bgcolor: "#22272D",
                     borderRadius: 2,
+                    height: "fit-content",
+                    bgcolor: appColors.panel,
+                    border: `1px solid ${appColors.border}`,
                 }}
-                elevation={5}
             >
-                {/* <Icon sx={{ fill: appColors.text.primary, mr: 1 }} fontSize="large" /> */}
-                <Typography sx={{ color: "greenyellow" }}>
-                    {props.posts[type].total || "No"} {type}
-                    {props.posts[type].total !== 1 ? "s" : null}
-                </Typography>
-                <Typography variant="caption" sx={{ color: "gray" }}>
-                    You have {props.posts[type].own ? `posted ${props.posts[type].own} ` : "not posted any "}
-                    {type}
-                    {props.posts[type].total !== 1 ? "s" : null}
-                </Typography>
+                <PanelTitle text={title} />
+                <PanelSubtitle text={subtitle} />
             </Paper>
         );
     };
     return (
         <>
-            <Typography variant="h5">Chat</Typography>
+            <Stack
+                sx={{ display: { xs: "none", sm: "flex" } }}
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                spacing={1.5}
+                ml={-2}
+            >
+                <Tooltip title="You can view this because you are a NewCal Admin">
+                    <Icon_Info sx={{ fill: appColors.secondary, position: "sticky", right: 20 }} />
+                </Tooltip>
+                <PanelHeader text="Admin Chat" />
+            </Stack>
+
+            <Stack spacing={0.5} sx={{ display: { xs: "block", sm: "none" } }}>
+                <PanelHeader text="Admin Chat" />
+                <PanelSubtitle text="Only viewable to NewCal Admins" />
+            </Stack>
+
             <Stack mt={2}>
-                {Object.values(E_PostType).map((x) => (
-                    <PanelCard key={x} type={x} />
-                ))}
+                <PanelCard title="History" subtitle={`${chat?.messages?.length} messages`} />
+                <PanelCard
+                    title="Recent"
+                    subtitle={`${chat?.messages?.filter((x) => within24Hours(new Date(x.date))).length} messages`}
+                />
+                <PanelCard
+                    title="Latest"
+                    subtitle={
+                        <>
+                            {capitalise(chat?.messages[0].user.role)}: <i>"{abbreviate(chat?.messages[0].text, 20)}"</i>
+                        </>
+                    }
+                />
             </Stack>
         </>
     );

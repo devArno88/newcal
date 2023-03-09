@@ -55,7 +55,7 @@ export const PostPageActions: FunctionComponent<PropTypes> = (props) => {
     return (
         <Stack>
             {adminLikes.length ? (
-                <Typography ml={7} mt={-1} mb={3} sx={{ color: "greenyellow", opacity: 0.8 }}>
+                <Typography ml={7} mt={-1} mb={3} sx={{ color: appColors.secondary, opacity: 0.8 }}>
                     {`Liked by NewCal ${
                         adminLikes.length === 1
                             ? adminLikes[0]
@@ -71,7 +71,7 @@ export const PostPageActions: FunctionComponent<PropTypes> = (props) => {
                         {loading ? (
                             <CircularProgress sx={{ height: 28, width: 28 }} />
                         ) : props.likes.some((x) => x.user._id.toString() === props.session?.id) ? (
-                            <Icon_LikeActive sx={{ fill: "greenyellow" }} />
+                            <Icon_LikeActive sx={{ fill: appColors.secondary }} />
                         ) : (
                             <Icon_LikeInactive sx={{ fill: appColors.text.primary }} />
                         )}

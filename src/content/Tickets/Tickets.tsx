@@ -1,13 +1,13 @@
 import { Loading, PageHeader } from "@/src/components";
 import { TicketForm } from "@/src/content/Modal";
 import { TicketCard } from "@/src/content/Ticket/Card/TicketCard";
-import { I_Mutator, I_Ticket } from "@/src/interfaces";
+import { I_Alerter, I_Mutator, I_Ticket } from "@/src/interfaces";
 import { sortArrayByDate } from "@/src/utils";
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, ReactElement, useState } from "react";
 
-interface PropTypes extends I_Mutator {
+interface PropTypes extends I_Mutator, I_Alerter {
     data: I_Ticket[];
     loading: boolean;
 }
@@ -37,7 +37,12 @@ export const Tickets: FunctionComponent<PropTypes> = (props): ReactElement => {
                         </Button>
                     </Link>
                 </Stack>
-                <TicketForm mutate={props.mutate} open={open} handleClose={() => setOpen(false)} />
+                <TicketForm
+                    setAlert={props.setAlert}
+                    mutate={props.mutate}
+                    open={open}
+                    handleClose={() => setOpen(false)}
+                />
                 <Stack gap={2} mt={4} sx={{ width: { xs: "100%", sm: "70%", md: "65%" } }}>
                     {props.loading ? (
                         <Loading />

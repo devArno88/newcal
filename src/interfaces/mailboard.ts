@@ -102,4 +102,5 @@ export interface I_MailBoard extends I_MongoID {
     Flat98: number;
     Flat99: number;
     Flat100: number;
+    __v?: number;
 }

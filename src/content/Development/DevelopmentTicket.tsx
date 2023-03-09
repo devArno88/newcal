@@ -21,9 +21,10 @@ export const DevelopmentTicket: FunctionComponent<PropTypes> = (props) => {
                         {title}
                     </Typography>
                     <Chip
-                        color={state === "closed" ? "success" : "warning"}
-                        sx={{ width: "fit-content" }}
                         label={state.toUpperCase()}
+                        sx={{ width: "fit-content" }}
+                        color={state === "closed" ? "success" : "warning"}
+                        style={{ border: `2px solid ${appColors.text.primary}`, borderRadius: "1rem" }}
                     />
                 </Stack>
                 <Typography variant="h6" sx={{ color: appColors.text.primary }}>

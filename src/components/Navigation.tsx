@@ -158,7 +158,7 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
     const handleCloseNavMenu = () => setAnchorElNav(null);
     const handleCloseUserMenu = () => setAnchorElUser(null);
     return (
-        <AppBar position="static">
+        <AppBar position="sticky">
             <Container maxWidth="md">
                 <Toolbar disableGutters>
                     <Link href={props.session ? "/mycal" : "/"}>

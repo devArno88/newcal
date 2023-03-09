@@ -1,13 +1,13 @@
 import { Loading, PageHeader } from "@/src/components";
 import { PostForm } from "@/src/content/Modal";
 import { PostCard } from "@/src/content/Post/Card/PostCard";
-import { I_Mutator, I_Post } from "@/src/interfaces";
+import { I_Alerter, I_Mutator, I_NewCalSession, I_Post } from "@/src/interfaces";
 import { sortArrayByDate } from "@/src/utils";
 import { Button, Stack } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, ReactElement, useState } from "react";
 
-interface PropTypes extends I_Mutator {
+interface PropTypes extends I_Mutator, I_NewCalSession, I_Alerter {
     data: I_Post[];
     loading: boolean;
 }
@@ -37,7 +37,13 @@ export const Posts: FunctionComponent<PropTypes> = (props): ReactElement => {
                         </Button>
                     </Link>
                 </Stack>
-                <PostForm mutate={props.mutate} open={open} handleClose={() => setOpen(false)} />
+                <PostForm
+                    open={open}
+                    mutate={props.mutate}
+                    session={props.session}
+                    setAlert={props.setAlert}
+                    handleClose={() => setOpen(false)}
+                />
                 <Stack gap={2} mt={4} sx={{ width: { xs: "100%", sm: "70%", md: "65%" } }}>
                     {props.loading ? (
                         <Loading />

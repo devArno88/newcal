@@ -1,10 +1,10 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches, E_Roles, E_TicketType } from "@/src/interfaces";
 import { E_PostType } from "@/src/interfaces/post";
-import { GymBookingSchema, PoolBookingSchema, TableBookingSchema, TicketSchema } from "@/src/schemas";
+import { ChatSchema, GymBookingSchema, PoolBookingSchema, TableBookingSchema, TicketSchema } from "@/src/schemas";
 import { MailBoardSchema } from "@/src/schemas/MailBoard";
 import { PostSchema } from "@/src/schemas/Post";
-import { connectDB } from "@/src/utils";
+import { connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -14,6 +14,7 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.get](req, res, session) {
         const isResident = session?.role === E_Roles.resident;
+        const userType = isAdmin(session) ? "admin" : "resident";
 
         try {
             // - - -  MAILBOX/MAILBOARD - - - //
@@ -49,74 +50,66 @@ const routes = {
             // - - -  POSTS - - - //
 
             const post_notice_total = await PostSchema.count({ type: E_PostType.notice });
-            const post_notice_own = await PostSchema.count({ type: E_PostType.notice, resident: session?.id });
+            const post_notice_own = await PostSchema.count({ type: E_PostType.notice, user: session?.id, userType });
             const post_listing_total = await PostSchema.count({ type: E_PostType.listing });
-            const post_listing_own = await PostSchema.count({ type: E_PostType.listing, resident: session?.id });
+            const post_listing_own = await PostSchema.count({ type: E_PostType.listing, user: session?.id, userType });
             const post_question_total = await PostSchema.count({ type: E_PostType.question });
             const post_question_own = await PostSchema.count({
                 type: E_PostType.question,
-                resident: session?.id,
+                user: session?.id,
+                userType,
             });
 
             const posts = {
-                notice: {
-                    own: post_notice_own,
-                    total: post_notice_total,
-                },
-                listing: {
-                    own: post_listing_own,
-                    total: post_listing_total,
-                },
-                question: {
-                    own: post_question_own,
-                    total: post_question_total,
-                },
+                notice: { own: post_notice_own, total: post_notice_total },
+                listing: { own: post_listing_own, total: post_listing_total },
+                question: { own: post_question_own, total: post_question_total },
             };
+
+            const warnings = await PostSchema.find({ type: E_PostType.warning }).populate(["user"]);
 
             // - - -  TICKETS - - - //
 
             const ticket_enhancement_total = await TicketSchema.count({ type: E_TicketType.enhancement });
             const ticket_enhancement_own = await TicketSchema.count({
                 type: E_TicketType.enhancement,
-                resident: session?.id,
+                user: session?.id,
+                userType,
             });
             const ticket_issue_total = await TicketSchema.count({ type: E_TicketType.issue });
             const ticket_issue_own = await TicketSchema.count({
                 type: E_TicketType.issue,
-                resident: session?.id,
+                user: session?.id,
+                userType,
             });
             const ticket_question_total = await TicketSchema.count({ type: E_TicketType.question });
             const ticket_question_own = await TicketSchema.count({
                 type: E_TicketType.question,
-                resident: session?.id,
+                user: session?.id,
+                userType,
             });
 
             const tickets = {
-                enhancement: {
-                    own: ticket_enhancement_own,
-                    total: ticket_enhancement_total,
-                },
-                issue: {
-                    own: ticket_issue_own,
-                    total: ticket_issue_total,
-                },
-                question: {
-                    own: ticket_question_own,
-                    total: ticket_question_total,
-                },
+                enhancement: { own: ticket_enhancement_own, total: ticket_enhancement_total },
+                issue: { own: ticket_issue_own, total: ticket_issue_total },
+                question: { own: ticket_question_own, total: ticket_question_total },
             };
 
             // - - - - - - - - - - - - - //
 
+            const chat = await ChatSchema.findById("64039806f432cee69115dd46").populate(["messages.user"]);
+
             res.json({
-                mailboard: isResident ? null : mailboard,
+                mailboard: isResident ? {} : mailboard,
                 mailbox,
                 bookings,
                 posts,
                 tickets,
+                warnings,
+                chat,
             });
         } catch (err) {
-            console.error(err);
+            res.status(500).json({ err: "Could not fetch MyCal data" });
         }
     },
     ///////////////////////////////////////////////////////////
