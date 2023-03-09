@@ -66,7 +66,7 @@ export const MailboardPanel: FunctionComponent<PropTypes> = (props) => {
             ) : (
                 <PanelHeader text="Mailbox" />
             )}
-            <Stack>
+            <Stack mt={2}>
                 <Typography
                     sx={{ color: mailToCollect ? appColors.secondary : "lightseagreen" }}
                     variant="h6"

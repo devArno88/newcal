@@ -1,10 +1,8 @@
 import { deleteTicketComment, handleTicketCommentLike } from "@/src/actions/ticket";
 import { E_AlertTypes } from "@/src/context";
 import { I_Alerter, I_Comment, I_Mutator, I_NewCalSession } from "@/src/interfaces";
-import { AdminIcons, appColors, fromNowDate, getFlatColor } from "@/src/utils";
+import { AdminIcons, appColors, fromNowDate, getFlatColor, Icon_LikeActive, Icon_LikeInactive } from "@/src/utils";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
-import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import { Avatar, CircularProgress, IconButton, Paper, Stack, Typography } from "@mui/material";
 import { Types } from "mongoose";
 import { FunctionComponent, useState } from "react";
@@ -94,9 +92,9 @@ export const TicketPageComment: FunctionComponent<PropTypes> = (props) => {
                             {loading ? (
                                 <CircularProgress sx={{ height: 28, width: 28 }} />
                             ) : props.likes.some((x) => x.user._id.toString() === props.session?.id) ? (
-                                <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: appColors.secondary }} />
+                                <Icon_LikeActive sx={{ ...sxIcon, fill: appColors.secondary }} />
                             ) : (
-                                <FavoriteBorderTwoToneIcon sx={sxIcon} />
+                                <Icon_LikeInactive sx={sxIcon} />
                             )}
                             {loading ? null : props.likes.length ? (
                                 <Typography sx={{ color: appColors.text.primary }}>

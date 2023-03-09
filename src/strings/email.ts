@@ -18,7 +18,7 @@ export const mailboardEmail = ({ name, flat, items }) => `
     <h3>Hi ${name.split(" ")[0]},</h3>
     <h4>Your mailbox has just been updated - there ${items === 1 ? "is" : "are"} ${items === 6 ? "5+" : items} item${
     items === 1 ? "" : "s"
-} to collect for Flat ${flat}</h4>
+} to collect for Flat ${flat}.</h4>
     <h4>Please make your way to reception to collect these at your earliest convenience.</h4>
     <h4>This has been added to your <a href="${
         process.env.NEXTAUTH_URL

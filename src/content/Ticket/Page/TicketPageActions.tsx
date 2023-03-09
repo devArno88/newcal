@@ -2,10 +2,8 @@ import { deleteTicket, handleTicketLike } from "@/src/actions/ticket";
 import { CommentForm } from "@/src/content/Modal";
 import { E_AlertTypes } from "@/src/context";
 import { E_TicketType, I_Alerter, I_Likes, I_Mutator, I_NewCalSession, I_Views } from "@/src/interfaces";
-import { appColors, Icon_Delete } from "@/src/utils";
+import { appColors, Icon_Delete, Icon_LikeActive, Icon_LikeInactive } from "@/src/utils";
 import AddCommentTwoToneIcon from "@mui/icons-material/AddCommentTwoTone";
-import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
-import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
 import { CircularProgress, Paper, Stack, Typography } from "@mui/material";
 import { Types } from "mongoose";
@@ -79,15 +77,13 @@ export const TicketPageActions: FunctionComponent<PropTypes> = (props) => {
                         {loading ? (
                             <CircularProgress sx={{ height: 28, width: 28 }} />
                         ) : props.likes.some((x) => x.user._id.toString() === props.session?.id) ? (
-                            <FavoriteTwoToneIcon sx={{ ...sxIcon, fill: appColors.secondary }} />
+                            <Icon_LikeActive sx={{ ...sxIcon, fill: appColors.secondary }} />
                         ) : (
-                            <FavoriteBorderTwoToneIcon sx={sxIcon} />
+                            <Icon_LikeInactive sx={sxIcon} />
                         )}
-                        {/* {loading ? null : props.likes.length ? ( */}
                         <Typography sx={{ color: appColors.text.primary }}>
                             {props.likes.length || "No"} like{props.likes.length === 1 ? null : "s"}
                         </Typography>
-                        {/* ) : null} */}
                     </Stack>
                 </Paper>
                 <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={() => setOpen(true)}>
