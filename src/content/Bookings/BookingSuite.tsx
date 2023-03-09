@@ -58,7 +58,6 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
     //             error={`Multiple pending bookings exist for ${props?.session?.flat} on ${props.date}`}
     //         />
     //     );
-
     return (
         <Stack gap={4} alignItems="center" justifyContent="center">
             <PageHeader
@@ -107,6 +106,7 @@ export const BookingSuite: FunctionComponent<PropTypes> = (props): ReactElement 
                                     isExpired={isExpired}
                                     isAdmin={!isResident}
                                     isDisabled={isDisabled}
+                                    session={props.session}
                                     isFortnightAway={isFortnightAway}
                                     handleBookingForm={handleBookingForm}
                                     slot={slotStrings[props.type].filter((s) => s.slot === slot.slot)[0]}

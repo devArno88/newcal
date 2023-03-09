@@ -1,9 +1,9 @@
-import { I_Slot } from "@/src/interfaces";
+import { I_NewCalSession, I_Slot } from "@/src/interfaces";
 import LockIcon from "@mui/icons-material/Lock";
 import { Paper, Stack, Typography } from "@mui/material";
 import { FunctionComponent, ReactElement } from "react";
 
-interface PropTypes {
+interface PropTypes extends I_NewCalSession {
     flat: number;
     slot: I_Slot;
     isBooked: boolean;
@@ -25,16 +25,19 @@ export const BookingCard: FunctionComponent<PropTypes> = (props): ReactElement =
         handleBookingForm,
         slot: { slot, start, end },
     } = props;
+    const isUnavailable = isBooked && flat && flat !== props.session?.flat;
     return (
         <Paper
             key={slot}
             elevation={3}
-            onClick={() => (isExpired || isFortnightAway || isAdmin ? undefined : handleBookingForm(slot))}
+            onClick={() =>
+                isUnavailable || isExpired || isFortnightAway || isAdmin ? undefined : handleBookingForm(slot)
+            }
             sx={{
                 mb: 1.5,
                 padding: "3px 6px",
                 bgcolor: isDisabled ? "lightgray" : isBooked ? "lightsalmon" : "lightgreen",
-                cursor: isExpired || isFortnightAway || isAdmin || isDisabled ? undefined : "pointer",
+                cursor: isUnavailable || isExpired || isFortnightAway || isAdmin || isDisabled ? undefined : "pointer",
             }}
         >
             <Stack sx={{ alignItems: "center" }}>
