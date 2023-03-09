@@ -8,5 +8,4 @@ export const sumObjectValues = (obj: { [key: string]: number }) => Object.values
 
 export const sortObjectByValues = (obj: { [key: string]: number }) => Object.keys(obj).sort((a, b) => obj[b] - obj[a]);
 
-export const sumObjectValuesAboveZero = (obj: { [key: string]: unknown }) =>
-    Object.keys(obj).filter((x) => obj[x] > 0).length;
+export const getObjectKeysAboveZero = (obj: { [key: string]: unknown }) => Object.keys(obj).filter((x) => obj[x] > 0);

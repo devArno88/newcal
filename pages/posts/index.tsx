@@ -1,19 +1,21 @@
-import { AppError } from "@/src/components";
+import { AppError, Unauthenticated } from "@/src/components";
 import Layout from "@/src/components/Layout";
 import { Posts } from "@/src/content/Posts";
 import { useAlert } from "@/src/context";
 import { fetcher } from "@/src/utils";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import useSWR from "swr";
 
 export default function Page() {
+    const router = useRouter();
     const { setAlert } = useAlert();
     const { data: session, status } = useSession();
-    const { data, error, isLoading, isValidating, mutate } = useSWR(`/api/posts`, fetcher);
+    const { data, error, isLoading, isValidating, mutate } = useSWR(session ? `/api/posts` : null, fetcher);
     const loading = isLoading || isValidating || status === "loading";
     if (error) return <AppError source="Posts" error={error.message} session={session} />;
-    console.log({ data });
+    if (!session) return <Unauthenticated url={router.asPath} />;
     return (
         <>
             <Head>

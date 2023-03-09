@@ -1,7 +1,10 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
+import { ResidentSchema } from "@/src/schemas";
 import { MailBoardSchema } from "@/src/schemas/MailBoard";
-import { connectDB } from "@/src/utils";
+import { sendEmail } from "@/src/services";
+import { mailboardEmail } from "@/src/strings";
+import { connectDB, getObjectKeysAboveZero } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -35,6 +38,21 @@ const routes = {
                 },
                 { returnDocument: "after" }
             );
+
+            const flatsToNotify = getObjectKeysAboveZero(mailboxes).map((x) => +x.replace("Flat", ""));
+            const residents = await ResidentSchema.find({ flat: { $in: flatsToNotify } });
+
+            Promise.all(
+                residents.map(async (resident) => {
+                    const { name, email, flat } = resident;
+                    await sendEmail({
+                        to: email,
+                        subject: `Mailbox Update`,
+                        html: mailboardEmail({ name, flat, items: mailboxes[`Flat${flat}`] }),
+                    });
+                })
+            );
+
             res.json({ msg: "Mailboard updated successfully" });
         } catch (err) {
             res.status(500).json({ err: "Mailboard could not be updated" });

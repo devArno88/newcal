@@ -104,7 +104,7 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
             setAlert({ type: E_AlertTypes.success, text: res?.msg });
         }
     };
-    const defaultDetails = defaultSlotDetails({ slot: props.slot, type: props.type });
+    const defaultDetails = defaultSlotDetails({ slot: +props.slot, type: props.type });
     const pendingDetails = props.pending ? defaultSlotDetails({ slot: props.pending?.slot, type: props.type }) : null;
     const isOwnPendingBooking = props.slot === props.pending?.slot && props.session?.flat === props.pending?.flat;
     const dateRange = `${defaultDetails?.start?.slice(0, -3)} - ${defaultDetails?.end?.slice(0, -3)}`;

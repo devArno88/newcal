@@ -3,10 +3,10 @@ import { E_Roles, I_MailBoard, I_NewCalSession } from "@/src/interfaces";
 import {
     appColors,
     fromNowDate,
+    getObjectKeysAboveZero,
     Icon_Info,
     sortObjectByValues,
     sumObjectValues,
-    sumObjectValuesAboveZero,
 } from "@/src/utils";
 import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
 import { Grid, Paper, Stack, Tooltip, Typography } from "@mui/material";
@@ -36,7 +36,7 @@ export const MailboardPanel: FunctionComponent<PropTypes> = (props) => {
         props.mailboard && isConcierge ? sumObjectValues(mailboard) : props?.mailbox?.items;
     itemsToCollect = Object.values(mailboard).some((x) => x === 6) ? `${itemsToCollect}+` : itemsToCollect;
     const highest = sortObjectByValues(mailboard);
-    const flatsToCollect = sumObjectValuesAboveZero(mailboard);
+    const flatsToCollect = getObjectKeysAboveZero(mailboard).length;
     const others = flatsToCollect > 12 ? flatsToCollect - 12 : null;
     const lastUpdated = `Last updated ${fromNowDate(
         isConcierge ? props?.mailboard?.updated : props?.mailbox?.updated
@@ -89,7 +89,7 @@ export const MailboardPanel: FunctionComponent<PropTypes> = (props) => {
                                                     {x.replace("Flat", "Flat ")}
                                                 </Typography>
                                                 <Typography sx={{ color: appColors.secondary }}>
-                                                    {`${mailboard[x] === 6 ? "5+" : mailboard[x]} item${
+                                                    {`${mailboard[x] === 6 ? "5+" : mailboard[x] || "No"} item${
                                                         mailboard[x] === 1 ? "" : "s"
                                                     }`}
                                                 </Typography>

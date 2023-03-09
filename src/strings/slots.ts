@@ -1,4 +1,4 @@
-import { I_Slot } from "../interfaces";
+import { E_BookingType, I_Slot } from "../interfaces";
 
 const pool: I_Slot[] = [
     { slot: 1, start: "05:00:00", end: "05:45:00" },
@@ -72,7 +72,7 @@ const table: I_Slot[] = [
 ];
 
 export const slotStrings = {
-    pool,
-    gym,
-    table,
+    [E_BookingType.pool]: pool,
+    [E_BookingType.gym]: gym,
+    [E_BookingType.table]: table,
 };

@@ -1,18 +1,30 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { E_Fetches } from "@/src/interfaces";
-import { GymBookingSchema } from "@/src/schemas";
-import { connectDB, niceDate } from "@/src/utils";
+import { E_BookingType, E_Fetches } from "@/src/interfaces";
+import { GymBookingSchema, ResidentSchema } from "@/src/schemas";
+import { sendEmail } from "@/src/services";
+import { bookingEmail } from "@/src/strings";
+import { connectDB, defaultSlotDetails, niceDate } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    POST api/pool/[date]/[slot]
+    // @routes    POST api/pool/[input]/[slot]
     // @desc      Create new pool booking
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.post](req, res, session) {
         try {
             const booking = new GymBookingSchema({ date: req.query.input, slot: req.query.slot, flat: session?.flat });
             await booking.save();
+            const resident = await ResidentSchema.findById(session?.id);
+            if (!resident) return res.status(500).json({ err: "Invalid resident" });
+            const { name, email, flat } = resident;
+            const { start, end } = defaultSlotDetails({ type: E_BookingType.gym, slot: +req.query.slot });
+            const date = niceDate(new Date(req.query.input));
+            await sendEmail({
+                to: email,
+                subject: "Gym Booking Confirmed",
+                html: bookingEmail({ name, flat, start, end, date, type: E_BookingType.gym }),
+            });
             res.status(200).json({ msg: `Gym booked successfully for ${niceDate(req.query.input)}` });
         } catch (err) {
             console.error(err);

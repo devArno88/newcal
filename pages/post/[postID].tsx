@@ -1,5 +1,5 @@
 import { addPostView } from "@/src/actions/post";
-import { AppError, Loading } from "@/src/components";
+import { AppError, Loading, Unauthenticated } from "@/src/components";
 import Layout from "@/src/components/Layout";
 import { PostPage } from "@/src/content/Post";
 import { useAlert } from "@/src/context";
@@ -17,7 +17,7 @@ export default function Page() {
         query: { postID },
     } = router;
     const { data: session, status } = useSession();
-    const { data: post, error, isLoading, mutate } = useSWR(postID ? `/api/post/${postID}` : null, fetcher);
+    const { data: post, error, isLoading, mutate } = useSWR(session && postID ? `/api/post/${postID}` : null, fetcher);
     const loading = isLoading || status === "loading";
     useEffect(() => {
         async function handleView(id) {
@@ -26,6 +26,7 @@ export default function Page() {
         if (post) handleView(post?._id);
     }, [post]);
     if (error) return <AppError source="Post" error={error.message} session={session} />;
+    if (!session) return <Unauthenticated url={router.asPath} />;
     return (
         <>
             <Head>

@@ -64,7 +64,6 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
     const {
         data: { bookings, posts, tickets, mailbox, mailboard, warnings, chat },
     } = props;
-    console.log({ props });
     const MyCalConfig: { [key in E_Roles]: DashboardPanel[] } = {
         [E_Roles.resident]: [
             {

@@ -1,7 +1,9 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { E_Fetches } from "@/src/interfaces";
-import { PostSchema } from "@/src/schemas";
-import { connectDB, isAdmin } from "@/src/utils";
+import { PostSchema, ResidentSchema } from "@/src/schemas";
+import { sendEmail } from "@/src/services";
+import { warningEmail } from "@/src/strings";
+import { capitalise, connectDB, isAdmin } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -19,6 +21,27 @@ const routes = {
                 userType,
             });
             await post.save();
+
+            const residents = await ResidentSchema.find({});
+            if (post.type === "warning") {
+                Promise.all(
+                    residents.map(async (resident) => {
+                        const { name, email } = resident;
+                        await sendEmail({
+                            to: email,
+                            subject: `Warning`,
+                            html: warningEmail({
+                                name,
+                                postID: post._id.toString(),
+                                title: post.title,
+                                content: post.content,
+                                author: `NewCal ${capitalise(session?.role)}`,
+                            }),
+                        });
+                    })
+                );
+            }
+
             res.status(200).json({ msg: "Post created successfully" });
         } catch (err) {
             res.status(500).json({ err: "Post could not be created" });

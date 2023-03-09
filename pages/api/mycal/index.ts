@@ -131,4 +131,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/pool/[date]");
+export default connectDB(handler, "/api/mycal");

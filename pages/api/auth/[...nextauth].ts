@@ -18,7 +18,7 @@ export const authOptions = {
                     pass: process.env.EMAIL_SERVER_PASSWORD,
                 },
             },
-            from: process.env.EMAIL_FROM,
+            from: `NewCal <${process.env.EMAIL_FROM}>`,
         }),
         GoogleProvider({
             clientId: process.env.GOOGLE_ID,

@@ -10,3 +10,4 @@ export * from "./Loading";
 export * from "./NavBar";
 export * from "./PageHeader";
 export * from "./Typography";
+export * from "./Unauthenticated";

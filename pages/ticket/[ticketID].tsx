@@ -1,5 +1,5 @@
 import { addTicketView } from "@/src/actions/ticket";
-import { AppError, Loading } from "@/src/components";
+import { AppError, Loading, Unauthenticated } from "@/src/components";
 import Layout from "@/src/components/Layout";
 import { TicketPage } from "@/src/content/Ticket";
 import { useAlert } from "@/src/context";
@@ -17,7 +17,12 @@ export default function Page() {
         query: { ticketID },
     } = router;
     const { data: session, status } = useSession();
-    const { data: ticket, error, isLoading, mutate } = useSWR(ticketID ? `/api/ticket/${ticketID}` : null, fetcher);
+    const {
+        data: ticket,
+        error,
+        isLoading,
+        mutate,
+    } = useSWR(session && ticketID ? `/api/ticket/${ticketID}` : null, fetcher);
     const loading = isLoading || status === "loading";
     useEffect(() => {
         async function handleView(id) {
@@ -26,6 +31,7 @@ export default function Page() {
         if (ticket) handleView(ticket?._id);
     }, [ticket]);
     if (error) return <AppError source="Ticket" error={error.message} session={session} />;
+    if (!session) return <Unauthenticated url={router.asPath} />;
     return (
         <>
             <Head>
