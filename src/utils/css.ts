@@ -13,6 +13,13 @@ export const appColors = {
         primary: "#ccc",
         secondary: "#fff",
     },
+    gradient: {
+        g1: "linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%)",
+        g2: "linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%)",
+        g3: "linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%)",
+        g4: "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)",
+        g5: "linear-gradient(to top, #d9afd9 0%, #97d9e1 100%)",
+    },
 };
 
 export const getFlatColor = () =>

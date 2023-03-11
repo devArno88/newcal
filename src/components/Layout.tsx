@@ -13,9 +13,13 @@ export default function Layout({ children }: { children: ReactNode }) {
     return (
         <Box sx={{ bgcolor: appColors.background }}>
             <Navigation session={session} />
-            <Container maxWidth="md" sx={{ pt: 4, pb: 4, height: "100vh" }}>
-                {children}
-            </Container>
+            {session ? (
+                <Container maxWidth="md" sx={{ pt: 4, pb: 4, height: "100vh" }}>
+                    {children}
+                </Container>
+            ) : (
+                children
+            )}
             <AlertBar {...state} />
         </Box>
     );

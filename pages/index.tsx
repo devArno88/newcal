@@ -1,4 +1,5 @@
 import Layout from "@/src/components/Layout";
+import { Landing } from "@/src/content/Landing";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -11,8 +12,7 @@ export default function Page() {
     }, [session, router]);
     return (
         <Layout>
-            <h1>New Caledonian Wharf</h1>
-            <p>Some nice stuff about the building</p>
+            <Landing />
         </Layout>
     );
 }

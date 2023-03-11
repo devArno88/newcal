@@ -2,6 +2,7 @@ import { E_Roles, I_NewCalSession } from "@/src/interfaces";
 import {
     AdminIcons,
     appColors,
+    capitalise,
     Icon_Booking,
     Icon_Chat,
     Icon_Dashboard,
@@ -148,17 +149,24 @@ const NavData = {
     ],
 };
 
+const LandingItems = ["home", "highlights", "features", "information", "transport", "contact"];
+
 export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
     const adminAccount = isAdmin(props.session);
     const Icon = adminAccount ? AdminIcons[props.session.role] : null;
+    const [anchorElLanding, setAnchorElLanding] = useState<null | HTMLElement>(null);
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const handleOpenLandingMenu = (event: MouseEvent<HTMLElement>) => {
+        setAnchorElLanding(event.currentTarget);
+    };
     const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => setAnchorElNav(event.currentTarget);
     const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => setAnchorElUser(event.currentTarget);
+    const handleCloseNavLanding = () => setAnchorElLanding(null);
     const handleCloseNavMenu = () => setAnchorElNav(null);
     const handleCloseUserMenu = () => setAnchorElUser(null);
     return (
-        <AppBar position="sticky">
+        <AppBar position="sticky" sx={{ bgcolor: props.session ? appColors.primary : appColors.dark }}>
             <Container maxWidth="md">
                 <Toolbar disableGutters>
                     <Link href={props.session ? "/mycal" : "/"}>
@@ -297,17 +305,70 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
                             </Menu>
                         </Box>
                     ) : (
-                        <Button
-                            variant="contained"
-                            sx={{ bgcolor: "green" }}
-                            href={`/api/auth/signin`}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                signIn(null, { callbackUrl: `${process.env.NEXTAUTH_URL}/mycal` });
-                            }}
-                        >
-                            Log In
-                        </Button>
+                        <>
+                            {/* <IconButton
+                                color="inherit"
+                                aria-haspopup="true"
+                                aria-controls="menu-landing"
+                                onClick={handleOpenLandingMenu}
+                                aria-label="menu-landing"
+                                sx={{ border: `2px solid ${appColors.text.secondary}`, bgcolor: appColors.dark }}
+                            >
+                                <Icon_Menu sx={{ fill: appColors.text.secondary }} />
+                            </IconButton>
+                            <Menu
+                                id="menu-landing"
+                                anchorEl={anchorElLanding}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                }}
+                                open={Boolean(anchorElLanding)}
+                                onClose={handleCloseNavLanding}
+                                sx={{
+                                    display: { xs: "block", md: "none" },
+                                }}
+                            >
+                                {LandingItems.map((x) => (
+                                    <Link key={x} href={`#${x}`}>
+                                        <MenuItem onClick={handleCloseNavLanding}>
+                                            <Stack direction="row" alignItems="center">
+                                                <Typography textAlign="center">{capitalise(x)}</Typography>
+                                            </Stack>
+                                        </MenuItem>
+                                    </Link>
+                                ))}
+                            </Menu> */}
+                            <Stack
+                                mr={2.5}
+                                spacing={3}
+                                direction="row"
+                                alignItems="center"
+                                display={{ xs: "none", sm: "none", md: "flex" }}
+                            >
+                                {LandingItems.map((x) => (
+                                    <Link key={x} href={`#${x}`}>
+                                        <span style={{ cursor: "pointer" }}>{capitalise(x)}</span>
+                                    </Link>
+                                ))}
+                            </Stack>
+                            <Button
+                                variant="contained"
+                                sx={{ bgcolor: "green", borderRadius: "2rem" }}
+                                href={`/api/auth/signin`}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    signIn(null, { callbackUrl: `${process.env.NEXTAUTH_URL}/mycal` });
+                                }}
+                            >
+                                Log In
+                            </Button>
+                        </>
                     )}
                 </Toolbar>
             </Container>
