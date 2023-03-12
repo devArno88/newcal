@@ -31,7 +31,7 @@ export class Carousel extends React.Component {
         const { index } = this.state;
         return (
             <Stack spacing={2} mt={10}>
-                <Typography textAlign="center" variant="h4" sx={{ color: "#333" }}>
+                <Typography textAlign="center" variant="h4" sx={{ color: "#fff" }}>
                     More Highlights
                 </Typography>
                 <Stack
@@ -41,11 +41,11 @@ export class Carousel extends React.Component {
                     alignItems="center"
                     sx={{ display: { xs: "none", sm: "flex" } }}
                 >
-                    <ArrowBackTwoToneIcon sx={{ fill: "#333" }} />
-                    <Typography variant="h5" sx={{ color: "#333" }}>
+                    <ArrowBackTwoToneIcon sx={{ fill: "#fff" }} />
+                    <Typography variant="h5" sx={{ color: "#fff" }}>
                         Shuffle With Arrow Keys
                     </Typography>
-                    <ArrowForwardTwoToneIcon sx={{ fill: "#333" }} />
+                    <ArrowForwardTwoToneIcon sx={{ fill: "#fff" }} />
                 </Stack>
                 <Box
                     sx={{

@@ -25,13 +25,13 @@ export const Hero: FunctionComponent = (): ReactElement => {
                     </Typography>
 
                     <Typography
-                        sx={{ color: "#26d0e2" }}
-                        variant="h4"
-                        fontWeight={400}
-                        fontSize={{ xs: "1rem", sm: "1.5rem", md: "2rem" }}
-                        textAlign="center"
                         pl={2}
                         pr={2}
+                        variant="h4"
+                        fontWeight={400}
+                        textAlign="center"
+                        sx={{ color: "#26d0e2" }}
+                        fontSize={{ xs: "1rem", sm: "1.5rem", md: "2rem" }}
                     >
                         OFFERING PANORAMIC VIEWS OF LONDON AND THE RIVER THAMES
                     </Typography>

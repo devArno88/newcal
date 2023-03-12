@@ -1,4 +1,5 @@
 import { ImageBox } from "@/src/components";
+import { appColors } from "@/src/utils";
 import ConstructionTwoToneIcon from "@mui/icons-material/ConstructionTwoTone";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import MenuBookTwoToneIcon from "@mui/icons-material/MenuBookTwoTone";
@@ -10,11 +11,16 @@ import { experimentalStyled as styled } from "@mui/material/styles";
 import { FunctionComponent, ReactElement } from "react";
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+    backgroundColor: "transparent",
     padding: theme.spacing(4),
     textAlign: "center",
     borderRadius: "2rem",
-    color: theme.palette.text.secondary,
+    // color: theme.palette.text.secondary,
+    border: "2px solid #fff",
+    color: "#fff",
+    "&:hover": {
+        border: `2px solid ${appColors.secondary}`,
+    },
 }));
 
 const docs = [
@@ -46,7 +52,7 @@ const docs = [
 
 export const Information: FunctionComponent = (): ReactElement => {
     return (
-        <div id="information">
+        <section id="information">
             <ImageBox fade url="/bg/canary.jpg">
                 <Container maxWidth="md" sx={{ padding: "100px 0" }}>
                     <Typography variant="h3" textAlign="center" mb={4} letterSpacing={1} fontWeight={300}>
@@ -61,7 +67,7 @@ export const Information: FunctionComponent = (): ReactElement => {
                             <Grid item xs={12} sm={8} md={6} key={i}>
                                 <Item>
                                     <a
-                                        style={{ textDecoration: "none" }}
+                                        style={{ textDecoration: "none", color: "#fff" }}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         href={x.href}
@@ -85,6 +91,6 @@ export const Information: FunctionComponent = (): ReactElement => {
                     </Grid>
                 </Container>
             </ImageBox>
-        </div>
+        </section>
     );
 };

@@ -352,7 +352,7 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
                                 display={{ xs: "none", sm: "none", md: "flex" }}
                             >
                                 {LandingItems.map((x) => (
-                                    <Link key={x} href={`#${x}`}>
+                                    <Link scroll={false} key={x} href={`#${x}`}>
                                         <span style={{ cursor: "pointer" }}>{capitalise(x)}</span>
                                     </Link>
                                 ))}
