@@ -73,8 +73,8 @@ export const Transport: FunctionComponent = (): ReactElement => {
                                             {x.title}
                                         </Typography>
                                         <Stack spacing={1} mt={1}>
-                                            {x.bullets.map((s) => (
-                                                <Typography variant="h6" fontWeight={400}>
+                                            {x.bullets.map((s, j) => (
+                                                <Typography key={j} variant="h6" fontWeight={400}>
                                                     {s}
                                                 </Typography>
                                             ))}
