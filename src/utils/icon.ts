@@ -11,6 +11,7 @@ import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
+import LoginTwoToneIcon from "@mui/icons-material/LoginTwoTone";
 import ManageAccountsTwoToneIcon from "@mui/icons-material/ManageAccountsTwoTone";
 import MarkunreadMailboxTwoToneIcon from "@mui/icons-material/MarkunreadMailboxTwoTone";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -52,6 +53,7 @@ export const Icon_AddComment = AddCommentTwoToneIcon;
 export const Icon_Delete = DeleteTwoToneIcon;
 export const Icon_Send = SendTwoToneIcon;
 export const Icon_Warning = ReportTwoToneIcon;
+export const Icon_Login = LoginTwoToneIcon;
 
 export const AdminIcons = {
     [E_Roles.management]: Icon_Management,

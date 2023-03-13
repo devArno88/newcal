@@ -1,10 +1,10 @@
 import { E_Fetches } from "@/interfaces";
-import { fetcher, fetcherPrep } from "@/utils";
+import { fetcher, fetchParams } from "@/utils";
 import { Types } from "mongoose";
 
 export const createGymBooking = async ({ date, slot }: { date: string; slot: number }): Promise<any> => {
     try {
-        return await fetcher(`/api/gym/${date}/${slot}`, fetcherPrep({ method: E_Fetches.post }));
+        return await fetcher(`/api/gym/${date}/${slot}`, fetchParams({ method: E_Fetches.post }));
     } catch (err) {
         console.error(err);
     }
@@ -12,7 +12,7 @@ export const createGymBooking = async ({ date, slot }: { date: string; slot: num
 
 export const deleteGymBooking = async ({ id }: { id: Types.ObjectId }): Promise<any> => {
     try {
-        return await fetcher(`/api/gym/${id}`, fetcherPrep({ method: E_Fetches.delete }));
+        return await fetcher(`/api/gym/${id}`, fetchParams({ method: E_Fetches.delete }));
     } catch (err) {
         console.error(err);
     }

@@ -25,7 +25,7 @@ export default function Page() {
         }
         if (post) handleView(post?._id);
     }, [post]);
-    if (error) return <AppError source="Post" error={error.message} session={session} />;
+    if (error) return <AppError source={`Post ${postID}`} error={error.message} session={session} />;
     if (!session) return <Unauthenticated url={router.asPath} />;
     return (
         <>

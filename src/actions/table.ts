@@ -1,12 +1,12 @@
 import { E_Fetches } from "@/interfaces";
-import { fetcher, fetcherPrep } from "@/utils";
+import { fetcher, fetchParams } from "@/utils";
 import { Types } from "mongoose";
 
 const NEXTAUTH_URL = process.env.NEXTAUTH_URL;
 
 export const createTableBooking = async ({ date, slot }: { date: string; slot: number }): Promise<any> => {
     try {
-        return await fetcher(`/api/table/${date}/${slot}`, fetcherPrep({ method: E_Fetches.post }));
+        return await fetcher(`/api/table/${date}/${slot}`, fetchParams({ method: E_Fetches.post }));
     } catch (err) {
         console.error(err);
     }
@@ -14,7 +14,7 @@ export const createTableBooking = async ({ date, slot }: { date: string; slot: n
 
 export const deleteTableBooking = async ({ id }: { id: Types.ObjectId }): Promise<any> => {
     try {
-        return await fetcher(`/api/table/${id}`, fetcherPrep({ method: E_Fetches.delete }));
+        return await fetcher(`/api/table/${id}`, fetchParams({ method: E_Fetches.delete }));
     } catch (err) {
         console.error(err);
     }

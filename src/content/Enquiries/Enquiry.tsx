@@ -1,22 +1,15 @@
-import { appColors, fromNowDate, niceDate } from "@/src/utils";
-import { Chip, Paper, Stack, Typography } from "@mui/material";
+import { I_Enquiry } from "@/src/interfaces";
+import { appColors } from "@/src/utils";
+import { Paper } from "@mui/material";
 import { FunctionComponent } from "react";
 
-interface PropTypes {
-    number: number;
-    title: string;
-    state: string;
-    body: string;
-    created_at: Date;
-    updated_at: Date;
-    labels: any;
-}
+interface PropTypes extends I_Enquiry {}
 
-export const DevelopmentTicket: FunctionComponent<PropTypes> = (props) => {
-    const { number, title, state, body, created_at, updated_at, labels } = props;
+export const Enquiry: FunctionComponent<PropTypes> = (props) => {
+    const { name, email, phone, message, date } = props;
     return (
         <Paper sx={{ bgcolor: appColors.card, p: 4, border: `2px solid ${appColors.border}`, borderRadius: "1rem" }}>
-            <Stack direction="row" justifyContent="space-between">
+            {/* <Stack direction="row" justifyContent="space-between">
                 <Typography sx={{ color: appColors.secondary }} variant="h5" noWrap>
                     {`#${number}: ${title}`}
                 </Typography>
@@ -56,7 +49,7 @@ export const DevelopmentTicket: FunctionComponent<PropTypes> = (props) => {
                 <Typography sx={{ color: appColors.secondary }}>
                     <i>Last updated {fromNowDate(updated_at)}</i>
                 </Typography>
-            </Stack>
+            </Stack> */}
         </Paper>
     );
 };

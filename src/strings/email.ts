@@ -1,6 +1,8 @@
+const redText = `style="color:#FF4500;"`;
+
 export const bookingEmail = ({ name, flat, start, end, date, type }) => `
     <h3>Hi ${name.split(" ")[0]},</h3>
-    <h4>A ${type} booking has been confirmed for Flat ${flat} from ${start.slice(0, -3)} - ${end.slice(
+    <h4 ${redText}>A ${type} booking has been confirmed for Flat ${flat} from ${start.slice(0, -3)} - ${end.slice(
     0,
     -3
 )} on ${date}.</h4>
@@ -16,9 +18,9 @@ export const bookingEmail = ({ name, flat, start, end, date, type }) => `
 
 export const mailboardEmail = ({ name, flat, items }) => `
     <h3>Hi ${name.split(" ")[0]},</h3>
-    <h4>Your mailbox has just been updated - there ${items === 1 ? "is" : "are"} ${items === 6 ? "5+" : items} item${
-    items === 1 ? "" : "s"
-} to collect for Flat ${flat}.</h4>
+    <h4 ${redText}>Your mailbox has just been updated - there ${items === 1 ? "is" : "are"} ${
+    items === 6 ? "5+" : items
+} item${items === 1 ? "" : "s"} to collect for Flat ${flat}.</h4>
     <h4>Please make your way to reception to collect these at your earliest convenience.</h4>
     <h4>This has been added to your <a href="${
         process.env.NEXTAUTH_URL
@@ -30,9 +32,9 @@ export const mailboardEmail = ({ name, flat, items }) => `
 export const warningEmail = ({ name, postID, title, content, author }) => `
     <h3>Hi ${name.split(" ")[0]},</h3>
     <h4>A new warning has just been posted:</h4>
-    <h2>${title}</h2>
-    <h3>${content}</h3>
-    <h4>Posted by ${author}</h4>
+    <h2 ${redText}>${title}</h2>
+    <h3 ${redText}>${content}</h3>
+    <h4 ${redText}>Posted by ${author}</h4>
     <h4>This can be viewed <a href="${
         process.env.NEXTAUTH_URL
     }/post/${postID}">here</a> or found within your <a href="${
@@ -41,3 +43,15 @@ export const warningEmail = ({ name, postID, title, content, author }) => `
     <h4>Have a great day!</h4>
     <h3>The NewCal Team</h3>
 `;
+
+export const enquiryEmail = ({ name, message }) => {
+    console.log({ ENQUIRY_EMAIL: message.split("\n") });
+    return `
+    <h3>Hi ${name.split(" ")[0]},</h3>
+    <h4>Thank you for interest in New Caledonian Wharf. We have received your enquiry and a member of our Residence Management Team will be in touch with you very shortly!</h4>
+    <h4>Your message:</h4>
+    <h3 ${redText}>${message.replaceAll("\n", "<br>")}</h3>
+    <h4>Have a great day!</h4>
+    <h3>The NewCal Team</h3>
+`;
+};

@@ -1,11 +1,11 @@
 import { TicketFormData } from "@/src/content/Modal";
 import { E_Fetches } from "@/src/interfaces";
-import { fetcher, fetcherPrep } from "@/src/utils";
+import { fetcher, fetchParams } from "@/src/utils";
 import { Types } from "mongoose";
 
 export const createTicket = async ({ formData }: { formData: TicketFormData }): Promise<any> => {
     try {
-        return await fetcher(`/api/ticket`, fetcherPrep({ method: E_Fetches.post, body: formData }));
+        return await fetcher(`/api/ticket`, fetchParams({ method: E_Fetches.post, body: formData }));
     } catch (err) {
         console.error(err);
     }
@@ -13,7 +13,7 @@ export const createTicket = async ({ formData }: { formData: TicketFormData }): 
 
 export const deleteTicket = async ({ ticketID }: { ticketID: Types.ObjectId }): Promise<any> => {
     try {
-        return await fetcher(`/api/ticket/${ticketID}`, fetcherPrep({ method: E_Fetches.delete }));
+        return await fetcher(`/api/ticket/${ticketID}`, fetchParams({ method: E_Fetches.delete }));
     } catch (err) {
         console.error(err);
     }
@@ -27,7 +27,7 @@ export const createTicketComment = async ({
     formData: { text: string };
 }): Promise<any> => {
     try {
-        return await fetcher(`/api/ticket/comment/${ticketID}`, fetcherPrep({ method: E_Fetches.put, body: formData }));
+        return await fetcher(`/api/ticket/comment/${ticketID}`, fetchParams({ method: E_Fetches.put, body: formData }));
     } catch (err) {
         console.error(err);
     }
@@ -41,7 +41,7 @@ export const deleteTicketComment = async ({
     commentID: Types.ObjectId;
 }): Promise<any> => {
     try {
-        return await fetcher(`/api/ticket/comment/${ticketID}/${commentID}`, fetcherPrep({ method: E_Fetches.delete }));
+        return await fetcher(`/api/ticket/comment/${ticketID}/${commentID}`, fetchParams({ method: E_Fetches.delete }));
     } catch (err) {
         console.error(err);
     }
@@ -49,7 +49,7 @@ export const deleteTicketComment = async ({
 
 export const handleTicketLike = async ({ ticketID }: { ticketID: Types.ObjectId }): Promise<any> => {
     try {
-        return await fetcher(`/api/ticket/like/${ticketID}`, fetcherPrep({ method: E_Fetches.put }));
+        return await fetcher(`/api/ticket/like/${ticketID}`, fetchParams({ method: E_Fetches.put }));
     } catch (err) {
         console.error(err);
     }
@@ -65,7 +65,7 @@ export const handleTicketCommentLike = async ({
     try {
         return await fetcher(
             `/api/ticket/comment/like/${ticketID}/${commentID}`,
-            fetcherPrep({ method: E_Fetches.put })
+            fetchParams({ method: E_Fetches.put })
         );
     } catch (err) {
         console.error(err);
@@ -74,7 +74,7 @@ export const handleTicketCommentLike = async ({
 
 export const addTicketView = async ({ ticketID }: { ticketID: Types.ObjectId }): Promise<any> => {
     try {
-        return await fetcher(`/api/ticket/view/${ticketID}`, fetcherPrep({ method: E_Fetches.put }));
+        return await fetcher(`/api/ticket/view/${ticketID}`, fetchParams({ method: E_Fetches.put }));
     } catch (err) {
         console.error(err);
     }

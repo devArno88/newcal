@@ -15,7 +15,7 @@ export const Development: FunctionComponent<PropTypes> = (props) => {
     const handleType = (event: SelectChangeEvent) => setType(event.target.value);
     return (
         <Stack spacing={4}>
-            <PageHeader title="NewCal Issues" subtitle="App Development Backlog" />
+            <PageHeader title="NewCal Development" subtitle="App Development Backlog" />
             <Stack spacing={4}>
                 <DevelopmentFilter status={status} handleStatus={handleStatus} type={type} handleType={handleType} />
                 {props.issues

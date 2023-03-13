@@ -15,7 +15,6 @@ const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(4),
     textAlign: "center",
     borderRadius: "2rem",
-    // color: theme.palette.text.secondary,
     border: "2px solid #fff",
     color: "#fff",
     "&:hover": {
@@ -53,6 +52,13 @@ const docs = [
 export const Information: FunctionComponent = (): ReactElement => {
     return (
         <section id="information">
+            <style>
+                {`
+                    .infoLink:hover {
+                        color: ${appColors.secondary}
+                    }
+                `}
+            </style>
             <ImageBox fade url="/bg/canary.jpg">
                 <Container maxWidth="md" sx={{ padding: "100px 0" }}>
                     <Typography variant="h3" textAlign="center" mb={4} letterSpacing={1} fontWeight={300}>
@@ -70,6 +76,7 @@ export const Information: FunctionComponent = (): ReactElement => {
                                         style={{ textDecoration: "none", color: "#fff" }}
                                         target="_blank"
                                         rel="noopener noreferrer"
+                                        className="infoLink"
                                         href={x.href}
                                     >
                                         <Stack

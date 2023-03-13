@@ -19,7 +19,7 @@ export const landingStrings: any = {
             image: "/ncw-slide-3.png",
         },
         {
-            title: null,
+            title: "Treasure on the Thames",
             text: "Overall, this luxurious residential property offers an unparalleled combination of location, amenities and style, making it the perfect choice for those looking to experience the very best of London living.",
             image: "/ncw-slide-5.png",
         },

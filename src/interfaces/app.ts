@@ -59,3 +59,16 @@ export interface I_Mailbox {
 export interface I_Alerter {
     setAlert: ({ type, text }: { type: E_AlertTypes; text: string }) => void;
 }
+
+export interface I_Enquiry extends I_MongoID {
+    name: Maybe<string>;
+    email: Maybe<string>;
+    phone?: Maybe<string>;
+    message: Maybe<string>;
+    open: Maybe<boolean>;
+    date: Maybe<Date>;
+}
+
+export interface I_Enquiries {
+    enquiries?: I_Enquiry[];
+}

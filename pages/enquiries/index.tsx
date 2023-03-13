@@ -1,7 +1,6 @@
 import { AccessDenied, AppError, Loading, Unauthenticated } from "@/src/components";
 import Layout from "@/src/components/Layout";
-import { Chat } from "@/src/content/Chat";
-import { useAlert } from "@/src/context";
+import { Enquiries } from "@/src/content/Enquiries";
 import { fetcher, isAdmin } from "@/src/utils";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
@@ -10,21 +9,21 @@ import useSWR from "swr";
 
 export default function Page() {
     const router = useRouter();
-    const { setAlert } = useAlert();
-    const { data: session, status }: any = useSession();
+    const { data: session, status } = useSession();
     const {
-        data: chat,
+        data: enquiries,
         error,
         isLoading,
+        isValidating,
         mutate,
-    } = useSWR(session ? `/api/chat/64039806f432cee69115dd46` : null, fetcher);
-    const loading = isLoading || status === "loading";
-    if (error) return <AppError source="Admin Chat" error={error.message} session={session} />;
+    } = useSWR(session ? `/api/enquiries` : null, fetcher);
+    const loading = isLoading || isValidating || status === "loading";
+    if (error) return <AppError source="Enquiries" error={error.message} session={session} />;
     if (!session) return <Unauthenticated url={router.asPath} />;
     return (
         <>
             <Head>
-                <title>Admin Chat | NewCal</title>
+                <title>Enquiries | NewCal</title>
             </Head>
 
             <Layout>
@@ -33,7 +32,7 @@ export default function Page() {
                 ) : loading ? (
                     <Loading />
                 ) : (
-                    <Chat setAlert={setAlert} chat={chat} mutate={mutate} session={session} />
+                    <Enquiries enquiries={enquiries} mutate={mutate} />
                 )}
             </Layout>
         </>

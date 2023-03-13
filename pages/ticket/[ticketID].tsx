@@ -30,7 +30,7 @@ export default function Page() {
         }
         if (ticket) handleView(ticket?._id);
     }, [ticket]);
-    if (error) return <AppError source="Ticket" error={error.message} session={session} />;
+    if (error) return <AppError source={`Ticket ${ticketID}`} error={error.message} session={session} />;
     if (!session) return <Unauthenticated url={router.asPath} />;
     return (
         <>

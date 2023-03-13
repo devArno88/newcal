@@ -1,12 +1,11 @@
 import { ImageBox } from "@/src/components";
 import { appColors } from "@/src/utils";
-import { Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import { FunctionComponent, ReactElement } from "react";
 
-const Item = styled(Paper)(({ theme }) => ({
+const Item = styled(Box)(({ theme }) => ({
     backgroundColor: "transparent",
     padding: theme.spacing(2),
     textAlign: "center",

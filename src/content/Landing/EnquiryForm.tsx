@@ -1,7 +1,10 @@
-import { Box, Button, FormControl, Stack, TextField } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { createEnquiry } from "@/src/actions";
+import { E_AlertTypes } from "@/src/context";
+import { I_Alerter } from "@/src/interfaces";
+import { Box, Button, CircularProgress, FormControl, Stack, TextField } from "@mui/material";
+import { ChangeEvent, FunctionComponent, MouseEvent, ReactElement, useState } from "react";
 
-interface ContactFormData {
+export interface EnquiryFormData {
     name: string;
     email: string;
     phone: string;
@@ -15,11 +18,26 @@ const initState = {
     message: "",
 };
 
-export const ContactForm = () => {
-    const [formData, setFormData] = useState<ContactFormData>(initState);
+export const EnquiryForm: FunctionComponent<I_Alerter> = (props): ReactElement => {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [formData, setFormData] = useState<EnquiryFormData>(initState);
     const onChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
-        setFormData((previousState: ContactFormData) => ({ ...previousState, [e.target.name]: e.target.value }));
+        setFormData((previousState: EnquiryFormData) => ({ ...previousState, [e.target.name]: e.target.value }));
     const { name, email, phone, message } = formData;
+    const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        const res = await createEnquiry({ formData });
+        if (res?.err) {
+            props.setAlert({ type: E_AlertTypes.error, text: res?.err });
+            setLoading(false);
+        }
+        if (res?.msg) {
+            setLoading(false);
+            setFormData(initState);
+            props.setAlert({ type: E_AlertTypes.success, text: res?.msg });
+        }
+    };
     return (
         <FormControl sx={{ width: "100%" }}>
             <Stack spacing={1}>
@@ -59,6 +77,7 @@ export const ContactForm = () => {
                 />
                 <TextField
                     multiline
+                    required
                     maxRows={2}
                     name="message"
                     label="Message"
@@ -73,7 +92,7 @@ export const ContactForm = () => {
             <Box alignItems={{ xs: "center", sm: "center", md: "start" }} width="100%">
                 <Button
                     size="large"
-                    onClick={() => console.log({ formData })}
+                    onClick={onSubmit}
                     variant="contained"
                     disabled={!name.length || !email.length || !message.length}
                     sx={{
@@ -85,7 +104,7 @@ export const ContactForm = () => {
                         borderRadius: "2rem",
                     }}
                 >
-                    Submit
+                    {loading ? <CircularProgress /> : "Submit"}
                 </Button>
             </Box>
         </FormControl>

@@ -1,4 +1,5 @@
 export * from "./chat";
+export * from "./enquiry";
 export * from "./gym";
 export * from "./mailboard";
 export * from "./pool";

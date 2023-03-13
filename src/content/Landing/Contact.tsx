@@ -1,7 +1,9 @@
 import { ImageBox } from "@/src/components";
+import { I_Alerter } from "@/src/interfaces";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { experimentalStyled as styled } from "@mui/material/styles";
-import { ContactForm } from "./ContactForm";
+import { FunctionComponent, ReactElement } from "react";
+import { EnquiryForm } from "./EnquiryForm";
 
 const Item = styled(Box)(({ theme }) => ({
     ...theme.typography.body2,
@@ -10,7 +12,7 @@ const Item = styled(Box)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export const Contact = () => {
+export const Contact: FunctionComponent<I_Alerter> = (props): ReactElement => {
     return (
         <section id="contact">
             <ImageBox fade url="/ncw-slide-4.png">
@@ -19,12 +21,12 @@ export const Contact = () => {
                         Contact
                     </Typography>
                     <Typography pl={8} pr={8} variant="h6" textAlign="center" mb={4} letterSpacing={1} fontWeight={300}>
-                        For any questions related to enquiries or management, please don{`'`}t hesitate to get in touch!
+                        For any questions or enquiries, please don{`'`}t hesitate to get in touch!
                     </Typography>
                     <Grid container spacing={{ xs: 2, md: 2 }} alignItems="start" justifyContent="center">
                         <Grid item xs={12} sm={8} md={6}>
                             <Item>
-                                <ContactForm />
+                                <EnquiryForm setAlert={props.setAlert} />
                             </Item>
                         </Grid>
                         <Grid item xs={12} sm={8} md={6}>

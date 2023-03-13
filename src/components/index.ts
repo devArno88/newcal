@@ -9,7 +9,6 @@ export * from "./footer";
 export * from "./ImageBox";
 export * from "./Layout";
 export * from "./Loading";
-export * from "./NavBar";
 export * from "./PageHeader";
 export * from "./Typography";
 export * from "./Unauthenticated";
