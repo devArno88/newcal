@@ -71,14 +71,14 @@ export const Information: FunctionComponent = (): ReactElement => {
                     >
                         {docs.map((x, i) => (
                             <Grid item xs={12} sm={8} md={6} key={i}>
-                                <Item>
-                                    <a
-                                        style={{ textDecoration: "none", color: "#fff" }}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="infoLink"
-                                        href={x.href}
-                                    >
+                                <a
+                                    style={{ textDecoration: "none", color: "#fff" }}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="infoLink"
+                                    href={x.href}
+                                >
+                                    <Item>
                                         <Stack
                                             direction="row"
                                             alignItems="center"
@@ -91,8 +91,8 @@ export const Information: FunctionComponent = (): ReactElement => {
                                         </Stack>
 
                                         <Typography variant="h6">{x.subtitle}</Typography>
-                                    </a>
-                                </Item>
+                                    </Item>
+                                </a>
                             </Grid>
                         ))}
                     </Grid>

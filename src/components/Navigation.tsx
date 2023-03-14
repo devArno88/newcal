@@ -162,7 +162,7 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
     const handleCloseNavMenu = () => setAnchorElNav(null);
     const handleCloseUserMenu = () => setAnchorElUser(null);
     return (
-        <AppBar position="sticky" sx={{ bgcolor: props.session ? appColors.primary : appColors.dark }}>
+        <AppBar position="fixed" sx={{ bgcolor: props.session ? appColors.primary : appColors.dark }}>
             <Container maxWidth="md">
                 <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
                     <Link href={props.session ? "/mycal" : "/"}>

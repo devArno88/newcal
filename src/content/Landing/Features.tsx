@@ -1,4 +1,4 @@
-import { ImageBox } from "@/src/components";
+import { ImageBox, LandingHeader } from "@/src/components";
 import { appColors } from "@/src/utils";
 import DeckTwoToneIcon from "@mui/icons-material/DeckTwoTone";
 import DirectionsCarFilledTwoToneIcon from "@mui/icons-material/DirectionsCarFilledTwoTone";
@@ -57,10 +57,8 @@ export const Features: FunctionComponent = (): ReactElement => {
     return (
         <section id="features">
             <ImageBox fade url="/bg/tower-bridge.jpg">
-                <Container maxWidth="md" sx={{ padding: "100px 0" }}>
-                    <Typography variant="h3" textAlign="center" mb={4} letterSpacing={1} fontWeight={300}>
-                        Features
-                    </Typography>
+                <Container maxWidth="md">
+                    <LandingHeader text="Features" />
                     <Grid
                         container
                         justifyContent="center"

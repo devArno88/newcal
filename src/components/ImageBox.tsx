@@ -19,6 +19,8 @@ export const ImageBox = ({
                 top: 0,
                 left: 0,
                 width: "100%",
+                pt: center ? 0 : 6,
+                pb: center ? 0 : 8,
                 backgroundSize: "cover",
                 backgroundPosition: "center center",
                 display: center ? "flex" : undefined,

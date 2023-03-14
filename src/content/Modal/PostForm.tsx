@@ -91,7 +91,7 @@ export const PostForm: FunctionComponent<PropTypes> = (props) => {
                             style: { color: appColors.text.primary, fontSize: 18 },
                         }}
                         FormHelperTextProps={{
-                            style: { color: "greenyellow" },
+                            style: { color: appColors.secondary },
                         }}
                         sx={{
                             input: {
@@ -110,7 +110,7 @@ export const PostForm: FunctionComponent<PropTypes> = (props) => {
                             style: { color: appColors.text.primary, fontSize: 18 },
                         }}
                         FormHelperTextProps={{
-                            style: { color: "greenyellow" },
+                            style: { color: appColors.secondary },
                         }}
                         sx={{
                             input: {
@@ -128,7 +128,7 @@ export const PostForm: FunctionComponent<PropTypes> = (props) => {
                         onClick={onSubmit}
                         variant="contained"
                         disabled={!type.length || !title.length || !content.length}
-                        sx={{ bgcolor: "greenyellow", color: "black" }}
+                        sx={{ bgcolor: appColors.primary, color: "#fff" }}
                     >
                         Submit
                     </Button>

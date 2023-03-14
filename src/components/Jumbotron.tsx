@@ -1,10 +1,10 @@
-import { Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import { appColors } from "../utils";
 
 export default function Jumbotron(props: any): JSX.Element {
-    const { title, text, image, reverse = false, single = false } = props;
+    const { title, text, image, reverse = false, single = false, first } = props;
 
     const textBlock: JSX.Element = (
         <div>
@@ -17,7 +17,7 @@ export default function Jumbotron(props: any): JSX.Element {
             <Typography
                 letterSpacing={1}
                 fontWeight={300}
-                sx={{ color: appColors.text.secondary, fontSize: { xs: 18, sm: 20, md: 22, xl: 24 } }}
+                sx={{ color: appColors.text.secondary, fontSize: { xs: 18, sm: 20, md: 20, xl: 24 } }}
             >
                 {text}
             </Typography>
@@ -37,8 +37,7 @@ export default function Jumbotron(props: any): JSX.Element {
         />
     );
 
-    const Item = styled(Paper)(({ theme }) => ({
-        boxShadow: "none",
+    const Item = styled(Box)(({ theme }) => ({
         textAlign: "start",
         backgroundColor: "transparent",
         color: theme.palette.text.secondary,
@@ -47,21 +46,29 @@ export default function Jumbotron(props: any): JSX.Element {
     return (
         <Grid
             container
-            // alignItems="center"
             spacing={{ xs: 4, sm: 6 }}
             direction={`row${reverse ? "-reverse" : ""}`}
             sx={{
-                boxShadow: 0,
                 bgcolor: "transparent",
                 justifyContent: "center",
-                alignItems: { xs: "start", sm: "start", md: "center", xl: "start" },
+                alignItems: "start",
+                p: first ? 2 : 0,
             }}
         >
-            <Grid xs={12} sm={10} md={6.5} xl={6}>
+            <Grid xs={12} sm={10} md={6} xl={6}>
                 <Item>{textBlock}</Item>
             </Grid>
 
-            <Grid xs={12} sm={10} md={5.5} xl={6} spacing={2} direction="column">
+            <Grid
+                xs={12}
+                sm={10}
+                md={6}
+                xl={6}
+                mt={{ md: 1, sm: 0 }}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+            >
                 <Item>{imgBlock}</Item>
             </Grid>
         </Grid>

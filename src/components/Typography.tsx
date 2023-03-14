@@ -25,3 +25,9 @@ export const PanelSubtitle: FunctionComponent<PropTypes> = ({ text }) => (
 );
 
 export const PanelCaption: FunctionComponent<PropTypes> = (props) => <Typography>{props.text}</Typography>;
+
+export const LandingHeader: FunctionComponent<PropTypes> = ({ text }) => (
+    <Typography mt={8} mb={8} variant="h3" textAlign="center" letterSpacing={1} fontWeight={300}>
+        {text}
+    </Typography>
+);

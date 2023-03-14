@@ -2,9 +2,7 @@ import { deleteTicket, handleTicketLike } from "@/src/actions/ticket";
 import { CommentForm } from "@/src/content/Modal";
 import { E_AlertTypes } from "@/src/context";
 import { E_TicketType, I_Alerter, I_Likes, I_Mutator, I_NewCalSession, I_Views } from "@/src/interfaces";
-import { appColors, Icon_Delete, Icon_LikeActive, Icon_LikeInactive } from "@/src/utils";
-import AddCommentTwoToneIcon from "@mui/icons-material/AddCommentTwoTone";
-import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
+import { appColors, Icon_AddComment, Icon_Delete, Icon_LikeActive, Icon_LikeInactive, Icon_View } from "@/src/utils";
 import { CircularProgress, Paper, Stack, Typography } from "@mui/material";
 import { Types } from "mongoose";
 import { NextRouter } from "next/router";
@@ -77,26 +75,48 @@ export const TicketPageActions: FunctionComponent<PropTypes> = (props) => {
                         {loading ? (
                             <CircularProgress sx={{ height: 28, width: 28 }} />
                         ) : props.likes.some((x) => x.user._id.toString() === props.session?.id) ? (
-                            <Icon_LikeActive sx={{ ...sxIcon, fill: appColors.secondary }} />
+                            <Icon_LikeActive sx={{ fill: appColors.secondary }} />
                         ) : (
-                            <Icon_LikeInactive sx={sxIcon} />
+                            <Icon_LikeInactive sx={{ fill: appColors.text.primary }} />
                         )}
-                        <Typography sx={{ color: appColors.text.primary }}>
+                        <Typography
+                            sx={{ color: appColors.text.primary, display: { xs: "none", sm: "none", md: "flex" } }}
+                        >
                             {props.likes.length || "No"} like{props.likes.length === 1 ? null : "s"}
                         </Typography>
-                    </Stack>
-                </Paper>
-                <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={() => setOpen(true)}>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <AddCommentTwoToneIcon sx={sxIcon} />
-                        <Typography sx={{ color: appColors.text.primary }}>Comment</Typography>
+                        {props.likes.length ? (
+                            <Typography
+                                sx={{ color: appColors.text.primary, display: { xs: "flex", sm: "flex", md: "none" } }}
+                            >
+                                {props.likes.length}
+                            </Typography>
+                        ) : null}
                     </Stack>
                 </Paper>
                 <Paper sx={sxPaper}>
                     <Stack direction="row" spacing={1} alignItems="center">
-                        <VisibilityTwoToneIcon sx={sxIcon} />
-                        <Typography sx={{ color: appColors.text.primary }}>
+                        <Icon_View sx={{ fill: appColors.text.primary }} />
+                        <Typography
+                            sx={{ color: appColors.text.primary, display: { xs: "none", sm: "none", md: "flex" } }}
+                        >
                             {props.views.length || "No"} view{props.views.length === 1 ? null : "s"}
+                        </Typography>
+                        {props.views.length ? (
+                            <Typography
+                                sx={{ color: appColors.text.primary, display: { xs: "flex", sm: "flex", md: "none" } }}
+                            >
+                                {props.views.length}
+                            </Typography>
+                        ) : null}
+                    </Stack>
+                </Paper>
+                <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={() => setOpen(true)}>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Icon_AddComment sx={{ fill: appColors.text.primary }} />
+                        <Typography
+                            sx={{ color: appColors.text.primary, display: { xs: "none", sm: "none", md: "flex" } }}
+                        >
+                            Comment
                         </Typography>
                     </Stack>
                 </Paper>

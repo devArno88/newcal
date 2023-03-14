@@ -84,7 +84,7 @@ export const TicketForm: FunctionComponent<PropTypes> = (props) => {
                             style: { color: appColors.text.primary, fontSize: 18 },
                         }}
                         FormHelperTextProps={{
-                            style: { color: "greenyellow" },
+                            style: { color: appColors.secondary },
                         }}
                         sx={{
                             input: {
@@ -103,7 +103,7 @@ export const TicketForm: FunctionComponent<PropTypes> = (props) => {
                             style: { color: appColors.text.primary, fontSize: 18 },
                         }}
                         FormHelperTextProps={{
-                            style: { color: "greenyellow" },
+                            style: { color: appColors.secondary },
                         }}
                         sx={{
                             input: {
@@ -121,7 +121,7 @@ export const TicketForm: FunctionComponent<PropTypes> = (props) => {
                         type="submit"
                         onClick={onSubmit}
                         variant="contained"
-                        sx={{ bgcolor: "greenyellow", color: "black" }}
+                        sx={{ bgcolor: appColors.primary, color: "#fff" }}
                         disabled={!type.length || !title.length || !content.length}
                     >
                         Submit
