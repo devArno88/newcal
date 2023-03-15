@@ -62,6 +62,7 @@ export const PostForm: FunctionComponent<PropTypes> = (props) => {
             }}
             aria-labelledby="post-modal-title"
             aria-describedby="post-modal-description"
+            sx={{ width: "100%" }}
         >
             <Box sx={style}>
                 <Typography id="post-modal-title" variant="h5">

@@ -10,8 +10,10 @@ import { FunctionComponent, useState } from "react";
 
 const sxPaper = {
     p: "12px 16px",
-    width: "fit-content",
-    textAlign: "center",
+    width: { xs: 50, sm: 50, md: "fit-content" },
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     bgcolor: appColors.card,
     borderRadius: "1rem",
     border: `1px solid ${appColors.border}`,

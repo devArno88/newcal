@@ -114,6 +114,7 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
             onClose={() => props.setOpen(false)}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            sx={{ width: "100%" }}
         >
             <Box sx={style}>
                 {isOwnPendingBooking ? null : (

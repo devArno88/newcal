@@ -1,7 +1,7 @@
 import { deletePostComment, handlePostCommentLike } from "@/src/actions/post";
 import { E_AlertTypes } from "@/src/context";
 import { I_Alerter, I_Comment, I_Mutator, I_NewCalSession } from "@/src/interfaces";
-import { AdminIcons, appColors, fromNowDate, getFlatColor, Icon_LikeActive, Icon_LikeInactive } from "@/src/utils";
+import { AdminIcons, appColors, fromNowDate, Icon_LikeActive, Icon_LikeInactive } from "@/src/utils";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import { Avatar, CircularProgress, IconButton, Paper, Stack, Typography } from "@mui/material";
 import { Types } from "mongoose";
@@ -41,25 +41,41 @@ export const PostPageComment: FunctionComponent<PropTypes> = (props) => {
     const adminLikes = props.likes?.filter((x) => x.user.role).map((x) => x.user.name);
 
     return (
-        <Stack direction={{ xs: "column", sm: "row", md: "row" }} alignItems="flex-start" spacing={3}>
+        <Stack
+            direction={{ xs: "column", sm: "row", md: "row" }}
+            sx={{ px: 4 }}
+            alignItems="flex-start"
+            spacing={{ xs: 1, sm: 3, md: 3 }}
+        >
             <Paper
                 sx={{
-                    p: "10px 16px",
+                    p: { xs: "6px 10px", sm: "8px 12px", md: "10px 16px" },
                     borderRadius: "2rem",
                     bgcolor: appColors.card,
                     border: `1px solid ${appColors.border}`,
                 }}
             >
                 <Stack direction="row" alignItems="center" spacing={1.5}>
-                    <Avatar src="" alt={props.user.name} sx={{ bgcolor: getFlatColor() }}>
+                    <Avatar
+                        src=""
+                        alt={props.user.name}
+                        sx={{
+                            bgcolor: appColors.primary,
+                        }}
+                    >
                         {Icon ? <Icon /> : props.user.flat || null}
                     </Avatar>
                     <Stack>
-                        <Typography noWrap sx={{ color: appColors.text.secondary }}>
+                        <Typography
+                            fontSize={{ xs: "0.9rem", sm: "1rem", md: "1.1rem" }}
+                            noWrap
+                            sx={{ color: appColors.secondary }}
+                        >
                             {props.userType === "admin" ? "NewCal" : null} {props.user.name}
                         </Typography>
                         <Typography
                             variant="caption"
+                            fontSize={{ xs: "0.7rem", sm: "0.75rem", md: "0.8rem" }}
                             noWrap
                             sx={{
                                 color: appColors.text.primary,
@@ -70,8 +86,10 @@ export const PostPageComment: FunctionComponent<PropTypes> = (props) => {
                     </Stack>
                 </Stack>
             </Paper>
-            <Stack>
-                <Typography variant="h6">{props.text}</Typography>
+            <Stack pl={{ xs: 1, sm: 0 }} pt={{ xs: 1, sm: 0 }}>
+                <Typography variant="h6" fontSize={{ xs: "1rem", sm: "1.1rem", md: "1.2rem" }}>
+                    {props.text}
+                </Typography>
                 {adminLikes.length ? (
                     <Typography mt={1} sx={{ color: appColors.secondary, opacity: 0.8 }}>
                         {`Liked by NewCal ${

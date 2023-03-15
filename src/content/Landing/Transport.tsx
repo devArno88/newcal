@@ -60,7 +60,12 @@ export const Transport: FunctionComponent = (): ReactElement => {
                                         <img
                                             src={x.image}
                                             alt={`Transport${i}`}
-                                            style={{ height: "100%", border: `2px solid #fff`, borderRadius: "1rem" }}
+                                            style={{
+                                                width: "100%",
+                                                height: "auto",
+                                                border: `2px solid #fff`,
+                                                borderRadius: "1rem",
+                                            }}
                                         />
                                         <Typography
                                             mt={2}

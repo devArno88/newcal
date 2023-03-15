@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <Box sx={{ bgcolor: appColors.background }}>
             <Navigation session={session} />
             {session ? (
-                <Container maxWidth="md" sx={{ pt: 8, pb: 4, height: "100%" }}>
+                <Container maxWidth="md" sx={{ pt: "5rem", pb: "3rem", height: "100%" }}>
                     {children}
                 </Container>
             ) : (

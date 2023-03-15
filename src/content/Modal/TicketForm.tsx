@@ -59,6 +59,7 @@ export const TicketForm: FunctionComponent<PropTypes> = (props) => {
             }}
             aria-labelledby="ticket-modal-title"
             aria-describedby="ticket-modal-description"
+            sx={{ width: "100%" }}
         >
             <FormControl sx={style}>
                 <Typography id="ticket-modal-title" variant="h5">

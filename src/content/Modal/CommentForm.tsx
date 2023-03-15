@@ -62,6 +62,7 @@ export const CommentForm: FunctionComponent<PropTypes> = (props) => {
             onClose={props.handleClose}
             aria-labelledby="comment-modal-title"
             aria-describedby="comment-modal-description"
+            sx={{ width: "100%" }}
         >
             <FormControl sx={style}>
                 <Typography id="comment-modal-title" variant="h6" component="h2" mb={2}>
