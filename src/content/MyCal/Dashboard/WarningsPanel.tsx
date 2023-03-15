@@ -1,6 +1,6 @@
 import { CardActivity } from "@/src/components";
 import { I_Post } from "@/src/interfaces";
-import { appColors, Icon_Warning } from "@/src/utils";
+import { abbreviate, appColors, Icon_Warning } from "@/src/utils";
 import { Paper, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, ReactElement } from "react";
@@ -13,8 +13,8 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                     mb: 1,
                     pt: 3,
                     pb: 3,
-                    pr: { xs: 5, sm: 10 },
-                    pl: { xs: 5, sm: 10 },
+                    pr: { xs: 3, sm: 6, md: 2 },
+                    pl: { xs: 3, sm: 6, md: 2 },
                     height: "fit-content",
                     bgcolor: "#22272D",
                     borderRadius: 2,
@@ -25,12 +25,12 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                 <Stack spacing={1.5}>
                     <Stack spacing={1} direction="row" justifyContent="center" alignItems="center">
                         <Icon_Warning fontSize="large" sx={{ fill: "salmon", mt: -0.1 }} />
-                        <Typography variant="h5" sx={{ color: "salmon" }}>
+                        <Typography variant="h5" sx={{ color: "salmon" }} noWrap>
                             {title.toUpperCase()}
                         </Typography>
                     </Stack>
                     <Typography variant="h6" sx={{ color: appColors.text.primary }}>
-                        {subtitle}
+                        {abbreviate(subtitle, 30)}
                     </Typography>
                     <CardActivity center likes={likes} comments={comments} views={views} />
                 </Stack>

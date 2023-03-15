@@ -40,7 +40,7 @@ export const TicketPageComment: FunctionComponent<PropTypes> = (props) => {
     const Icon = props.userType === "admin" ? AdminIcons[props.user.role] : null;
     const adminLikes = props.likes?.filter((x) => x.user.role).map((x) => x.user.name);
     return (
-        <Stack direction="row" alignItems="flex-start" spacing={3}>
+        <Stack direction={{ xs: "column", sm: "row", md: "row" }} alignItems="flex-start" spacing={3}>
             <Paper
                 sx={{
                     p: "10px 16px",
