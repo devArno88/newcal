@@ -6,6 +6,7 @@ export * from "./AuthBar";
 export * from "./CardActivity";
 export * from "./Carousel";
 export * from "./CenterBox";
+export * from "./Comment";
 export * from "./footer";
 export * from "./ImageBox";
 export * from "./Layout";

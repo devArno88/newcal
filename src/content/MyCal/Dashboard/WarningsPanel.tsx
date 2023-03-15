@@ -13,11 +13,11 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                     mb: 1,
                     pt: 3,
                     pb: 3,
+                    borderRadius: 2,
+                    bgcolor: "#22272D",
+                    height: "fit-content",
                     pr: { xs: 3, sm: 6, md: 2 },
                     pl: { xs: 3, sm: 6, md: 2 },
-                    height: "fit-content",
-                    bgcolor: "#22272D",
-                    borderRadius: 2,
                     border: `1px solid ${appColors.border}`,
                 }}
                 elevation={5}
@@ -31,7 +31,7 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                             sx={{
                                 color: "salmon",
                                 fontSize: { xs: 20, sm: 22, md: 24 },
-                                width: { xs: "20rem", sm: "30rem", md: "40rem" },
+                                width: { xs: "17rem", sm: "30rem", md: "40rem" },
                             }}
                         >
                             {title.toUpperCase()} A STUPID EXTRA LITTLE BIT OF VERY STUPID EXTRA STUPID LITTLE TEXTY

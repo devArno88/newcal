@@ -17,7 +17,7 @@ export const PageHeader: FunctionComponent<PropTypes> = (props) => {
             <Stack direction="row" display="flex" alignItems="center" justifyContent="center" marginBottom={1}>
                 {Icon ? <Icon fontSize="large" sx={{ mr: 1 }} /> : null}
                 <Typography
-                    sx={{ color: appColors.text.primary, fontSize: { xs: 26, sm: 28, md: 30 } }}
+                    sx={{ color: appColors.text.primary, fontSize: { xs: "1.8rem", sm: "1.9rem", md: "2rem" } }}
                     variant="h4"
                     letterSpacing={1}
                 >
@@ -27,7 +27,7 @@ export const PageHeader: FunctionComponent<PropTypes> = (props) => {
             <Typography
                 variant="h5"
                 fontFamily="monospace"
-                sx={{ color: appColors.secondary, fontSize: { xs: 18, sm: 20, md: 22 } }}
+                sx={{ color: appColors.secondary, fontSize: { xs: "1.2rem", sm: "1.3rem", md: "1.4rem" } }}
             >
                 {props.subtitle}
             </Typography>

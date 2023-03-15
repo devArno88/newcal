@@ -10,13 +10,13 @@ import { FunctionComponent, useState } from "react";
 
 const sxPaper = {
     p: "12px 16px",
-    width: { xs: 50, sm: 50, md: "fit-content" },
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
-    bgcolor: appColors.card,
     borderRadius: "1rem",
+    bgcolor: appColors.card,
+    justifyContent: "center",
     border: `1px solid ${appColors.border}`,
+    width: { xs: 50, sm: 50, md: "fit-content" },
 };
 
 interface PropTypes extends I_Likes, I_NewCalSession, I_Mutator, I_Alerter, I_Views {
