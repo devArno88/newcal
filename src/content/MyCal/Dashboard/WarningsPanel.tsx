@@ -31,7 +31,7 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                             sx={{
                                 color: "salmon",
                                 fontSize: { xs: 20, sm: 22, md: 24 },
-                                width: { xs: "17rem", sm: "30rem", md: "40rem" },
+                                width: { xs: "12rem", sm: "24rem", md: "40rem" },
                             }}
                         >
                             {title.toUpperCase()} A STUPID EXTRA LITTLE BIT OF VERY STUPID EXTRA STUPID LITTLE TEXTY
