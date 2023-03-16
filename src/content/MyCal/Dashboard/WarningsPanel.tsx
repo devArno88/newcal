@@ -31,7 +31,7 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                             sx={{
                                 color: "salmon",
                                 fontSize: { xs: 20, sm: 22, md: 24 },
-                                width: { xs: "12rem", sm: "24rem", md: "40rem" },
+                                width: { xs: "15rem", sm: "20rem", md: "25rem" },
                             }}
                         >
                             {title.toUpperCase()} A STUPID EXTRA LITTLE BIT OF VERY STUPID EXTRA STUPID LITTLE TEXTY
@@ -47,7 +47,8 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                             alignItems: "center",
                             color: appColors.text.primary,
                             fontSize: { xs: 18, sm: 20, md: 22 },
-                            width: { xs: "22rem", sm: "32rem", md: "42rem" },
+                            border: "2px solid red",
+                            width: { xs: "18rem", sm: "24rem", md: "30rem" },
                         }}
                     >
                         {subtitle}
