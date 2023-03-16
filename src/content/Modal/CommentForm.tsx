@@ -50,6 +50,7 @@ export const CommentForm: FunctionComponent<PropTypes> = (props) => {
         if (res) {
             if (res.err) setAlert({ type: E_AlertTypes.error, text: res.err });
             if (res.msg) {
+                setFormData(initState);
                 props.mutate();
                 props.handleClose();
                 setAlert({ type: E_AlertTypes.success, text: res.msg });

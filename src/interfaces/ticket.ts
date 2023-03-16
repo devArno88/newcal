@@ -22,7 +22,7 @@ export interface I_Ticket extends I_MongoID, I_Likes, I_Comments, I_Views {
     userType: Maybe<"resident" | "admin">;
     title: Maybe<string>;
     content: Maybe<string>;
-    status: Maybe<E_TicketStatus>;
+    status?: Maybe<E_TicketStatus>;
     // TODO: Incorporate S3 bucket logic
     files: [];
 }

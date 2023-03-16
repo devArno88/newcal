@@ -1,27 +1,22 @@
-import Avatar from "@mui/material/Avatar";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-// import CardMedia from "@mui/material/CardMedia";
-import { CardActivity } from "@/src/components";
-import { Chip } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { Avatar, Card, CardContent, CardHeader, Typography } from "@mui/material";
 import Link from "next/link";
-import { FunctionComponent } from "react";
-import { E_PostType, I_Post } from "../../../interfaces";
-import { abbreviate, AdminIcons, appColors, capitalise, fromNowDate } from "../../../utils";
-
-interface PropTypes extends I_Post {}
+import { FunctionComponent, ReactElement } from "react";
+import { E_PostType, E_TicketType } from "../interfaces";
+import { capitalise } from "../utils";
 
 const ChipColors = {
     [E_PostType.listing]: "warning",
     [E_PostType.notice]: "secondary",
     [E_PostType.question]: "info",
     [E_PostType.warning]: "error",
+    [E_TicketType.enhancement]: "success",
+    [E_TicketType.issue]: "error",
+    [E_TicketType.question]: "info",
 };
 
-export const PostCard: FunctionComponent<PropTypes> = (props) => {
-    const Icon = props.user.role ? AdminIcons[props.user.role] : null;
+interface PropTypes {}
+
+export const ItemCard: FunctionComponent<PropTypes> = (props): ReactElement => {
     return (
         <Link href={`/post/${props._id}`}>
             <Card
@@ -31,8 +26,6 @@ export const PostCard: FunctionComponent<PropTypes> = (props) => {
                     cursor: "pointer",
                     bgcolor: appColors.card,
                     border: `2px solid ${appColors.border}`,
-                    borderRadius: "0.6rem",
-                    // boxShadow: `0px 0px 3px 2px ${appColors.secondary}`,
                 }}
             >
                 <CardHeader
@@ -40,7 +33,7 @@ export const PostCard: FunctionComponent<PropTypes> = (props) => {
                     title={`${props.userType === "admin" ? "NewCal " : ""}${props.user.name}`}
                     titleTypographyProps={{ sx: { color: appColors.text.secondary, fontSize: 18 } }}
                     subheader={fromNowDate(props.date)}
-                    subheaderTypographyProps={{ sx: { color: "lightgray", fontSize: 14 } }}
+                    subheaderTypographyProps={{ sx: { color: "gray", fontSize: 14 } }}
                     action={
                         <Chip
                             variant="filled"
@@ -57,14 +50,14 @@ export const PostCard: FunctionComponent<PropTypes> = (props) => {
                         />
                     }
                     avatar={
-                        <Avatar sx={{ bgcolor: appColors.primary }} aria-label="post-chip">
+                        <Avatar sx={{ bgcolor: getFlatColor() }} aria-label="post-chip">
                             {props.user.role && Icon ? <Icon /> : props.user.flat || null}
                         </Avatar>
                     }
                 />
                 {/* <CardMedia component="img" height="194" image="/static/images/cards/paella.jpg" alt="Paella dish" /> */}
                 <CardContent sx={{ pl: 3, pr: 3, pt: 3, pb: 3 }}>
-                    <Typography variant="h6" sx={{ color: appColors.secondary }} mb={1} noWrap>
+                    <Typography variant="h6" sx={{ color: appColors.text.secondary }} mb={1} noWrap>
                         {props.title}
                     </Typography>
                     <Typography variant="body1" sx={{ color: appColors.text.primary }}>

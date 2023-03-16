@@ -23,15 +23,15 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                 elevation={5}
             >
                 <Stack spacing={1.5} justifyContent="center" alignItems="center" width="100%">
-                    <Stack spacing={1} direction="row">
+                    <Stack spacing={1} direction="row" alignItems="center">
                         <Icon_Warning sx={{ fill: "salmon", mt: -0.1, height: { xs: 24, sm: 28, md: 32 } }} />
                         <Typography
                             noWrap
                             variant="h5"
                             sx={{
                                 color: "salmon",
-                                fontSize: { xs: 20, sm: 22, md: 24 },
-                                width: { xs: "15rem", sm: "20rem", md: "25rem" },
+                                width: { xs: "14rem", sm: "20rem", md: "25rem" },
+                                fontSize: { xs: "1.2rem", sm: "1.4rem", md: "1.6rem" },
                             }}
                         >
                             {title.toUpperCase()} A STUPID EXTRA LITTLE BIT OF VERY STUPID EXTRA STUPID LITTLE TEXTY
@@ -43,12 +43,12 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                         variant="h6"
                         sx={{
                             textAlign: "center",
-                            justifyContent: "center",
                             alignItems: "center",
-                            color: appColors.text.primary,
-                            fontSize: { xs: 18, sm: 20, md: 22 },
                             border: "2px solid red",
-                            width: { xs: "18rem", sm: "24rem", md: "30rem" },
+                            justifyContent: "center",
+                            color: appColors.text.primary,
+                            width: { xs: "16rem", sm: "24rem", md: "30rem" },
+                            fontSize: { xs: "1rem", sm: "1.1rem", md: "1.2rem" },
                         }}
                     >
                         {subtitle}

@@ -32,3 +32,13 @@ export const abbreviate = (str: string, limit: number): string =>
 export const pluralise = (str: string): string => {
     return `${str}${str.slice(-1) === "s" ? `'` : `'s`}`;
 };
+
+// "Liked by NewCal X, Y and Z"
+export const adminLikeString = (adminLikes: string[]) =>
+    `Liked by NewCal ${
+        adminLikes.length === 1
+            ? adminLikes[0]
+            : adminLikes.length === 2
+            ? adminLikes.join(" and ")
+            : `${adminLikes[0]}, ${adminLikes[1]} and ${adminLikes[2]}`
+    }`;

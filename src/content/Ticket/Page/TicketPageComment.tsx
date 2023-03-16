@@ -1,5 +1,5 @@
 import { deleteTicketComment, handleTicketCommentLike } from "@/src/actions/ticket";
-import { Comment } from "@/src/components";
+import { ItemComment } from "@/src/components";
 import { E_AlertTypes } from "@/src/context";
 import { I_Alerter, I_Comment, I_Mutator, I_NewCalSession } from "@/src/interfaces";
 import { AdminIcons } from "@/src/utils";
@@ -35,7 +35,7 @@ export const TicketPageComment: FunctionComponent<PropTypes> = (props) => {
     const Icon = props.userType === "admin" ? AdminIcons[props.user.role] : null;
     const adminLikes = props.likes?.filter((x) => x.user.role).map((x) => x.user.name);
     return (
-        <Comment
+        <ItemComment
             {...props}
             Icon={Icon}
             loading={loading}

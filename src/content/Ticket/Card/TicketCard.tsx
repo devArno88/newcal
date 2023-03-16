@@ -22,7 +22,9 @@ export const TicketCard: FunctionComponent<PropTypes> = (props) => {
                     pb: 1,
                     cursor: "pointer",
                     bgcolor: appColors.card,
-                    border: `2px solid ${appColors.border}`,
+                    // border: `2px solid ${appColors.border}`,
+                    borderRadius: "0.6rem",
+                    boxShadow: `0px 0px 3px 2px ${appColors.secondary}`,
                 }}
             >
                 <CardHeader

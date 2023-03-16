@@ -17,7 +17,7 @@ interface PropTypes extends I_Comment, I_NewCalSession {
         | null;
 }
 
-export const Comment: FunctionComponent<PropTypes> = (props) => {
+export const ItemComment: FunctionComponent<PropTypes> = (props) => {
     return (
         <Stack
             direction={{ xs: "column", sm: "row", md: "row" }}
