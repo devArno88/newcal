@@ -27,7 +27,7 @@ export default function Page() {
     }, []);
     // TODO: Handle error
     // if (error) return <AppError source="Mailboard" error={error.message} session={session} />;
-    if (!session) return <Unauthenticated url={router.asPath} />;
+    if (!session) return <Unauthenticated status={status} url={router.asPath} />;
     return (
         <>
             <Head>

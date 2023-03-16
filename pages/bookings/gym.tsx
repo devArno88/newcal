@@ -17,7 +17,7 @@ export default function Page() {
     const { data: bookings, error, isLoading, mutate } = useSWR(session ? `/api/gym/${date}` : null, fetcher);
     const loading = isLoading || status === "loading";
     if (error) return <AppError source="Gym" error={error.message} session={session} />;
-    if (!session) return <Unauthenticated url={router.asPath} />;
+    if (!session) return <Unauthenticated status={status} url={router.asPath} />;
     return (
         <>
             <Head>

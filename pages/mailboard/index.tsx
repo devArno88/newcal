@@ -13,7 +13,7 @@ export default function Page() {
     const { data: mailboard, error, isLoading, mutate } = useSWR(session ? "/api/mailboard" : null, fetcher);
     const loading = isLoading || status === "loading";
     if (error) return <AppError source="Mailboard" error={error.message} session={session} />;
-    if (!session) return <Unauthenticated url={router.asPath} />;
+    if (!session) return <Unauthenticated status={status} url={router.asPath} />;
     return (
         <>
             <Head>

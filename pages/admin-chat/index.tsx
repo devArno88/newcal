@@ -11,7 +11,7 @@ import useSWR from "swr";
 export default function Page() {
     const router = useRouter();
     const { setAlert } = useAlert();
-    const { data: session, status }: any = useSession();
+    const { data: session, status } = useSession();
     const {
         data: chat,
         error,
@@ -20,7 +20,7 @@ export default function Page() {
     } = useSWR(session ? `/api/chat/64039806f432cee69115dd46` : null, fetcher);
     const loading = isLoading || status === "loading";
     if (error) return <AppError source="Admin Chat" error={error.message} session={session} />;
-    if (!session) return <Unauthenticated url={router.asPath} />;
+    if (!session) return <Unauthenticated status={status} url={router.asPath} />;
     return (
         <>
             <Head>

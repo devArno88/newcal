@@ -15,7 +15,7 @@ export default function Page() {
     const { data, error, isLoading, isValidating, mutate } = useSWR(session ? `/api/posts` : null, fetcher);
     const loading = isLoading || isValidating || status === "loading";
     if (error) return <AppError source="Posts" error={error.message} session={session} />;
-    if (!session) return <Unauthenticated url={router.asPath} />;
+    if (!session) return <Unauthenticated status={status} url={router.asPath} />;
     return (
         <>
             <Head>

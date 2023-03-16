@@ -19,7 +19,7 @@ export default function Page() {
     } = useSWR(session ? `/api/enquiries` : null, fetcher);
     const loading = isLoading || isValidating || status === "loading";
     if (error) return <AppError source="Enquiries" error={error.message} session={session} />;
-    if (!session) return <Unauthenticated url={router.asPath} />;
+    if (!session) return <Unauthenticated status={status} url={router.asPath} />;
     return (
         <>
             <Head>
