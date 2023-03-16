@@ -13,7 +13,7 @@ import {
     I_TableBooking,
 } from "@/src/interfaces";
 import { capitalise, defaultSlotDetails, getErrorMessage, shortDate } from "@/src/utils";
-import { Box, Button, Container, Modal, Stack, Typography } from "@mui/material";
+import { Box, Button, Modal, Stack, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 
 const style = {
@@ -109,63 +109,56 @@ export const BookingForm: FunctionComponent<PropTypes> = (props) => {
     const isOwnPendingBooking = props.slot === props.pending?.slot && props.session?.flat === props.pending?.flat;
     const dateRange = `${defaultDetails?.start?.slice(0, -3)} - ${defaultDetails?.end?.slice(0, -3)}`;
     return (
-        <Container sx={{ maxWidth: { xs: "xs", sm: "sm", md: "md" } }}>
-            <Modal
-                open={props.open}
-                onClose={() => props.setOpen(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                sx={{ width: "100%" }}
-            >
-                <Box sx={style}>
-                    {isOwnPendingBooking ? null : (
-                        <Typography id="modal-modal-title" variant="h5">
-                            {props.pending ? getErrorMessage() : `${capitalise(props.type)} Booking`}
-                        </Typography>
-                    )}
-                    <Typography id="modal-modal-title" variant="h6" sx={{ mt: 1 }}>
-                        {isOwnPendingBooking
-                            ? "You currently have this slot booked"
-                            : props.pending
-                            ? "You have a pending booking for this day"
-                            : `${props.today ? "Today " : shortDate(props.date)} from ${dateRange}`}
+        <Modal
+            open={props.open}
+            onClose={() => props.setOpen(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            sx={{ width: { xs: "100vw", sm: "100%", md: "100%" }, px: { xs: 2, sm: 0 } }}
+        >
+            <Box sx={style}>
+                {isOwnPendingBooking ? null : (
+                    <Typography id="modal-modal-title" variant="h5">
+                        {props.pending ? getErrorMessage() : `${capitalise(props.type)} Booking`}
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-                        {isOwnPendingBooking
-                            ? "What would you like to do?"
-                            : props.pending
-                            ? `Cancel your ${pendingDetails?.start.slice(0, -3)} - ${pendingDetails?.end.slice(
-                                  0,
-                                  -3
-                              )} slot to book this one`
-                            : "Are you sure you would like to book this slot?"}
-                    </Typography>
-                    {isOwnPendingBooking ? (
-                        <Stack direction="row" sx={{ justifyContent: "flex-end", gap: 1, mt: 3 }}>
-                            <Button variant="contained" sx={{ bgcolor: "gray" }} onClick={() => props.setOpen(false)}>
-                                Keep It
-                            </Button>
-                            <Button variant="contained" color="error" sx={{ width: 120 }} onClick={handleDeleteBooking}>
-                                {loading ? <Loading size="small" /> : "Cancel It"}
-                            </Button>
-                        </Stack>
-                    ) : props.pending ? null : (
-                        <Stack direction="row" sx={{ justifyContent: "flex-end", gap: 1, mt: 3 }}>
-                            <Button variant="contained" sx={{ bgcolor: "gray" }} onClick={() => props.setOpen(false)}>
-                                Cancel
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                sx={{ width: 100 }}
-                                onClick={handleCreateBooking}
-                            >
-                                {loading ? <Loading size="small" /> : "Confirm"}
-                            </Button>
-                        </Stack>
-                    )}
-                </Box>
-            </Modal>
-        </Container>
+                )}
+                <Typography id="modal-modal-title" variant="h6" sx={{ mt: 1 }}>
+                    {isOwnPendingBooking
+                        ? "You currently have this slot booked"
+                        : props.pending
+                        ? "You have a pending booking for this day"
+                        : `${props.today ? "Today " : shortDate(props.date)} from ${dateRange}`}
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                    {isOwnPendingBooking
+                        ? "What would you like to do?"
+                        : props.pending
+                        ? `Cancel your ${pendingDetails?.start.slice(0, -3)} - ${pendingDetails?.end.slice(
+                              0,
+                              -3
+                          )} slot to book this one`
+                        : "Are you sure you would like to book this slot?"}
+                </Typography>
+                {isOwnPendingBooking ? (
+                    <Stack direction="row" sx={{ justifyContent: "flex-end", gap: 1, mt: 3 }}>
+                        <Button variant="contained" sx={{ bgcolor: "gray" }} onClick={() => props.setOpen(false)}>
+                            Keep It
+                        </Button>
+                        <Button variant="contained" color="error" sx={{ width: 120 }} onClick={handleDeleteBooking}>
+                            {loading ? <Loading size="small" /> : "Cancel It"}
+                        </Button>
+                    </Stack>
+                ) : props.pending ? null : (
+                    <Stack direction="row" sx={{ justifyContent: "flex-end", gap: 1, mt: 3 }}>
+                        <Button variant="contained" sx={{ bgcolor: "gray" }} onClick={() => props.setOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button variant="contained" color="primary" sx={{ width: 100 }} onClick={handleCreateBooking}>
+                            {loading ? <Loading size="small" /> : "Confirm"}
+                        </Button>
+                    </Stack>
+                )}
+            </Box>
+        </Modal>
     );
 };
