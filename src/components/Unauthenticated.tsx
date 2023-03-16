@@ -18,6 +18,7 @@ export const Unauthenticated = ({
         </Head>
 
         <Layout>
+            <Box sx={{ pt: "5rem" }} />
             {status === "loading" ? (
                 <>
                     <PageHeader title="SIT TIGHT" subtitle="We're just checking your login credentials..." />
