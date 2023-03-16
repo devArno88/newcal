@@ -30,7 +30,7 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                             variant="h5"
                             sx={{
                                 color: "salmon",
-                                width: { xs: "14rem", sm: "20rem", md: "25rem" },
+                                width: { xs: "14rem", sm: "24rem", md: "30rem" },
                                 fontSize: { xs: "1.2rem", sm: "1.4rem", md: "1.6rem" },
                             }}
                         >
@@ -44,10 +44,9 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                         sx={{
                             textAlign: "center",
                             alignItems: "center",
-                            border: "2px solid red",
                             justifyContent: "center",
                             color: appColors.text.primary,
-                            width: { xs: "16rem", sm: "24rem", md: "30rem" },
+                            width: { xs: "16rem", sm: "30rem", md: "40rem" },
                             fontSize: { xs: "1rem", sm: "1.1rem", md: "1.2rem" },
                         }}
                     >

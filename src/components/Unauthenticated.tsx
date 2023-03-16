@@ -22,6 +22,7 @@ export const Unauthenticated = ({
             {status === "loading" ? (
                 <>
                     <PageHeader title="SIT TIGHT" subtitle="We're just checking your login credentials..." />
+                    <Box sx={{ pt: "2rem" }} />
                     <Loading />
                 </>
             ) : status === "unauthenticated" ? (
