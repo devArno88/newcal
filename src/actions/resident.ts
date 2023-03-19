@@ -36,7 +36,7 @@ export const updateResident = async ({
     }
 };
 
-export const deletePost = async ({ residentID }: { residentID: Types.ObjectId }): Promise<any> => {
+export const deleteResident = async ({ residentID }: { residentID: Types.ObjectId }): Promise<any> => {
     try {
         return await fetcher(`/api/resident/${residentID}`, fetchParams({ method: E_Fetches.delete }));
     } catch (err) {
