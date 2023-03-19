@@ -1,27 +1,37 @@
 import { PanelHeader, PanelSubtitle, PanelTitle } from "@/src/components";
-import { abbreviate, appColors, capitalise, Icon_Info, within24Hours } from "@/src/utils";
+import { abbreviate, AdminIcons, appColors, Icon_Info, within24Hours } from "@/src/utils";
 import { Paper, Stack, Tooltip } from "@mui/material";
 
-export const ChatPanel = ({ chat }) => {
-    const PanelCard = ({ title, subtitle }) => {
-        return (
-            <Paper
-                elevation={5}
-                sx={{
-                    mb: 1,
-                    pt: 1,
-                    pb: 1,
-                    borderRadius: 2,
-                    height: "fit-content",
-                    bgcolor: appColors.panel,
-                    border: `1px solid ${appColors.border}`,
-                }}
-            >
-                <PanelTitle text={title} />
+const PanelCard = ({ title, subtitle, Icon }: { title: string; subtitle: string | JSX.Element; Icon?: any }) => {
+    return (
+        <Paper
+            elevation={5}
+            sx={{
+                mb: 1,
+                pt: 1,
+                pb: 1,
+                borderRadius: 2,
+                height: "fit-content",
+                bgcolor: appColors.panel,
+                border: `1px solid ${appColors.border}`,
+            }}
+        >
+            <PanelTitle text={title} />
+            {Icon ? (
+                <Stack spacing={1} justifyContent="center" alignItems="center" direction="row">
+                    <Icon sx={{ fill: appColors.text.secondary }} />
+                    <PanelSubtitle text={subtitle} />
+                </Stack>
+            ) : (
                 <PanelSubtitle text={subtitle} />
-            </Paper>
-        );
-    };
+            )}
+        </Paper>
+    );
+};
+
+export const ChatPanel = ({ chat }) => {
+    const firstMessage = chat?.messages[0];
+    const Icon = AdminIcons[firstMessage.user.role];
     return (
         <>
             <Stack
@@ -49,19 +59,7 @@ export const ChatPanel = ({ chat }) => {
                     title="Recent"
                     subtitle={`${chat?.messages?.filter((x) => within24Hours(new Date(x.date))).length} messages`}
                 />
-                <PanelCard
-                    title="Latest"
-                    subtitle={
-                        <>
-                            {capitalise(chat?.messages[0].user.role)}:{" "}
-                            <i>
-                                {`"`}
-                                {abbreviate(chat?.messages[0].text, 20)}
-                                {`"`}
-                            </i>
-                        </>
-                    }
-                />
+                <PanelCard title="Latest" Icon={Icon} subtitle={<i>{abbreviate(chat?.messages[0].text, 28)}</i>} />
             </Stack>
         </>
     );

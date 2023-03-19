@@ -1,5 +1,7 @@
 import { E_Roles } from "@/src/interfaces";
 import AddCommentTwoToneIcon from "@mui/icons-material/AddCommentTwoTone";
+import AlternateEmailTwoToneIcon from "@mui/icons-material/AlternateEmailTwoTone";
+import ApartmentTwoToneIcon from "@mui/icons-material/ApartmentTwoTone";
 import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
 import CodeTwoToneIcon from "@mui/icons-material/CodeTwoTone";
 import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
@@ -16,6 +18,8 @@ import ManageAccountsTwoToneIcon from "@mui/icons-material/ManageAccountsTwoTone
 import MarkunreadMailboxTwoToneIcon from "@mui/icons-material/MarkunreadMailboxTwoTone";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
+import PersonOutlineTwoToneIcon from "@mui/icons-material/PersonOutlineTwoTone";
+import PhoneIphoneTwoToneIcon from "@mui/icons-material/PhoneIphoneTwoTone";
 import QuestionAnswerTwoToneIcon from "@mui/icons-material/QuestionAnswerTwoTone";
 import QuizTwoToneIcon from "@mui/icons-material/QuizTwoTone";
 import ReportProblemTwoToneIcon from "@mui/icons-material/ReportProblemTwoTone";
@@ -54,6 +58,10 @@ export const Icon_Delete = DeleteTwoToneIcon;
 export const Icon_Send = SendTwoToneIcon;
 export const Icon_Warning = ReportTwoToneIcon;
 export const Icon_Login = LoginTwoToneIcon;
+export const Icon_User = PersonOutlineTwoToneIcon;
+export const Icon_Email = AlternateEmailTwoToneIcon;
+export const Icon_Phone = PhoneIphoneTwoToneIcon;
+export const Icon_Flat = ApartmentTwoToneIcon;
 
 export const AdminIcons = {
     [E_Roles.management]: Icon_Management,

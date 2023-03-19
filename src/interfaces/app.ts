@@ -38,6 +38,10 @@ export interface I_Resident extends I_MongoID {
     flat?: Maybe<number>;
 }
 
+export interface I_Residents {
+    residents: Maybe<I_Resident[]>;
+}
+
 export interface I_User extends I_MongoID {
     name: Maybe<string>;
     email: Maybe<string>;

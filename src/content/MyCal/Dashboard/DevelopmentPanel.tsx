@@ -26,9 +26,9 @@ export const DevelopmentPanel = (props) => {
                     mb: 1,
                     pt: 1,
                     pb: 1,
-                    height: "fit-content",
-                    bgcolor: "#22272D",
                     borderRadius: 2,
+                    bgcolor: "#22272D",
+                    height: "fit-content",
                     border: `1px solid ${appColors.border}`,
                 }}
                 elevation={5}

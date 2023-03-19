@@ -28,6 +28,7 @@ const routes = {
 
 const handler = async (req, res) => {
     const session = await getServerSession(req, res, authOptions);
+    // if (!isManagement(session)) return res.status(500).json({ err: "Action only available to NewCal Management" });
     if (session) {
         const execute = routes[req.method] || routes[E_Fetches.forbidden];
         return execute(req, res, session);

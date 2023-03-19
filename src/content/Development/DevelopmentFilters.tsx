@@ -9,7 +9,7 @@ interface PropTypes {
     handleType: (e: SelectChangeEvent) => void;
 }
 
-export const DevelopmentFilter: FunctionComponent<PropTypes> = (props) => {
+export const DevelopmentFilters: FunctionComponent<PropTypes> = (props) => {
     const inputProps = (x: string) => ({
         "aria-label": `${x}Filter`,
         sx: {

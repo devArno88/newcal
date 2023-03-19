@@ -1,26 +1,29 @@
 import { E_Fetches } from "@/src/interfaces";
-import { EnquirySchema } from "@/src/schemas/Enquiry";
+import { ResidentSchema } from "@/src/schemas";
 import { connectDB } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    PUT api/enquiry/[enquiryID]
-    // @desc      Close enquiry
+    // @routes    POST api/enquiry
+    // @desc      Send new enquiry
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    async [E_Fetches.put](req, res, session) {
+    async [E_Fetches.post](req, res) {
         try {
-            const enquiry = await EnquirySchema.findById(req.query.enquiryID);
-            if (enquiry.open) {
-                enquiry.open = false;
-            } else {
-                enquiry.open = true;
-            }
-            await enquiry.save();
-            res.status(200).json({ msg: "Enquiry status updated successfully" });
+            const { ...data } = req.body;
+            const resident = new ResidentSchema({
+                ...data,
+            });
+            await resident.save();
+            // await sendEmail({
+            //     to: email,
+            //     subject: `New Caledonian Wharf Enquiry`,
+            //     html: residentEmail({ name, message }),
+            // });
+            res.status(200).json({ msg: "Resident created successfully" });
         } catch (err) {
-            res.status(500).json({ err: "Enquiry status could not be updated" });
+            res.status(500).json({ err: "Resident could not be created" });
         }
     },
     ///////////////////////////////////////////////////////////
@@ -43,4 +46,4 @@ const handler = async (req, res) => {
     }
 };
 
-export default connectDB(handler, "/api/enquiry/[enquiryID]");
+export default connectDB(handler, "/api/resident");

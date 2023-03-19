@@ -1,10 +1,17 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { E_Fetches, E_Roles, E_TicketType } from "@/src/interfaces";
-import { E_PostType } from "@/src/interfaces/post";
-import { ChatSchema, GymBookingSchema, PoolBookingSchema, TableBookingSchema, TicketSchema } from "@/src/schemas";
-import { MailBoardSchema } from "@/src/schemas/MailBoard";
-import { PostSchema } from "@/src/schemas/Post";
-import { connectDB, isAdmin } from "@/src/utils";
+import { E_Fetches, E_PostType, E_TicketType } from "@/src/interfaces";
+import {
+    ChatSchema,
+    EnquirySchema,
+    GymBookingSchema,
+    MailBoardSchema,
+    PoolBookingSchema,
+    PostSchema,
+    ResidentSchema,
+    TableBookingSchema,
+    TicketSchema,
+} from "@/src/schemas";
+import { connectDB, isAdmin, isManagement } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 
 const routes = {
@@ -13,7 +20,7 @@ const routes = {
     // @desc      Get MyCal Dashboard data
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.get](req, res, session) {
-        const isResident = session?.role === E_Roles.resident;
+        const isResident = !isAdmin(session);
         const userType = isAdmin(session) ? "admin" : "resident";
 
         try {
@@ -95,9 +102,19 @@ const routes = {
                 question: { own: ticket_question_own, total: ticket_question_total },
             };
 
-            // - - - - - - - - - - - - - //
+            // - - -  CHATS - - - //
 
             const chat = await ChatSchema.findById("64039806f432cee69115dd46").populate(["messages.user"]);
+
+            // - - -  ENQUIRIES - - - //
+
+            const enquiries = await EnquirySchema.find({});
+
+            // - - -  RESIDENTS - - - //
+
+            const residents = await ResidentSchema.find({});
+
+            // - - - - - - - - - - - - - //
 
             res.json({
                 mailboard: isResident ? {} : mailboard,
@@ -106,7 +123,9 @@ const routes = {
                 posts,
                 tickets,
                 warnings,
-                chat,
+                chat: isResident ? null : chat,
+                enquiries: isManagement(session) ? enquiries : null,
+                residents: isManagement(session) ? residents : null,
             });
         } catch (err) {
             res.status(500).json({ err: "Could not fetch MyCal data" });

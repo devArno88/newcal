@@ -45,7 +45,6 @@ export const warningEmail = ({ name, postID, title, content, author }) => `
 `;
 
 export const enquiryEmail = ({ name, message }) => {
-    console.log({ ENQUIRY_EMAIL: message.split("\n") });
     return `
     <h3>Hi ${name.split(" ")[0]},</h3>
     <h4>Thank you for interest in New Caledonian Wharf. We have received your enquiry and a member of our Residence Management Team will be in touch with you very shortly!</h4>

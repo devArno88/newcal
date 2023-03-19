@@ -2,16 +2,18 @@ import { PageHeader } from "@/src/components";
 import {
     E_Roles,
     I_Chat,
+    I_Enquiry,
     I_GymBooking,
     I_MailBoard,
     I_Mutator,
     I_NewCalSession,
     I_PoolBooking,
+    I_Resident,
     I_TableBooking,
     I_Tickets,
 } from "@/src/interfaces";
 import { I_Post, I_Posts } from "@/src/interfaces/post";
-import { appColors } from "@/src/utils";
+import { appColors, capitalise, isAdmin } from "@/src/utils";
 import { Grid, Paper, Stack } from "@mui/material";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import Link from "next/link";
@@ -19,8 +21,10 @@ import { FunctionComponent } from "react";
 import { BookingsPanel } from "./BookingsPanel";
 import { ChatPanel } from "./ChatPanel";
 import { DevelopmentPanel } from "./DevelopmentPanel";
+import { EnquiriesPanel } from "./EnquiriesPanel";
 import { MailboardPanel } from "./MailboardPanel";
 import { PostsPanel } from "./PostsPanel";
+import { ResidentsPanel } from "./ResidentsPanel";
 import { TicketsPanel } from "./TicketsPanel";
 import { WarningsPanel } from "./WarningsPanel";
 
@@ -54,6 +58,8 @@ interface DashboardData extends I_Posts, I_Tickets {
     };
     warnings: I_Post[];
     chat: I_Chat;
+    enquiries: I_Enquiry[];
+    residents: I_Resident[];
 }
 
 interface PropTypes extends I_NewCalSession, I_Mutator {
@@ -62,7 +68,7 @@ interface PropTypes extends I_NewCalSession, I_Mutator {
 
 export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
     const {
-        data: { bookings, posts, tickets, mailbox, mailboard, warnings, chat },
+        data: { bookings, posts, tickets, mailbox, mailboard, warnings, chat, enquiries, residents },
     } = props;
     const MyCalConfig: { [key in E_Roles]: DashboardPanel[] } = {
         [E_Roles.resident]: [
@@ -92,12 +98,20 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                 element: <WarningsPanel warnings={warnings} />,
             },
             {
-                href: "/development",
-                element: <DevelopmentPanel />,
+                href: "/residents",
+                element: <ResidentsPanel residents={residents} />,
+            },
+            {
+                href: "/enquiries",
+                element: <EnquiriesPanel enquiries={enquiries} />,
             },
             {
                 href: "/admin-chat",
                 element: <ChatPanel chat={chat} />,
+            },
+            {
+                href: "/development",
+                element: <DevelopmentPanel />,
             },
             {
                 href: "/mycal/posts",
@@ -162,7 +176,10 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
     };
     return (
         <Stack gap={4}>
-            <PageHeader title="MyCal" subtitle="My NewCal Dashboard" />
+            <PageHeader
+                title="MyCal"
+                subtitle={`${isAdmin(props.session) ? capitalise(props.session?.role) : "My NewCal"} Dashboard`}
+            />
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 {MyCalConfig[props.session?.role].map((x, i) => {
                     const Panel = (

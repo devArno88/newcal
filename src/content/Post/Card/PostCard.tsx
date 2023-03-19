@@ -37,7 +37,7 @@ export const PostCard: FunctionComponent<PropTypes> = (props) => {
             >
                 <CardHeader
                     sx={{ mb: -2 }}
-                    title={`${props.userType === "admin" ? "NewCal " : ""}${props.user.name}`}
+                    title={props.user.name}
                     titleTypographyProps={{ sx: { color: appColors.text.secondary, fontSize: 18 } }}
                     subheader={fromNowDate(props.date)}
                     subheaderTypographyProps={{ sx: { color: "lightgray", fontSize: 14 } }}

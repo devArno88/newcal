@@ -1,6 +1,6 @@
 import { AccessDenied, AppError, Loading, Unauthenticated } from "@/src/components";
 import Layout from "@/src/components/Layout";
-import { Enquiries } from "@/src/content/Enquiries";
+import { Residents } from "@/src/content/Residents";
 import { useAlert } from "@/src/context";
 import { fetcher, isManagement } from "@/src/utils";
 import { useSession } from "next-auth/react";
@@ -13,19 +13,19 @@ export default function Page() {
     const { setAlert } = useAlert();
     const { data: session, status } = useSession();
     const {
-        data: enquiries,
+        data: residents,
         error,
         isLoading,
         isValidating,
         mutate,
-    } = useSWR(session ? `/api/enquiries` : null, fetcher);
+    } = useSWR(session ? `/api/residents` : null, fetcher);
     const loading = isLoading || isValidating || status === "loading";
-    if (error) return <AppError source="Enquiries" error={error.message} session={session} />;
+    if (error) return <AppError source="Residents" error={error.message} session={session} />;
     if (!session) return <Unauthenticated status={status} url={router.asPath} />;
     return (
         <>
             <Head>
-                <title>Enquiries | NewCal</title>
+                <title>Residents | NewCal</title>
             </Head>
 
             <Layout>
@@ -34,7 +34,7 @@ export default function Page() {
                 ) : loading ? (
                     <Loading />
                 ) : (
-                    <Enquiries setAlert={setAlert} enquiries={enquiries} mutate={mutate} />
+                    <Residents residents={residents} mutate={mutate} setAlert={setAlert} />
                 )}
             </Layout>
         </>

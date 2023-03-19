@@ -78,7 +78,7 @@ export const EnquiryForm: FunctionComponent<I_Alerter> = (props): ReactElement =
                 <TextField
                     multiline
                     required
-                    maxRows={2}
+                    maxRows={3}
                     name="message"
                     label="Message"
                     value={message}

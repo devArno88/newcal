@@ -1,7 +1,7 @@
 import { PageHeader } from "@/src/components";
 import { SelectChangeEvent, Stack } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { DevelopmentFilter } from "./DevelopmentFilter";
+import { DevelopmentFilters } from "./DevelopmentFilters";
 import { DevelopmentTicket } from "./DevelopmentTicket";
 
 interface PropTypes {
@@ -17,7 +17,7 @@ export const Development: FunctionComponent<PropTypes> = (props) => {
         <Stack spacing={4}>
             <PageHeader title="NewCal Development" subtitle="App Development Backlog" />
             <Stack spacing={4}>
-                <DevelopmentFilter status={status} handleStatus={handleStatus} type={type} handleType={handleType} />
+                <DevelopmentFilters status={status} handleStatus={handleStatus} type={type} handleType={handleType} />
                 {props.issues
                     ?.filter((x) => (status.length ? x.state === status : x))
                     .filter((x) => (type.length ? x.title.includes(`[ ${type.toUpperCase()} ]`) : x))

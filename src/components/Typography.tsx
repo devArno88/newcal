@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import { appColors } from "../utils";
 
 interface PropTypes {
-    text: string;
+    text: string | JSX.Element;
 }
 
 export const PanelHeader: FunctionComponent<PropTypes> = ({ text }) => (
