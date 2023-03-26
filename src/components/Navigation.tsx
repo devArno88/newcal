@@ -1,3 +1,4 @@
+import { config } from "@/src/config";
 import { E_Roles, I_NewCalSession } from "@/src/interfaces";
 import {
     AdminIcons,
@@ -40,7 +41,6 @@ import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FunctionComponent, MouseEvent, useState } from "react";
-import { config } from "../config";
 
 const NavData = {
     [E_Roles.resident]: [
@@ -256,7 +256,6 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
                                         mt: 0.4,
                                         textAlign: "right",
                                         mr: { xs: 1, sm: 1.2 },
-                                        // display: { xs: "block", sm: "block", md: "none" },
                                     }}
                                 >
                                     <strong style={{ fontSize: 15 }}>
