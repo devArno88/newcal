@@ -19,6 +19,9 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                     pr: { xs: 3, sm: 6, md: 2 },
                     pl: { xs: 3, sm: 6, md: 2 },
                     border: `1px solid ${appColors.border}`,
+                    "&:hover": {
+                        border: `1px solid red`,
+                    },
                 }}
                 elevation={5}
             >
@@ -30,12 +33,11 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                             variant="h5"
                             sx={{
                                 color: "salmon",
-                                width: { xs: "14rem", sm: "24rem", md: "30rem" },
+                                maxWidth: { xs: "14rem", sm: "24rem", md: "30rem" },
                                 fontSize: { xs: "1.2rem", sm: "1.4rem", md: "1.6rem" },
                             }}
                         >
-                            {title.toUpperCase()} A STUPID EXTRA LITTLE BIT OF VERY STUPID EXTRA STUPID LITTLE TEXTY
-                            TEXT
+                            {title.toUpperCase()}
                         </Typography>
                     </Stack>
                     <Typography

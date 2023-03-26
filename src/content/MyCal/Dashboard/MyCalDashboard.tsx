@@ -22,24 +22,24 @@ import { BookingsPanel } from "./BookingsPanel";
 import { ChatPanel } from "./ChatPanel";
 import { DevelopmentPanel } from "./DevelopmentPanel";
 import { EnquiriesPanel } from "./EnquiriesPanel";
+import { InfoPanel } from "./InfoPanel";
 import { MailboardPanel } from "./MailboardPanel";
 import { PostsPanel } from "./PostsPanel";
 import { ResidentsPanel } from "./ResidentsPanel";
 import { TicketsPanel } from "./TicketsPanel";
 import { WarningsPanel } from "./WarningsPanel";
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: appColors.card,
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
+const Item = styled(Paper)(() => ({
+    padding: 16,
     textAlign: "center",
-    color: appColors.text.primary,
-    cursor: "pointer",
-    border: `2px solid ${appColors.border}`,
     borderRadius: "1.5rem",
+    color: appColors.text.primary,
+    backgroundColor: appColors.card,
+    border: `2px solid ${appColors.border}`,
 }));
 
 interface DashboardPanel {
+    id: string;
     expand?: boolean;
     href: string | null;
     element: JSX.Element;
@@ -73,102 +73,147 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
     const MyCalConfig: { [key in E_Roles]: DashboardPanel[] } = {
         [E_Roles.resident]: [
             {
+                id: "resident_warnings",
                 expand: true,
                 href: null,
                 element: <WarningsPanel warnings={warnings} />,
             },
             {
+                id: "resident_info",
+                expand: false,
+                href: null,
+                element: <InfoPanel session={props.session} mailbox={mailbox} />,
+            },
+            {
+                id: "resident_bookings",
+                expand: false,
                 href: "/mycal/bookings",
                 element: <BookingsPanel bookings={bookings} />,
             },
             {
+                id: "resident_posts",
+                expand: false,
                 href: "/mycal/posts",
                 element: <PostsPanel posts={posts} />,
             },
             {
+                id: "resident_tickets",
+                expand: false,
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
-            { href: null, element: <MailboardPanel session={props.session} mailbox={mailbox} mailboard={mailboard} /> },
+            // { href: null, element: <MailboardPanel session={props.session} mailbox={mailbox} mailboard={mailboard} /> },
         ],
         [E_Roles.management]: [
             {
+                id: "management_warnings",
                 expand: true,
                 href: null,
                 element: <WarningsPanel warnings={warnings} />,
             },
             {
+                id: "management_residents",
+                expand: false,
                 href: "/residents",
                 element: <ResidentsPanel residents={residents} />,
             },
             {
+                id: "management_enquiries",
+                expand: false,
                 href: "/enquiries",
                 element: <EnquiriesPanel enquiries={enquiries} />,
             },
             {
+                id: "management_chat",
+                expand: false,
                 href: "/admin-chat",
                 element: <ChatPanel chat={chat} />,
             },
             {
+                id: "management_development",
+                expand: false,
                 href: "/development",
                 element: <DevelopmentPanel />,
             },
             {
+                id: "management_posts",
+                expand: false,
                 href: "/mycal/posts",
                 element: <PostsPanel posts={posts} />,
             },
             {
+                id: "management_tickets",
+                expand: false,
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
         ],
         [E_Roles.concierge]: [
             {
+                id: "concierge_warnings",
                 expand: true,
                 href: null,
                 element: <WarningsPanel warnings={warnings} />,
             },
             {
+                id: "concierge_mailboard",
                 expand: true,
                 href: "/mailboard",
                 element: <MailboardPanel session={props.session} mailboard={mailboard} />,
             },
             {
+                id: "concierge_chat",
+                expand: false,
                 href: "/admin-chat",
                 element: <ChatPanel chat={chat} />,
             },
             {
+                id: "concierge_development",
+                expand: false,
                 href: "/development",
                 element: <DevelopmentPanel />,
             },
             {
+                id: "concierge_posts",
+                expand: false,
                 href: "/mycal/posts",
                 element: <PostsPanel posts={posts} />,
             },
             {
+                id: "concierge_tickets",
+                expand: false,
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
         ],
         [E_Roles.development]: [
             {
+                id: "development_warnings",
                 expand: true,
                 href: null,
                 element: <WarningsPanel warnings={warnings} />,
             },
             {
+                id: "development_chat",
+                expand: false,
                 href: "/admin-chat",
                 element: <ChatPanel chat={chat} />,
             },
             {
+                id: "development_development",
+                expand: false,
                 href: "/development",
                 element: <DevelopmentPanel />,
             },
             {
+                id: "development_posts",
+                expand: false,
                 href: "/mycal/posts",
                 element: <PostsPanel posts={posts} />,
             },
             {
+                id: "development_tickets",
+                expand: false,
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
@@ -180,15 +225,25 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                 title="MyCal"
                 subtitle={`${isAdmin(props.session) ? capitalise(props.session?.role) : "My NewCal"} Dashboard`}
             />
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                {MyCalConfig[props.session?.role].map((x, i) => {
+            <Grid columns={{ xs: 4, sm: 8, md: 12 }} container spacing={{ xs: 2, md: 3 }}>
+                {MyCalConfig[props.session?.role].map((x) => {
+                    const expand = x.id.includes("warnings") || x.id.includes("mailboard");
                     const Panel = (
-                        <Grid item xs={12} sm={x.expand ? 12 : 4} md={x.expand ? 12 : 6} key={x.href ? undefined : i}>
-                            <Item>{x.element}</Item>
+                        <Grid item xs={12} sm={expand ? 12 : 4} md={expand ? 12 : 6} key={x.href ? undefined : x.id}>
+                            <Item
+                                sx={{
+                                    "&:hover": {
+                                        border: `2px solid ${appColors[x.href ? "primary" : "border"]}`,
+                                    },
+                                    cursor: x.id === "resident_info" ? undefined : "pointer",
+                                }}
+                            >
+                                {x.element}
+                            </Item>
                         </Grid>
                     );
                     return x.href ? (
-                        <Link href={x.href} key={i}>
+                        <Link href={x.href} key={x.id}>
                             {Panel}
                         </Link>
                     ) : (

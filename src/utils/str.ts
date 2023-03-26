@@ -1,3 +1,4 @@
+import ShortUniqueID from "short-unique-id";
 import { v4 as uuid } from "uuid";
 import { getRandomArrayElement } from "./arr";
 
@@ -42,3 +43,13 @@ export const adminLikeString = (adminLikes: string[]) =>
             ? adminLikes.join(" and ")
             : `${adminLikes[0]}, ${adminLikes[1]} and ${adminLikes[2]}`
     }`;
+
+// Mail body linebreaks
+export const lineBreak = "%0D%0A";
+export const doubleBreak = `${lineBreak}${lineBreak}`;
+
+export const isNumericString = (str: string) => /^\d+$/.test(str);
+
+export const firstName = (name: string) => name.split(" ")[0];
+
+export const shortID = () => new ShortUniqueID({ length: 6 })().toUpperCase();

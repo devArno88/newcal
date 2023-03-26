@@ -45,11 +45,11 @@ export const ItemActions: FunctionComponent<PropTypes> = (props) => {
     return (
         <Stack>
             {props.adminLikes.length ? (
-                <Typography ml={7} mt={-1} mb={3} sx={{ color: appColors.secondary, opacity: 0.8 }}>
+                <Typography my={3} sx={{ color: appColors.secondary, opacity: 0.9 }}>
                     {adminLikeString(props.adminLikes)}
                 </Typography>
             ) : null}
-            <Stack direction="row" spacing={2} ml={6}>
+            <Stack direction="row" spacing={2}>
                 <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={props.onLike}>
                     <Stack direction="row" spacing={1} alignItems="center">
                         {props.loading ? (

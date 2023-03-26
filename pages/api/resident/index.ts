@@ -1,26 +1,34 @@
 import { E_Fetches } from "@/src/interfaces";
 import { ResidentSchema } from "@/src/schemas";
-import { connectDB } from "@/src/utils";
+import { sendEmail } from "@/src/services";
+import { newResidentEmail } from "@/src/strings";
+import { connectDB, isNumericString } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // @routes    POST api/enquiry
-    // @desc      Send new enquiry
+    // @routes    POST api/resident
+    // @desc      Create new resident
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.post](req, res) {
         try {
-            const { ...data } = req.body;
+            const { name, email, flat } = req.body;
+            const exists = await ResidentSchema.findOne({ email });
+            if (exists) return res.status(500).json({ err: "Resident email already exists" });
+            const isNumeric = isNumericString(flat);
+            if (!isNumeric) return res.status(500).json({ err: "Flat number should contain numbers only" });
             const resident = new ResidentSchema({
-                ...data,
+                name,
+                email,
+                flat: +flat, // Flat passed as string
             });
             await resident.save();
-            // await sendEmail({
-            //     to: email,
-            //     subject: `New Caledonian Wharf Enquiry`,
-            //     html: residentEmail({ name, message }),
-            // });
+            await sendEmail({
+                to: email,
+                subject: `NewCal Resident Registration`,
+                html: newResidentEmail({ name, email, flat }),
+            });
             res.status(200).json({ msg: "Resident created successfully" });
         } catch (err) {
             res.status(500).json({ err: "Resident could not be created" });

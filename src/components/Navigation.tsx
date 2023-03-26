@@ -3,16 +3,19 @@ import {
     AdminIcons,
     appColors,
     capitalise,
+    firstName,
     Icon_Booking,
     Icon_Chat,
     Icon_Dashboard,
     Icon_Developer,
+    Icon_Email,
     Icon_Login,
     Icon_Logout,
     Icon_Mailboard,
     Icon_Menu,
     Icon_Posts,
     Icon_Tickets,
+    Icon_User,
     isAdmin,
 } from "@/src/utils";
 import {
@@ -101,14 +104,24 @@ const NavData = {
             Icon: Icon_Dashboard,
         },
         {
-            text: "Development",
-            href: "/development",
-            Icon: Icon_Developer,
+            text: "Residents",
+            href: "/residents",
+            Icon: Icon_User,
+        },
+        {
+            text: "Enquiries",
+            href: "/enquiries",
+            Icon: Icon_Email,
         },
         {
             text: "Admin Chat",
             href: "/admin-chat",
             Icon: Icon_Chat,
+        },
+        {
+            text: "Development",
+            href: "/development",
+            Icon: Icon_Developer,
         },
         {
             text: "Posts",
@@ -242,7 +255,7 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
                                     }}
                                 >
                                     <strong style={{ fontSize: 15 }}>
-                                        {adminAccount ? props.session?.name : props.session.name.split(" ")[0]}
+                                        {adminAccount ? props.session?.name : firstName(props.session.name)}
                                     </strong>
                                     <br />
                                     <small style={{ fontSize: 13 }}>

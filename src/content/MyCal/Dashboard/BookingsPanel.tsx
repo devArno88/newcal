@@ -27,12 +27,13 @@ export const BookingsPanel = (props) => {
                     pt: 2,
                     pb: 2,
                     height: "fit-content",
+                    // width: "100%",
                     bgcolor: appColors.panel,
                     borderRadius: 2,
                     border: `1px solid ${appColors.border}`,
                 }}
             >
-                <Icon sx={{ fill: appColors.secondary }} fontSize="large" />
+                <Icon sx={{ fill: appColors.primary }} fontSize="large" />
                 <PanelTitle text={title} />
                 <PanelSubtitle text={subtitle} />
             </Paper>

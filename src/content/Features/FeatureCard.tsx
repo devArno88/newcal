@@ -25,10 +25,17 @@ export const ResidentCard: FunctionComponent<PropTypes> = (props): ReactElement 
         if (window.confirm("Are you sure you want to delete this resident?")) {
             const res = await deleteResident({ residentID: props._id });
             if (res) {
-                if (res?.err) props.setAlert({ type: E_AlertTypes.error, text: res?.err });
+                if (res?.err)
+                    props.setAlert({
+                        type: E_AlertTypes.error,
+                        text: res?.err,
+                    });
                 if (res?.msg) {
                     props.mutate();
-                    props.setAlert({ type: E_AlertTypes.success, text: res?.msg });
+                    props.setAlert({
+                        type: E_AlertTypes.success,
+                        text: res?.msg,
+                    });
                 }
             }
         }
@@ -92,7 +99,10 @@ export const ResidentCard: FunctionComponent<PropTypes> = (props): ReactElement 
                             color="primary"
                             variant="contained"
                             onClick={props.onClick}
-                            sx={{ borderRadius: "1rem", width: { xs: 80, sm: "100%", md: 80 } }}
+                            sx={{
+                                borderRadius: "1rem",
+                                width: { xs: 80, sm: "100%", md: 80 },
+                            }}
                         >
                             <Icon_Edit />
                         </Button>
@@ -102,7 +112,10 @@ export const ResidentCard: FunctionComponent<PropTypes> = (props): ReactElement 
                             color="error"
                             onClick={onDelete}
                             variant="contained"
-                            sx={{ borderRadius: "1rem", width: { xs: 80, sm: "100%", md: 80 } }}
+                            sx={{
+                                borderRadius: "1rem",
+                                width: { xs: 80, sm: "100%", md: 80 },
+                            }}
                         >
                             <Icon_Delete />
                         </Button>

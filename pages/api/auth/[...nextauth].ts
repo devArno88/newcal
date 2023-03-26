@@ -43,6 +43,7 @@ export const authOptions = {
                 activeSession.id = residentData._id.toString();
                 activeSession.flat = residentData.flat;
                 activeSession.name = residentData.name;
+                activeSession.email = residentData.email;
                 activeSession.role = "resident";
                 // return activeSession;
             }

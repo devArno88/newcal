@@ -2,7 +2,7 @@ import { E_Fetches } from "@/src/interfaces";
 import { EnquirySchema } from "@/src/schemas/Enquiry";
 import { sendEmail } from "@/src/services";
 import { enquiryEmail } from "@/src/strings";
-import { connectDB } from "@/src/utils";
+import { connectDB, shortID } from "@/src/utils";
 
 const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -12,7 +12,9 @@ const routes = {
     async [E_Fetches.post](req, res) {
         try {
             const { name, email, phone, message } = req.body;
+            const id = shortID();
             const enquiry = new EnquirySchema({
+                uid: id,
                 name,
                 email,
                 phone: phone || null,
@@ -21,10 +23,10 @@ const routes = {
             await enquiry.save();
             await sendEmail({
                 to: email,
-                subject: `New Caledonian Wharf Enquiry`,
-                html: enquiryEmail({ name, message }),
+                subject: `Enquiry #${id} Submitted Successfully`,
+                html: enquiryEmail({ name, message, id }),
             });
-            res.status(200).json({ msg: "Enquiry created successfully" });
+            res.status(200).json({ msg: `Enquiry #${id} received` });
         } catch (err) {
             res.status(500).json({ err: "Enquiry could not be created" });
         }

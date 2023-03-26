@@ -1,5 +1,7 @@
 import { E_Fetches } from "@/src/interfaces";
 import { ResidentSchema } from "@/src/schemas";
+import { sendEmail } from "@/src/services";
+import { updatedResidentEmail } from "@/src/strings";
 import { connectDB } from "@/src/utils";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
@@ -11,14 +13,19 @@ const routes = {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     async [E_Fetches.put](req, res) {
         try {
-            const { ...data } = req.body;
+            const { name, email, flat } = req.body;
             const resident = await ResidentSchema.findById(req.query.residentID);
-            if (!resident) return res.status(500).json({ err: "Invalid resident" });
+            if (!resident) res.status(500).json({ err: "Invalid resident" });
             await ResidentSchema.findOneAndUpdate(
                 { _id: req.query.residentID },
-                { $set: { ...data } },
+                { $set: { name, email, flat: +flat } }, // Flat passed as string
                 { returnDocument: "after" }
             );
+            await sendEmail({
+                to: email,
+                subject: `NewCal Resident Details Updated`,
+                html: updatedResidentEmail({ name, email, flat }),
+            });
             res.status(200).json({ msg: "Resident details updated successfully" });
         } catch (err) {
             res.status(500).json({ err: "Resident details could not be updated" });

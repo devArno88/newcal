@@ -9,11 +9,12 @@ export const fetchParams = ({ method, body = null }: { method: E_Fetches; body?:
 export const fetcher = async (...args: Parameters<typeof fetch>) => {
     const res = await fetch(...args);
 
-    if (!res.ok) {
-        const errRes = await res.json();
-        console.error({ error: errRes.err, status: res.status });
-        throw new Error(errRes.err);
-    }
+    // if (!res.ok) {
+    // const errRes = await res.json();
+    // console.error({ error: errRes.err, status: res.status });
+    // return errorRes;
+    // throw new Error(errRes.err);
+    // }
 
     return res.json();
 };

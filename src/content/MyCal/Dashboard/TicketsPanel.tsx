@@ -38,7 +38,7 @@ export const TicketsPanel = (props) => {
                 }}
                 elevation={5}
             >
-                <Icon sx={{ fill: appColors.text.primary, mr: 1 }} fontSize="large" />
+                <Icon sx={{ fill: appColors.primary }} fontSize="large" />
                 <PanelTitle text={title} />
                 <PanelSubtitle text={subtitle} />
             </Paper>

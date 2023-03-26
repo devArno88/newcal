@@ -4,13 +4,17 @@ import AlternateEmailTwoToneIcon from "@mui/icons-material/AlternateEmailTwoTone
 import ApartmentTwoToneIcon from "@mui/icons-material/ApartmentTwoTone";
 import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
 import CodeTwoToneIcon from "@mui/icons-material/CodeTwoTone";
+import ContactMailTwoToneIcon from "@mui/icons-material/ContactMailTwoTone";
 import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import EventAvailableTwoToneIcon from "@mui/icons-material/EventAvailableTwoTone";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderTwoToneIcon from "@mui/icons-material/FavoriteBorderTwoTone";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
+import Grid3x3TwoToneIcon from "@mui/icons-material/Grid3x3TwoTone";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 import LoginTwoToneIcon from "@mui/icons-material/LoginTwoTone";
@@ -62,6 +66,10 @@ export const Icon_User = PersonOutlineTwoToneIcon;
 export const Icon_Email = AlternateEmailTwoToneIcon;
 export const Icon_Phone = PhoneIphoneTwoToneIcon;
 export const Icon_Flat = ApartmentTwoToneIcon;
+export const Icon_Edit = EditTwoToneIcon;
+export const Icon_Mail = EmailTwoToneIcon;
+export const Icon_ID = Grid3x3TwoToneIcon;
+export const Icon_Enquiry = ContactMailTwoToneIcon;
 
 export const AdminIcons = {
     [E_Roles.management]: Icon_Management,

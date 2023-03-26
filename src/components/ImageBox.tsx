@@ -24,10 +24,10 @@ export const ImageBox = ({
                 backgroundSize: "cover",
                 backgroundPosition: "center center",
                 display: center ? "flex" : undefined,
-                height: center ? { xs: 650, sm: 800, md: "100vh" } : undefined,
                 alignItems: center ? "center" : undefined,
                 justifyContent: center ? "center" : undefined,
                 backgroundImage: `${fade ? gradient : ""}url(${url})`,
+                height: center ? { xs: 650, sm: 800, md: 850 } : undefined,
             }}
         >
             {children}

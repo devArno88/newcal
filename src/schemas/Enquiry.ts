@@ -2,6 +2,7 @@ import { E_MongoCollection, I_Enquiry } from "@/src/interfaces";
 import * as mongoose from "mongoose";
 
 const Schema = new mongoose.Schema<I_Enquiry>({
+    uid: { type: String, required: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String || null, default: null },

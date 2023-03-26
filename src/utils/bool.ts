@@ -6,3 +6,10 @@ export const isAdmin = (session: Session) =>
 
 export const isManagement = (session: Session) => session?.role === E_Roles.management;
 export const isConcierge = (session: Session) => session?.role === E_Roles.concierge;
+
+export const residentFilter = ({ resident, filter }) =>
+    filter.length
+        ? resident.name.toLowerCase().includes(filter.toLowerCase()) ||
+          resident.email.toLowerCase().includes(filter.toLowerCase()) ||
+          resident.flat.toString().includes(filter.toLowerCase())
+        : resident;

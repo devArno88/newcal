@@ -32,7 +32,7 @@ export const PostsPanel = (props) => {
                 }}
                 elevation={5}
             >
-                <Icon sx={{ fill: appColors.secondary }} fontSize="large" />
+                <Icon sx={{ fill: appColors.primary }} fontSize="large" />
                 <PanelTitle text={title} />
                 <PanelSubtitle text={subtitle} />
             </Paper>

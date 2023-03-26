@@ -1,4 +1,4 @@
-import { AdminIcons, isAdmin } from "@/src/utils";
+import { AdminIcons, firstName, isAdmin } from "@/src/utils";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import { Avatar, Box, Button } from "@mui/material";
 import { signIn, signOut } from "next-auth/react";
@@ -28,7 +28,7 @@ export default function AuthBar(props: any): JSX.Element {
 
                     <Box sx={{ display: { xs: "none", sm: "block", overflow: "none" } }}>
                         <strong style={{ fontSize: 12, color: "greenyellow" }}>
-                            {adminAccount ? session?.name : session.name.split(" ")[0]}
+                            {adminAccount ? session?.name : firstName(session.name)}
                         </strong>
                         <br />
                         <small style={{ fontSize: 11 }}>{adminAccount ? "NewCal Admin" : `Flat ${session.flat}`}</small>

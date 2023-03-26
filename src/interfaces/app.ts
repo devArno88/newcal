@@ -65,6 +65,7 @@ export interface I_Alerter {
 }
 
 export interface I_Enquiry extends I_MongoID {
+    uid: Maybe<string>;
     name: Maybe<string>;
     email: Maybe<string>;
     phone?: Maybe<string>;

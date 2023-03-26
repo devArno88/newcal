@@ -14,11 +14,11 @@ export const DevelopmentFilters: FunctionComponent<PropTypes> = (props) => {
         "aria-label": `${x}Filter`,
         sx: {
             borderRadius: 3,
-            color: appColors.text.secondary,
+            color: appColors.text.primary,
             border: `2px solid ${appColors.border}`,
         },
     });
-    const sx = { ".MuiSvgIcon-root ": { fill: `${appColors.text.secondary} !important` } };
+    const sx = { ".MuiSvgIcon-root ": { fill: `${appColors.text.primary} !important` } };
     return (
         <Stack direction={{ xs: "column", sm: "row" }} justifyContent="center" spacing={2}>
             <FormControl sx={{ minWidth: 150 }}>
@@ -35,7 +35,7 @@ export const DevelopmentFilters: FunctionComponent<PropTypes> = (props) => {
                     <MenuItem value="open">Open</MenuItem>
                     <MenuItem value="closed">Closed</MenuItem>
                 </Select>
-                <FormHelperText sx={{ color: appColors.text.primary }}>Status</FormHelperText>
+                <FormHelperText sx={{ color: appColors.secondary }}>Status</FormHelperText>
             </FormControl>
             <FormControl sx={{ minWidth: 150 }}>
                 <Select
@@ -53,7 +53,7 @@ export const DevelopmentFilters: FunctionComponent<PropTypes> = (props) => {
                     <MenuItem value="bug">Bug</MenuItem>
                     <MenuItem value="ui">Interface</MenuItem>
                 </Select>
-                <FormHelperText sx={{ color: appColors.text.primary }}>Type</FormHelperText>
+                <FormHelperText sx={{ color: appColors.secondary }}>Type</FormHelperText>
             </FormControl>
         </Stack>
     );

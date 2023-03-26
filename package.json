@@ -37,10 +37,10 @@
         "Lluis Agusti <hi@llu.lu>"
     ],
     "dependencies": {
-        "@emotion/react": "^11.10.4",
-        "@emotion/styled": "^11.10.4",
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
         "@mui/icons-material": "^5.10.6",
-        "@mui/material": "^5.10.8",
+        "@mui/material": "^5.11.14",
         "@mui/x-date-pickers": "^5.0.5",
         "@next-auth/mongodb-adapter": "^1.1.0",
         "@next/bundle-analyzer": "^12.3.1",
@@ -58,6 +58,7 @@
         "react-dom": "^18.2.0",
         "react-swipeable-views": "^0.14.0",
         "react-swipeable-views-utils": "^0.14.0",
+        "short-unique-id": "^4.4.4",
         "swr": "^2.0.3"
     },
     "devDependencies": {

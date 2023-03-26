@@ -1,6 +1,6 @@
+import { E_Fetches } from "@/src/interfaces";
+import { fetcher, fetchParams } from "@/src/utils";
 import { Types } from "mongoose";
-import { E_Fetches } from "../interfaces";
-import { fetcher, fetchParams } from "../utils";
 
 export const createResident = async ({
     formData,
@@ -8,7 +8,7 @@ export const createResident = async ({
     formData: {
         name: string;
         email: string;
-        flat: number;
+        flat: string;
     };
 }): Promise<any> => {
     try {
@@ -26,7 +26,7 @@ export const updateResident = async ({
     formData: {
         name: string;
         email: string;
-        flat: number;
+        flat: string;
     };
 }): Promise<any> => {
     try {
