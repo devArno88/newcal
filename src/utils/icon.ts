@@ -3,6 +3,7 @@ import AddCommentTwoToneIcon from "@mui/icons-material/AddCommentTwoTone";
 import AlternateEmailTwoToneIcon from "@mui/icons-material/AlternateEmailTwoTone";
 import ApartmentTwoToneIcon from "@mui/icons-material/ApartmentTwoTone";
 import AutoAwesomeTwoToneIcon from "@mui/icons-material/AutoAwesomeTwoTone";
+import AutoFixHighTwoToneIcon from "@mui/icons-material/AutoFixHighTwoTone";
 import CodeTwoToneIcon from "@mui/icons-material/CodeTwoTone";
 import ContactMailTwoToneIcon from "@mui/icons-material/ContactMailTwoTone";
 import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
@@ -70,6 +71,7 @@ export const Icon_Edit = EditTwoToneIcon;
 export const Icon_Mail = EmailTwoToneIcon;
 export const Icon_ID = Grid3x3TwoToneIcon;
 export const Icon_Enquiry = ContactMailTwoToneIcon;
+export const Icon_Feature = AutoFixHighTwoToneIcon;
 
 export const AdminIcons = {
     [E_Roles.management]: Icon_Management,

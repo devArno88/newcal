@@ -3,20 +3,24 @@ import {
     AdminIcons,
     appColors,
     capitalise,
+    doubleBreak,
     firstName,
     Icon_Booking,
     Icon_Chat,
     Icon_Dashboard,
     Icon_Developer,
     Icon_Email,
+    Icon_Feature,
     Icon_Login,
     Icon_Logout,
+    Icon_Mail,
     Icon_Mailboard,
     Icon_Menu,
     Icon_Posts,
     Icon_Tickets,
     Icon_User,
     isAdmin,
+    mailtoParameters,
 } from "@/src/utils";
 import {
     AppBar,
@@ -36,6 +40,7 @@ import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { FunctionComponent, MouseEvent, useState } from "react";
+import { config } from "../config";
 
 const NavData = {
     [E_Roles.resident]: [
@@ -314,6 +319,35 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
                             anchorOrigin={{ vertical: "top", horizontal: "right" }}
                             transformOrigin={{ vertical: "top", horizontal: "right" }}
                         >
+                            {props.session && props.session.role === E_Roles.resident ? (
+                                <a
+                                    style={{ textDecoration: "none", color: appColors.dark }}
+                                    {...mailtoParameters({
+                                        target: config.managementEmail,
+                                        subject: "NewCal Enquiry",
+                                        body: `Hi,${doubleBreak}[- ANY ADDITIONAL INFORMATION -]${doubleBreak}Kind regards,${doubleBreak}${props.session.name} - Flat ${props.session.flat}`,
+                                    })}
+                                >
+                                    <MenuItem onClick={handleCloseUserMenu}>
+                                        <Stack direction="row" alignItems="center">
+                                            <Icon_Mail fontSize="small" sx={{ mr: 1 }} />
+                                            <Typography textAlign="center">Contact Management</Typography>
+                                        </Stack>
+                                    </MenuItem>
+                                </a>
+                            ) : null}
+
+                            {props.session ? (
+                                <Link href="/features">
+                                    <MenuItem onClick={handleCloseUserMenu}>
+                                        <Stack direction="row" alignItems="center">
+                                            <Icon_Feature fontSize="small" sx={{ mr: 1 }} />
+                                            <Typography textAlign="center">App Features</Typography>
+                                        </Stack>
+                                    </MenuItem>
+                                </Link>
+                            ) : null}
+
                             {props.session ? (
                                 <MenuItem
                                     onClick={(e) => {
