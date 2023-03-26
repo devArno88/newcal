@@ -9,6 +9,10 @@ export const appColors = {
     card: "#0d1117",
     border: "#555",
     panel: "#22272D",
+    admin: {
+        primary: "#00FF7F",
+        secondary: "#80FFBF",
+    },
     text: {
         primary: "#ccc",
         secondary: "#fff",

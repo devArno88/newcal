@@ -104,7 +104,9 @@ export const ItemActions: FunctionComponent<PropTypes> = (props) => {
                     <Paper sx={{ ...sxPaper, cursor: "pointer" }} onClick={props.onDelete}>
                         <Stack direction="row" spacing={1} alignItems="center">
                             <Icon_Delete sx={{ fill: "salmon" }} />
-                            <Typography sx={{ color: "salmon" }}>Delete</Typography>
+                            <Typography sx={{ color: "salmon", display: { xs: "none", sm: "none", md: "flex" } }}>
+                                Delete
+                            </Typography>
                         </Stack>
                     </Paper>
                 ) : null}

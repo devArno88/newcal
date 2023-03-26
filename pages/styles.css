@@ -17,6 +17,10 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+#chatbox::-webkit-scrollbar {
+    display: none;
+}
+
 li,
 p {
     line-height: 1.5rem;

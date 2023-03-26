@@ -9,8 +9,7 @@ export const EnquiriesPanel = ({ enquiries }: { enquiries: I_Enquiry[] }) => {
             <Paper
                 sx={{
                     mb: 1,
-                    pt: 1,
-                    pb: 1,
+                    py: 1,
                     borderRadius: 2,
                     bgcolor: "#22272D",
                     height: "fit-content",
@@ -18,7 +17,7 @@ export const EnquiriesPanel = ({ enquiries }: { enquiries: I_Enquiry[] }) => {
                 }}
                 elevation={5}
             >
-                <PanelTitle text={title} />
+                <PanelTitle admin text={title} />
                 <PanelSubtitle text={subtitle} />
             </Paper>
         );
@@ -36,19 +35,18 @@ export const EnquiriesPanel = ({ enquiries }: { enquiries: I_Enquiry[] }) => {
                 spacing={1.5}
                 ml={-2}
             >
-                <Tooltip title="You can view this because you are NewCal Management">
-                    <Icon_Info sx={{ fill: appColors.secondary, position: "sticky", right: 20 }} />
+                <Tooltip title="Only viewable to NewCal Management">
+                    <Icon_Info sx={{ fill: appColors.admin.secondary, position: "sticky", right: 20 }} />
                 </Tooltip>
-                <PanelHeader text="Enquiries" />
+                <PanelHeader admin text="Enquiries" />
             </Stack>
             <Stack spacing={0.5} sx={{ display: { xs: "block", sm: "none" } }}>
-                <PanelHeader text="Enquiries" />
+                <PanelHeader admin text="Enquiries" />
                 <PanelSubtitle text="Only viewable to NewCal Management" />
             </Stack>
             <Stack mt={2}>
                 <PanelCard title="Recent" subtitle={`${recent || "No"} enquir${recent === 1 ? "y" : "ies"}`} />
-                <PanelCard title="Open" subtitle={`${open || "No"} enquir${open === 1 ? "y" : "ies"}`} />
-                <PanelCard title="Closed" subtitle={`${closed || "No"} enquir${closed === 1 ? "y" : "ies"}`} />
+                <PanelCard title="Status" subtitle={`${open} open - ${closed} closed`} />
             </Stack>
         </>
     );

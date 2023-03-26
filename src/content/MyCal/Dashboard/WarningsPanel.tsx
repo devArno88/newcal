@@ -11,8 +11,7 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
             <Paper
                 sx={{
                     mb: 1,
-                    pt: 3,
-                    pb: 3,
+                    py: 3,
                     borderRadius: 2,
                     bgcolor: "#22272D",
                     height: "fit-content",
@@ -20,7 +19,7 @@ const PanelCard = ({ title, subtitle, href, likes, comments, views }) => {
                     pl: { xs: 3, sm: 6, md: 2 },
                     border: `1px solid ${appColors.border}`,
                     "&:hover": {
-                        border: `1px solid red`,
+                        border: `1px solid salmon`,
                     },
                 }}
                 elevation={5}

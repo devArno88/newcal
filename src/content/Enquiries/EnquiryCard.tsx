@@ -20,7 +20,7 @@ interface PropTypes extends I_Enquiry, I_Mutator, I_Alerter {}
 export const EnquiryCard: FunctionComponent<PropTypes> = (props) => {
     const { uid, name, email, phone, message, date, open } = props;
     const mailParams = mailtoParameters({
-        target: email,
+        target: `${name} <${email}>`,
         subject: `New Caledonian Wharf Enquiry #${uid}`,
         body: `Hi ${firstName(name)},${doubleBreak}`,
     });
@@ -30,10 +30,10 @@ export const EnquiryCard: FunctionComponent<PropTypes> = (props) => {
                 <Stack direction="row" alignItems="center" spacing={2}>
                     <Icon_ID sx={{ fill: appColors.secondary }} />
                     <Typography
-                        fontFamily="monospace"
-                        sx={{ color: appColors.secondary }}
                         variant="h5"
                         letterSpacing={1}
+                        fontFamily="monospace"
+                        sx={{ color: appColors.secondary }}
                     >
                         {uid}
                     </Typography>

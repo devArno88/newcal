@@ -1,6 +1,6 @@
 import { PanelHeader, PanelSubtitle, PanelTitle } from "@/src/components";
 import { I_Resident } from "@/src/interfaces";
-import { appColors, Icon_Info } from "@/src/utils";
+import { appColors, Icon_Info, uniqueArray } from "@/src/utils";
 import { Paper, Stack, Tooltip } from "@mui/material";
 
 export const ResidentsPanel = ({ residents }: { residents: I_Resident[] }) => {
@@ -9,8 +9,7 @@ export const ResidentsPanel = ({ residents }: { residents: I_Resident[] }) => {
             <Paper
                 sx={{
                     mb: 1,
-                    pt: 1,
-                    pb: 1,
+                    py: 1,
                     borderRadius: 2,
                     bgcolor: "#22272D",
                     height: "fit-content",
@@ -18,14 +17,12 @@ export const ResidentsPanel = ({ residents }: { residents: I_Resident[] }) => {
                 }}
                 elevation={5}
             >
-                <PanelTitle text={title} />
+                <PanelTitle admin text={title} />
                 <PanelSubtitle text={subtitle} />
             </Paper>
         );
     };
-    // const open = residents?.filter((x) => x.open).length;
-    // const closed = residents?.filter((x) => !x.open).length;
-    // const recent = residents?.filter((x) => within24Hours(new Date(x.date))).length;
+    const flats = uniqueArray(residents.map((x) => x.flat));
     return (
         <>
             <Stack
@@ -36,19 +33,21 @@ export const ResidentsPanel = ({ residents }: { residents: I_Resident[] }) => {
                 justifyContent="center"
                 sx={{ display: { xs: "none", sm: "flex" } }}
             >
-                <Tooltip title="You can view this because you are NewCal Management">
-                    <Icon_Info sx={{ fill: appColors.secondary, position: "sticky", right: 20 }} />
+                <Tooltip title="Only viewable to NewCal Management">
+                    <Icon_Info sx={{ fill: appColors.admin.secondary, position: "sticky", right: 20 }} />
                 </Tooltip>
-                <PanelHeader text="Residents" />
+                <PanelHeader admin text="Residents" />
             </Stack>
             <Stack spacing={0.5} sx={{ display: { xs: "block", sm: "none" } }}>
-                <PanelHeader text="Residents" />
+                <PanelHeader admin text="Residents" />
                 <PanelSubtitle text="Only viewable to NewCal Management" />
             </Stack>
             <Stack mt={2}>
-                {/* <PanelCard title="Recent" subtitle={`${recent || "No"} enquir${recent === 1 ? "y" : "ies"}`} />
-                <PanelCard title="Open" subtitle={`${open || "No"} enquir${open === 1 ? "y" : "ies"}`} />
-                <PanelCard title="Closed" subtitle={`${closed || "No"} enquir${closed === 1 ? "y" : "ies"}`} /> */}
+                <PanelCard
+                    title="Total"
+                    subtitle={`${residents.length || "No"} resident${residents.length === 1 ? "" : "s"}`}
+                />
+                <PanelCard title="Flats" subtitle={`${flats.length || "No"} flat${flats.length === 1 ? "" : "s"}`} />
             </Stack>
         </>
     );

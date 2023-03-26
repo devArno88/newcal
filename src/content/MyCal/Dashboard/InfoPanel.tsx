@@ -16,16 +16,15 @@ export const InfoPanel = (props) => {
     }) => {
         return (
             <Paper
+                elevation={5}
                 sx={{
                     mb: 1,
-                    pt: 2,
-                    pb: 2,
+                    py: 1,
+                    borderRadius: 2,
                     height: "fit-content",
                     bgcolor: appColors.panel,
-                    borderRadius: 2,
                     border: `1px solid ${greenBorder ? "lightseagreen" : appColors.border}`,
                 }}
-                elevation={5}
             >
                 <Icon sx={{ fill: appColors.primary }} fontSize="large" />
                 <PanelTitle text={title} />
@@ -47,10 +46,10 @@ export const InfoPanel = (props) => {
                 />
                 <PanelCard Icon={Icon_Email} title="Contact" subtitle={props.session.email} />
                 <PanelCard
-                    Icon={Icon_Mailboard}
                     title="Mailbox"
-                    subtitle={`${itemsToCollect} (${lastUpdated})`}
+                    Icon={Icon_Mailboard}
                     greenBorder={mailToCollect}
+                    subtitle={`${itemsToCollect} (${lastUpdated})`}
                 />
             </Stack>
         </>

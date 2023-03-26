@@ -24,12 +24,10 @@ export const BookingsPanel = (props) => {
                 elevation={5}
                 sx={{
                     mb: 1,
-                    pt: 2,
-                    pb: 2,
-                    height: "fit-content",
-                    // width: "100%",
-                    bgcolor: appColors.panel,
+                    py: 2,
                     borderRadius: 2,
+                    height: "fit-content",
+                    bgcolor: appColors.panel,
                     border: `1px solid ${appColors.border}`,
                 }}
             >

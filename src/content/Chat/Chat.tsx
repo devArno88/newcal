@@ -33,19 +33,18 @@ export const Chat: FunctionComponent<PropTypes> = (props) => {
             setFormData({ text: "" });
         }
     };
-    const onClick = () => handleMessage(formData);
     return (
         <Stack
             spacing={4}
             sx={{
-                height: "85vh",
+                height: "87vh",
                 position: "relative",
                 justifyContent: "space-between",
             }}
         >
             <PageHeader title="Admin Chat" subtitle="NewCal Development, Management and Concierge" />
-            <ChatMessages messages={props.chat.messages} session={props.session} />
-            <ChatInput text={text} onClick={onClick} onKeyDown={onKeyDown} onChange={onChange} />
+            <ChatMessages mutate={props.mutate} messages={props.chat.messages} session={props.session} />
+            <ChatInput text={text} onClick={() => handleMessage(formData)} onKeyDown={onKeyDown} onChange={onChange} />
         </Stack>
     );
 };

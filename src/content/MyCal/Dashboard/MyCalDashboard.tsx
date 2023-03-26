@@ -70,6 +70,7 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
     const {
         data: { bookings, posts, tickets, mailbox, mailboard, warnings, chat, enquiries, residents },
     } = props;
+    const adminPanels = ["_residents", "_enquiries", "_chat", "_development", "_mailboard"];
     const MyCalConfig: { [key in E_Roles]: DashboardPanel[] } = {
         [E_Roles.resident]: [
             {
@@ -102,7 +103,6 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                 href: "/mycal/tickets",
                 element: <TicketsPanel tickets={tickets} />,
             },
-            // { href: null, element: <MailboardPanel session={props.session} mailbox={mailbox} mailboard={mailboard} /> },
         ],
         [E_Roles.management]: [
             {
@@ -233,7 +233,13 @@ export const MyCalDashboard: FunctionComponent<PropTypes> = (props) => {
                             <Item
                                 sx={{
                                     "&:hover": {
-                                        border: `2px solid ${appColors[x.href ? "primary" : "border"]}`,
+                                        border: `2px solid ${
+                                            !x.href
+                                                ? appColors.border
+                                                : adminPanels.includes(`_${x.id.split("_")[1]}`)
+                                                ? appColors.admin.secondary
+                                                : appColors.secondary
+                                        }`,
                                     },
                                     cursor: x.id === "resident_info" ? undefined : "pointer",
                                 }}

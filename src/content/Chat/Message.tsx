@@ -11,7 +11,7 @@ interface PropTypes {
 
 export const Message: FunctionComponent<PropTypes> = (props) => {
     return (
-        <Stack alignItems={props.isAuthor ? "end" : "start"}>
+        <Stack alignItems={props.isAuthor ? "end" : "start"} mb={2}>
             <Stack direction={props.isAuthor ? "row-reverse" : "row"} spacing={2} alignItems="end">
                 {props.message.userType === "admin" && props.AdminIcon ? (
                     <Tooltip title={capitalise(props.message.user.role)}>
@@ -31,6 +31,7 @@ export const Message: FunctionComponent<PropTypes> = (props) => {
                     elevation={4}
                     sx={{
                         p: 2,
+                        maxWidth: "60%",
                         borderRadius: 6,
                         alignItems: "end",
                         width: "fit-content",

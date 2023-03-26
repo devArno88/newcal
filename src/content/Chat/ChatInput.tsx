@@ -16,20 +16,22 @@ export const ChatInput: FunctionComponent<PropTypes> = (props) => {
                 multiline
                 maxRows={2}
                 value={props.text}
-                sx={{ width: "100%" }}
                 onChange={props.onChange}
                 onKeyDown={props.onKeyDown}
                 helperText="⇧ + ⏎ for new line, ⏎ to send"
-                FormHelperTextProps={{ sx: { color: appColors.text.primary } }}
                 InputProps={{
                     sx: {
                         pr: 3,
                         pl: 3,
                         borderRadius: 4,
                         color: appColors.text.primary,
-                        border: `2px solid ${appColors.primary}`,
+                        borderColor: appColors.primary,
+                        border: `1px solid ${appColors.border}`,
                     },
                 }}
+                InputLabelProps={{ sx: { color: appColors.text.primary } }}
+                FormHelperTextProps={{ sx: { color: appColors.secondary } }}
+                sx={{ width: "100%" }}
             />
             <IconButton
                 disableRipple

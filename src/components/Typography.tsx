@@ -4,16 +4,26 @@ import { appColors } from "../utils";
 
 interface PropTypes {
     text: string | JSX.Element;
+    admin?: boolean;
 }
 
-export const PanelHeader: FunctionComponent<PropTypes> = ({ text }) => (
-    <Typography variant="h5" fontWeight={500} letterSpacing={1.2} sx={{ color: appColors.primary }}>
+export const PanelHeader: FunctionComponent<PropTypes> = ({ text, admin = false }) => (
+    <Typography
+        variant="h5"
+        fontWeight={500}
+        letterSpacing={1.2}
+        sx={{ color: admin ? appColors.admin.primary : appColors.primary }}
+    >
         {text}
     </Typography>
 );
 
-export const PanelTitle: FunctionComponent<PropTypes> = ({ text }) => (
-    <Typography variant="h6" sx={{ color: appColors.secondary }} letterSpacing={0.8}>
+export const PanelTitle: FunctionComponent<PropTypes> = ({ text, admin = false }) => (
+    <Typography
+        variant="h6"
+        sx={{ color: admin ? appColors.admin.secondary : appColors.secondary }}
+        letterSpacing={0.8}
+    >
         {text}
     </Typography>
 );

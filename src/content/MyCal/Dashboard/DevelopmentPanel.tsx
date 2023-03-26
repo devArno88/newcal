@@ -24,8 +24,7 @@ export const DevelopmentPanel = (props) => {
             <Paper
                 sx={{
                     mb: 1,
-                    pt: 1,
-                    pb: 1,
+                    py: 1,
                     borderRadius: 2,
                     bgcolor: "#22272D",
                     height: "fit-content",
@@ -37,7 +36,7 @@ export const DevelopmentPanel = (props) => {
                     <Loading />
                 ) : (
                     <>
-                        <PanelTitle text={title} />
+                        <PanelTitle admin text={title} />
                         <PanelSubtitle text={subtitle} />
                     </>
                 )}
@@ -57,10 +56,10 @@ export const DevelopmentPanel = (props) => {
                 spacing={1.5}
                 ml={-2}
             >
-                <Tooltip title="You can view this because you are a NewCal Admin">
-                    <Icon_Info sx={{ fill: appColors.secondary, position: "sticky", right: 20 }} />
+                <Tooltip title="Only viewable to NewCal Admins">
+                    <Icon_Info sx={{ fill: appColors.admin.secondary, position: "sticky", right: 20 }} />
                 </Tooltip>
-                <PanelHeader text="Development" />
+                <PanelHeader admin text="Development" />
             </Stack>
             <Stack spacing={0.5} sx={{ display: { xs: "block", sm: "none" } }}>
                 <PanelHeader text="Development" />
@@ -68,8 +67,7 @@ export const DevelopmentPanel = (props) => {
             </Stack>
             <Stack mt={2}>
                 <PanelCard title="Recent" subtitle={`${recent || "No"} ticket${recent === 1 ? "" : "s"}`} />
-                <PanelCard title="Open" subtitle={`${open || "No"} ticket${open === 1 ? "" : "s"}`} />
-                <PanelCard title="Closed" subtitle={`${closed || "No"} ticket${closed === 1 ? "" : "s"}`} />
+                <PanelCard title="Status" subtitle={`${open} open - ${closed} closed`} />
             </Stack>
         </>
     );

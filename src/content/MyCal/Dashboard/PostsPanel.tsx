@@ -23,8 +23,7 @@ export const PostsPanel = (props) => {
             <Paper
                 sx={{
                     mb: 1,
-                    pt: 2,
-                    pb: 2,
+                    py: 2,
                     height: "fit-content",
                     bgcolor: appColors.panel,
                     borderRadius: 2,

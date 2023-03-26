@@ -37,21 +37,21 @@ export const MailboardPanel: FunctionComponent<PropTypes> = (props) => {
     return (
         <>
             <Stack
-                sx={{ display: { xs: "none", sm: "flex" } }}
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing={1.5}
                 ml={-2}
+                spacing={1.5}
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+                sx={{ display: { xs: "none", sm: "flex" } }}
             >
-                <Tooltip title="You can modify this because you are a NewCal Concierge">
+                <Tooltip title="Only viewable to NewCal Concierge">
                     <Icon_Info sx={{ fill: appColors.secondary, position: "sticky", right: 20 }} />
                 </Tooltip>
                 <PanelHeader text="Mailboard" />
             </Stack>
             <Stack spacing={0.5} sx={{ display: { xs: "block", sm: "none" } }}>
                 <PanelHeader text="Mailboard" />
-                <PanelSubtitle text="Only accessible to NewCal Concierge" />
+                <PanelSubtitle text="Only viewable to NewCal Concierge" />
             </Stack>
             <Stack>
                 <Typography sx={{ color: appColors.secondary }} variant="h6" mt={0.5} mb={0.5}>
