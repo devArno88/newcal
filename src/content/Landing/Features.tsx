@@ -23,17 +23,17 @@ const Item = styled(Paper)(({ theme }) => ({
 const FeatureData = [
     {
         Icon: RoomServiceTwoToneIcon,
-        title: "24 Hour Reception",
+        title: "24/7 Reception",
         text: "An added level of convenience for residents, ensuring that there is always someone available to assist with any needs or concerns.",
     },
     {
         Icon: DeckTwoToneIcon,
-        title: "Private Leisure Area",
+        title: "Leisure Area",
         text: "An exclusive courtyard to relax and unwind, with dedicated infant activities, reservable tables and purpose-built barbecues.",
     },
     {
         Icon: ManageAccountsTwoToneIcon,
-        title: "Building Management",
+        title: "Management",
         text: "Overseeing the day-to-day operations of the property, ensuring that everything runs smoothly and efficiently for residents.",
     },
     {
