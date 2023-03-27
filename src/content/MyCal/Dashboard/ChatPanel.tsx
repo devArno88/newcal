@@ -30,7 +30,7 @@ const PanelCard = ({ title, subtitle, Icon }: { title: string; subtitle: string 
 
 export const ChatPanel = ({ chat }) => {
     const firstMessage = chat?.messages[0];
-    const Icon = AdminIcons[firstMessage.user.role];
+    const Icon = AdminIcons[firstMessage?.user.role];
     return (
         <>
             <Stack
@@ -58,7 +58,9 @@ export const ChatPanel = ({ chat }) => {
                     title="Recent"
                     subtitle={`${chat?.messages?.filter((x) => within24Hours(new Date(x.date))).length} messages`}
                 />
-                <PanelCard title="Latest" Icon={Icon} subtitle={<i>{abbreviate(chat?.messages[0].text, 28)}</i>} />
+                {Icon && firstMessage ? (
+                    <PanelCard title="Latest" Icon={Icon} subtitle={<i>{abbreviate(chat?.messages[0].text, 28)}</i>} />
+                ) : null}
             </Stack>
         </>
     );

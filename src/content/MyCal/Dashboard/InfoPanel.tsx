@@ -19,7 +19,7 @@ export const InfoPanel = (props) => {
                 elevation={5}
                 sx={{
                     mb: 1,
-                    py: 1,
+                    py: 2,
                     borderRadius: 2,
                     height: "fit-content",
                     bgcolor: appColors.panel,

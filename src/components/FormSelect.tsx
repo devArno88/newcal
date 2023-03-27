@@ -39,7 +39,7 @@ export const FormSelect = ({ options, value, onChange, helperText }) => {
                         </MenuItem>
                     ))}
                 </Select>
-                <FormHelperText sx={{ color: "greenyellow" }}>{helperText}</FormHelperText>
+                <FormHelperText sx={{ color: appColors.secondary }}>{helperText}</FormHelperText>
             </FormControl>
         </Box>
     );
