@@ -62,7 +62,7 @@ export const DevelopmentPanel = (props) => {
                 <PanelHeader admin text="Development" />
             </Stack>
             <Stack spacing={0.5} sx={{ display: { xs: "block", sm: "none" } }}>
-                <PanelHeader text="Development" />
+                <PanelHeader admin text="Development" />
                 <PanelSubtitle text="Only viewable to NewCal Admins" />
             </Stack>
             <Stack mt={2}>

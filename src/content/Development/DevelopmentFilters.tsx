@@ -35,7 +35,7 @@ export const DevelopmentFilters: FunctionComponent<PropTypes> = (props) => {
                     <MenuItem value="open">Open</MenuItem>
                     <MenuItem value="closed">Closed</MenuItem>
                 </Select>
-                <FormHelperText sx={{ color: appColors.secondary }}>Status</FormHelperText>
+                <FormHelperText sx={{ color: appColors.admin.secondary }}>Status</FormHelperText>
             </FormControl>
             <FormControl sx={{ minWidth: 150 }}>
                 <Select
@@ -53,7 +53,7 @@ export const DevelopmentFilters: FunctionComponent<PropTypes> = (props) => {
                     <MenuItem value="bug">Bug</MenuItem>
                     <MenuItem value="ui">Interface</MenuItem>
                 </Select>
-                <FormHelperText sx={{ color: appColors.secondary }}>Type</FormHelperText>
+                <FormHelperText sx={{ color: appColors.admin.secondary }}>Type</FormHelperText>
             </FormControl>
         </Stack>
     );

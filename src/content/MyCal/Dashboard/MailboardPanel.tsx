@@ -45,16 +45,16 @@ export const MailboardPanel: FunctionComponent<PropTypes> = (props) => {
                 sx={{ display: { xs: "none", sm: "flex" } }}
             >
                 <Tooltip title="Only viewable to NewCal Concierge">
-                    <Icon_Info sx={{ fill: appColors.secondary, position: "sticky", right: 20 }} />
+                    <Icon_Info sx={{ fill: appColors.admin.secondary, position: "sticky", right: 20 }} />
                 </Tooltip>
-                <PanelHeader text="Mailboard" />
+                <PanelHeader admin text="Mailboard" />
             </Stack>
             <Stack spacing={0.5} sx={{ display: { xs: "block", sm: "none" } }}>
-                <PanelHeader text="Mailboard" />
+                <PanelHeader admin text="Mailboard" />
                 <PanelSubtitle text="Only viewable to NewCal Concierge" />
             </Stack>
             <Stack>
-                <Typography sx={{ color: appColors.secondary }} variant="h6" mt={0.5} mb={0.5}>
+                <Typography sx={{ color: appColors.admin.secondary }} variant="h6" mt={0.5} mb={0.5}>
                     {itemsToCollect || "No"} item{itemsToCollect === 1 ? null : "s"} to collect{" "}
                     {flatsToCollect ? `(${flatsToCollect} flat${flatsToCollect === 1 ? "" : "s"})` : null}
                 </Typography>
@@ -69,7 +69,7 @@ export const MailboardPanel: FunctionComponent<PropTypes> = (props) => {
                                             <Typography sx={{ color: appColors.text.secondary }} variant="h6">
                                                 {x.replace("Flat", "Flat ")}
                                             </Typography>
-                                            <Typography sx={{ color: appColors.secondary }}>
+                                            <Typography sx={{ color: appColors.admin.secondary }}>
                                                 {`${mailboard[x] === 6 ? "5+" : mailboard[x] || "No"} item${
                                                     mailboard[x] === 1 ? "" : "s"
                                                 }`}
