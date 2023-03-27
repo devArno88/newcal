@@ -1,6 +1,5 @@
 import { appColors } from "@/src/utils";
-import { Box, Grid, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Grid, Typography } from "@mui/material";
 
 export default function Jumbotron(props: any): JSX.Element {
     const { title, text, image, reverse = false } = props;
@@ -14,8 +13,8 @@ export default function Jumbotron(props: any): JSX.Element {
                 {title ?? "Llorem ipsum"}
             </Typography>
             <Typography
-                letterSpacing={1}
-                fontWeight={300}
+                fontWeight={400}
+                letterSpacing={1.2}
                 sx={{ color: appColors.text.secondary, fontSize: { xs: 17, sm: 18, md: 19, xl: 24 } }}
             >
                 {text}
@@ -28,35 +27,28 @@ export default function Jumbotron(props: any): JSX.Element {
             src={image}
             alt="Image"
             style={{
-                borderRadius: "0.8rem",
-                height: "100%",
                 width: "100%",
+                height: "100%",
+                borderRadius: "0.8rem",
                 boxShadow: `0px 0px 12px 4px ${appColors.secondary}`,
             }}
         />
     );
 
-    const Item = styled(Box)(({ theme }) => ({
-        textAlign: "start",
-        backgroundColor: "transparent",
-        color: theme.palette.text.secondary,
-    }));
-
     return (
         <Grid
             container
-            // spacing={{ xs: 4, sm: 6, md: 6 }}
             direction={`row${reverse ? "-reverse" : ""}`}
             sx={{
-                bgcolor: "transparent",
-                justifyContent: "center",
-                alignItems: "start",
                 p: 2,
                 gap: 4,
+                alignItems: "start",
+                bgcolor: "transparent",
+                justifyContent: "center",
             }}
         >
             <Grid xs={12} sm={10} md={6}>
-                <Item>{textBlock}</Item>
+                {textBlock}
             </Grid>
 
             <Grid
@@ -68,7 +60,7 @@ export default function Jumbotron(props: any): JSX.Element {
                 justifyContent="center"
                 sx={{ mt: { md: 1, sm: 0 } }}
             >
-                <Item>{imgBlock}</Item>
+                {imgBlock}
             </Grid>
         </Grid>
     );
