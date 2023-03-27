@@ -1,4 +1,4 @@
-import AppMeta from "@/src/components/AppMeta";
+import { AppMeta } from "@/src/components";
 import { AlertProvider } from "@/src/context";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
