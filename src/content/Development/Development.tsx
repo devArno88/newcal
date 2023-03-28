@@ -1,4 +1,5 @@
 import { PageHeader } from "@/src/components";
+import { sortByUpdated } from "@/src/utils";
 import { SelectChangeEvent, Stack } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { DevelopmentFilters } from "./DevelopmentFilters";
@@ -21,6 +22,7 @@ export const Development: FunctionComponent<PropTypes> = (props) => {
                 {props.issues
                     ?.filter((x) => (status.length ? x.state === status : x))
                     .filter((x) => (type.length ? x.title.includes(`[ ${type.toUpperCase()} ]`) : x))
+                    .sort(sortByUpdated)
                     .map((ticket) => (
                         <DevelopmentTicket key={ticket.id} {...ticket} />
                     ))}

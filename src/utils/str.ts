@@ -53,3 +53,6 @@ export const isNumericString = (str: string) => /^\d+$/.test(str);
 export const firstName = (name: string) => name.split(" ")[0];
 
 export const shortID = () => new ShortUniqueID({ length: 6 })().toUpperCase();
+
+export const developmentIssuesURL = (state: "open" | "closed") =>
+    `https://api.github.com/repos/devArno88/newcal-issues/issues?state=${state}`;

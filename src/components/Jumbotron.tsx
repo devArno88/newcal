@@ -47,11 +47,12 @@ export default function Jumbotron(props: any): JSX.Element {
                 justifyContent: "center",
             }}
         >
-            <Grid xs={12} sm={10} md={6}>
+            <Grid item xs={12} sm={10} md={6}>
                 {textBlock}
             </Grid>
 
             <Grid
+                item
                 xs={12}
                 sm={10}
                 md={5}

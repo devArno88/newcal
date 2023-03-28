@@ -1,10 +1,12 @@
-// import { E_Fetches } from "../interfaces";
-// import { fetcher, fetchParams } from "../utils";
+import { developmentIssuesURL } from "@/src/utils";
 
 export const getDevelopmentIssues = async (): Promise<any> => {
-    // try {
-    //     return await fetcher(`/api/chat/${chatID}`, fetchParams({ method: E_Fetches.get }));
-    // } catch (err) {
-    //     console.error(err);
-    // }
+    const urls = [developmentIssuesURL("open"), developmentIssuesURL("closed")];
+    try {
+        let res = await Promise.all(urls.map((e) => fetch(e)));
+        let resJson = await Promise.all(res.map((e) => e.json()));
+        return resJson.flat();
+    } catch (err) {
+        console.log(err);
+    }
 };

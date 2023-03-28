@@ -1,3 +1,4 @@
+import { getDevelopmentIssues } from "@/src/actions/development";
 import { Loading, PanelHeader, PanelSubtitle, PanelTitle } from "@/src/components";
 import { appColors, Icon_Info, within24Hours } from "@/src/utils";
 import { Paper, Stack, Tooltip } from "@mui/material";
@@ -7,18 +8,15 @@ export const DevelopmentPanel = (props) => {
     const [issues, setIssues] = useState([]);
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
-        fetch("https://api.github.com/repos/devArno88/newcal-issues/issues?state=open")
-            .then((response) => response.json())
-            .then((data) => {
-                setIssues((x) => [...x, ...data]);
-            });
-        fetch("https://api.github.com/repos/devArno88/newcal-issues/issues?state=closed")
-            .then((response) => response.json())
-            .then((data) => {
-                setIssues((x) => [...x, ...data]);
+        const getDevelopmentTickets = async () => {
+            const data = await getDevelopmentIssues();
+            if (data) {
+                setIssues(data);
                 setLoading(false);
-            });
-    }, [loading]);
+            }
+        };
+        getDevelopmentTickets();
+    }, []);
     const PanelCard = ({ title, subtitle }) => {
         return (
             <Paper
