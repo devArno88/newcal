@@ -304,7 +304,8 @@ export const Navigation: FunctionComponent<I_NewCalSession> = (props) => {
                                         border: `2px solid ${appColors.text.secondary}`,
                                     }}
                                     alt={props.session.name}
-                                    src={props.session.user?.image ?? "/user.png"}
+                                    // src={props.session.user?.image ?? "/user.png"}
+                                    src=""
                                 />
                             )}
                         </Stack>

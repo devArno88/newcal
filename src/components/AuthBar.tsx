@@ -23,7 +23,8 @@ export default function AuthBar(props: any): JSX.Element {
                             <Icon sx={{ fill: "#333" }} />
                         </Avatar>
                     ) : (
-                        <Avatar alt={session.name} src={session.user?.image ?? "/user.png"} sx={{ mr: 1 }} />
+                        // <Avatar alt={session.name} src={session.user?.image ?? "/user.png"} sx={{ mr: 1 }} />
+                        <Avatar alt={session.name} src="" sx={{ mr: 1 }} />
                     )}
 
                     <Box sx={{ display: { xs: "none", sm: "block", overflow: "none" } }}>

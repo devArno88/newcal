@@ -79,7 +79,7 @@ export const CommentForm: FunctionComponent<PropTypes> = (props) => {
                         style: { color: appColors.text.primary, fontSize: 18 },
                     }}
                     FormHelperTextProps={{
-                        style: { color: "greenyellow" },
+                        style: { color: appColors.secondary },
                     }}
                     sx={{
                         input: {
@@ -96,7 +96,7 @@ export const CommentForm: FunctionComponent<PropTypes> = (props) => {
                         type="submit"
                         onClick={onSubmit}
                         variant="contained"
-                        sx={{ bgcolor: "greenyellow", color: "black" }}
+                        sx={{ bgcolor: appColors.primary, color: "#fff" }}
                         disabled={!text.length}
                     >
                         Submit
