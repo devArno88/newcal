@@ -70,7 +70,7 @@ export const Enquiries: FunctionComponent<PropTypes> = (props): ReactElement => 
                             ? x.uid.toLowerCase().includes(search.toLowerCase()) ||
                               x.name.toLowerCase().includes(search.toLowerCase()) ||
                               x.email.toLowerCase().includes(search.toLowerCase()) ||
-                              x.phone.toLowerCase().includes(search.toLowerCase())
+                              x.phone?.toLowerCase().includes(search.toLowerCase())
                             : x
                     )
                     .sort(sortArrayByDate)
