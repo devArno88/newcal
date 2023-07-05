@@ -1,9 +1,8 @@
-import React from "react";
-
 import { config } from "@/src/config";
+import { getRandomID, mailtoParameters } from "@/src/utils";
 import { Typography } from "@mui/material";
 import { Session } from "next-auth";
-import { getRandomID, mailtoParameters } from "../utils";
+import { FunctionComponent, ReactElement } from "react";
 
 interface PropTypes {
     error: string | object | Error;
@@ -17,7 +16,7 @@ interface PropTypes {
 
 const lineBreak = "%0D%0A";
 
-export const AppError: React.FunctionComponent<PropTypes> = (props) => {
+export const AppError: FunctionComponent<PropTypes> = (props): ReactElement => {
     const id = getRandomID();
     const { error, source, session } = props;
     const params = { id, source, error };
